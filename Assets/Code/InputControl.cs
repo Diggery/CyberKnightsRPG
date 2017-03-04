@@ -8,6 +8,10 @@ public class InputControl : MonoBehaviour {
     CameraControl cameraControl;
     SquadControl squad;
 
+    float swipeTime = 0.5f;
+    Vector2 swipeStart = Vector2.zero;
+    float swipeTimer = 0.5f;
+
 	void Start () {
         gameManager = GameManager.instance;
         squad = gameManager.Squad;
@@ -18,21 +22,43 @@ public class InputControl : MonoBehaviour {
             squad = gameManager.Squad;
 
         if (squad) {
+            Vector2 touchPos = (GvrController.TouchPos * 2) - Vector2.one;
 
-            if (Input.GetKeyDown(KeyCode.W)) {
+            if (GvrController.TouchDown) {
+                swipeTimer = swipeTime;
+                swipeStart = touchPos;
+            }
+
+            if (swipeTimer > 0)
+                swipeTimer -= Time.deltaTime;
+            
+            if (swipeTimer > 0 && GvrController.TouchUp) {
+                Debug.Log(touchPos.x - swipeStart.x);
+
+                if (touchPos.x - swipeStart.x > 0.5f) {
+                    
+                }
+
+                swipeTimer = swipeTime;
+                swipeStart = touchPos;
+            }           
+
+
+
+            if ((GvrController.ClickButtonDown && touchPos.y < 0) || Input.GetKeyDown(KeyCode.W)) {
                 squad.Move(squad.transform.forward);
             }
+            if ((GvrController.ClickButtonDown && touchPos.y > 0) || Input.GetKeyDown(KeyCode.S)) {
+                squad.Move(-squad.transform.forward);
+            }
+
             if (Input.GetKeyDown(KeyCode.A)) {
                 squad.Move(-squad.transform.right);
             }
-            if (Input.GetKeyDown(KeyCode.S)) {
-                squad.Move(-squad.transform.forward);
-            }
+
             if (Input.GetKeyDown(KeyCode.D)) {
                 squad.Move(squad.transform.right);
             }
-
-
 
 
             if (GvrController.AppButtonDown || Input.GetKeyDown(KeyCode.Space)) {

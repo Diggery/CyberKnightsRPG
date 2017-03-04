@@ -29,7 +29,6 @@ public class UnitMover : MonoBehaviour {
             moveTimer += Time.deltaTime / moveDuration;
             float amount = Mathf.SmoothStep(0, 1, moveTimer);
             transform.position = Vector3.Lerp(startPos, endPos, amount);
-            Debug.Log("Moving unit");
             if (moveTimer > 1) StopMoving();
         }
     }
