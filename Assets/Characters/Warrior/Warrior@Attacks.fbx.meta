@@ -1,0 +1,715 @@
+fileFormatVersion: 2
+guid: a46a7fe0f77084f468f373e4f6275434
+timeCreated: 1483291863
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Ref:Head_Skel
+    100002: Ref:Hips_Skel
+    100004: Ref:LeftClav_Skel
+    100006: Ref:LeftFoot_Skel
+    100008: Ref:LeftLowerArm_Skel
+    100010: Ref:LeftLowerLeg_Skel
+    100012: Ref:LeftUpperArm_Skel
+    100014: Ref:LeftUpperLeg_Skel
+    100016: Ref:RightClav_Skel
+    100018: Ref:RightFoot_Skel
+    100020: Ref:RightHand_Attach
+    100022: Ref:RightHand_Skel
+    100024: Ref:RightLowerArm_Skel
+    100026: Ref:RightLowerLeg_Skel
+    100028: Ref:RightUpperArm_Skel
+    100030: Ref:RightUpperLeg_Skel
+    100032: Ref:Torso_Skel
+    100034: Ref:Warrior_Geo
+    100036: //RootNode
+    400000: Ref:Head_Skel
+    400002: Ref:Hips_Skel
+    400004: Ref:LeftClav_Skel
+    400006: Ref:LeftFoot_Skel
+    400008: Ref:LeftLowerArm_Skel
+    400010: Ref:LeftLowerLeg_Skel
+    400012: Ref:LeftUpperArm_Skel
+    400014: Ref:LeftUpperLeg_Skel
+    400016: Ref:RightClav_Skel
+    400018: Ref:RightFoot_Skel
+    400020: Ref:RightHand_Attach
+    400022: Ref:RightHand_Skel
+    400024: Ref:RightLowerArm_Skel
+    400026: Ref:RightLowerLeg_Skel
+    400028: Ref:RightUpperArm_Skel
+    400030: Ref:RightUpperLeg_Skel
+    400032: Ref:Torso_Skel
+    400034: Ref:Warrior_Geo
+    400036: //RootNode
+    4300000: Ref:Warrior_Geo
+    7400000: Attack01
+    7400002: Attack02
+    7400004: Attack03
+    7400006: GetHitFront
+    7400008: GetHitBack
+    7400010: GetHitLeft
+    7400012: GetHitRight
+    7400014: ChargeAttack
+    7400016: DodgeBack
+    9500000: //RootNode
+    13700000: Ref:Warrior_Geo
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Attack01
+      takeName: Attack01
+      firstFrame: 0
+      lastFrame: 25
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Ref:Hips_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel/Ref:LeftLowerLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel/Ref:LeftLowerLeg_Skel/Ref:LeftFoot_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel/Ref:RightLowerLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel/Ref:RightLowerLeg_Skel/Ref:RightFoot_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:Head_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel/Ref:LeftUpperArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel/Ref:LeftUpperArm_Skel/Ref:LeftLowerArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel/Ref:RightHand_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel/Ref:RightHand_Skel/Ref:RightHand_Attach
+        weight: 1
+      - path: Ref:Warrior_Geo
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Attack02
+      takeName: Attack02
+      firstFrame: 30
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Ref:Hips_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel/Ref:LeftLowerLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel/Ref:LeftLowerLeg_Skel/Ref:LeftFoot_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel/Ref:RightLowerLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel/Ref:RightLowerLeg_Skel/Ref:RightFoot_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:Head_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel/Ref:LeftUpperArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel/Ref:LeftUpperArm_Skel/Ref:LeftLowerArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel/Ref:RightHand_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel/Ref:RightHand_Skel/Ref:RightHand_Attach
+        weight: 1
+      - path: Ref:Warrior_Geo
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Attack03
+      takeName: Attack03
+      firstFrame: 70
+      lastFrame: 97
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Ref:Hips_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel/Ref:LeftLowerLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel/Ref:LeftLowerLeg_Skel/Ref:LeftFoot_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel/Ref:RightLowerLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel/Ref:RightLowerLeg_Skel/Ref:RightFoot_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:Head_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel/Ref:LeftUpperArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel/Ref:LeftUpperArm_Skel/Ref:LeftLowerArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel/Ref:RightHand_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel/Ref:RightHand_Skel/Ref:RightHand_Attach
+        weight: 1
+      - path: Ref:Warrior_Geo
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: GetHitFront
+      takeName: GetHitFront
+      firstFrame: 110
+      lastFrame: 135
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Ref:Hips_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel/Ref:LeftLowerLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel/Ref:LeftLowerLeg_Skel/Ref:LeftFoot_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel/Ref:RightLowerLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel/Ref:RightLowerLeg_Skel/Ref:RightFoot_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:Head_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel/Ref:LeftUpperArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel/Ref:LeftUpperArm_Skel/Ref:LeftLowerArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel/Ref:RightHand_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel/Ref:RightHand_Skel/Ref:RightHand_Attach
+        weight: 1
+      - path: Ref:Warrior_Geo
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: GetHitBack
+      takeName: GetHitBack
+      firstFrame: 140
+      lastFrame: 165
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Ref:Hips_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel/Ref:LeftLowerLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel/Ref:LeftLowerLeg_Skel/Ref:LeftFoot_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel/Ref:RightLowerLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel/Ref:RightLowerLeg_Skel/Ref:RightFoot_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:Head_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel/Ref:LeftUpperArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel/Ref:LeftUpperArm_Skel/Ref:LeftLowerArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel/Ref:RightHand_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel/Ref:RightHand_Skel/Ref:RightHand_Attach
+        weight: 1
+      - path: Ref:Warrior_Geo
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: GetHitLeft
+      takeName: GetHitLeft
+      firstFrame: 170
+      lastFrame: 195
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Ref:Hips_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel/Ref:LeftLowerLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel/Ref:LeftLowerLeg_Skel/Ref:LeftFoot_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel/Ref:RightLowerLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel/Ref:RightLowerLeg_Skel/Ref:RightFoot_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:Head_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel/Ref:LeftUpperArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel/Ref:LeftUpperArm_Skel/Ref:LeftLowerArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel/Ref:RightHand_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel/Ref:RightHand_Skel/Ref:RightHand_Attach
+        weight: 1
+      - path: Ref:Warrior_Geo
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: GetHitRight
+      takeName: GetHitRight
+      firstFrame: 200
+      lastFrame: 225
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Ref:Hips_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel/Ref:LeftLowerLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel/Ref:LeftLowerLeg_Skel/Ref:LeftFoot_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel/Ref:RightLowerLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel/Ref:RightLowerLeg_Skel/Ref:RightFoot_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:Head_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel/Ref:LeftUpperArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel/Ref:LeftUpperArm_Skel/Ref:LeftLowerArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel/Ref:RightHand_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel/Ref:RightHand_Skel/Ref:RightHand_Attach
+        weight: 1
+      - path: Ref:Warrior_Geo
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ChargeAttack
+      takeName: ChargeAttack
+      firstFrame: 230
+      lastFrame: 270
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Ref:Hips_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel/Ref:LeftLowerLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel/Ref:LeftLowerLeg_Skel/Ref:LeftFoot_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel/Ref:RightLowerLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel/Ref:RightLowerLeg_Skel/Ref:RightFoot_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:Head_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel/Ref:LeftUpperArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel/Ref:LeftUpperArm_Skel/Ref:LeftLowerArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel/Ref:RightHand_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel/Ref:RightHand_Skel/Ref:RightHand_Attach
+        weight: 1
+      - path: Ref:Warrior_Geo
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: DodgeBack
+      takeName: DodgeBack
+      firstFrame: 280
+      lastFrame: 310
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Ref:Hips_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel/Ref:LeftLowerLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:LeftUpperLeg_Skel/Ref:LeftLowerLeg_Skel/Ref:LeftFoot_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel/Ref:RightLowerLeg_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:RightUpperLeg_Skel/Ref:RightLowerLeg_Skel/Ref:RightFoot_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:Head_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel/Ref:LeftUpperArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:LeftClav_Skel/Ref:LeftUpperArm_Skel/Ref:LeftLowerArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel/Ref:RightHand_Skel
+        weight: 1
+      - path: Ref:Hips_Skel/Ref:Torso_Skel/Ref:RightClav_Skel/Ref:RightUpperArm_Skel/Ref:RightLowerArm_Skel/Ref:RightHand_Skel/Ref:RightHand_Attach
+        weight: 1
+      - path: Ref:Warrior_Geo
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

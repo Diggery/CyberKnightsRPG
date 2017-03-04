@@ -1,0 +1,18 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Code/UnitControl.cs">
+    <Files>
+      <File FileName="Assets/Code/SquadControl.cs" Line="24" Column="27" />
+      <File FileName="Assets/Code/GameManager.cs" Line="26" Column="5" />
+      <File FileName="Assets/Code/InputControl.cs" Line="19" Column="1" />
+      <File FileName="Assets/Code/CameraControl.cs" Line="33" Column="48" />
+      <File FileName="Assets/Code/UnitControl.cs" Line="12" Column="1" />
+      <File FileName="Assets/Code/CombotConstructor.cs" Line="7" Column="33" />
+      <File FileName="Assets/Code/UnitMover.cs" Line="31" Column="9" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

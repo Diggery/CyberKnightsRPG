@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{277E294F-97D2-CA48-9569-68301BB979A5}") = "CyberKnightsRPG", "Assembly-CSharp.csproj", "{8565AA22-9224-29E0-2658-BEE9146C0BF9}"
+EndProject
+Project("{277E294F-97D2-CA48-9569-68301BB979A5}") = "CyberKnightsRPG", "Assembly-CSharp-Editor.csproj", "{34A2119A-E229-CD50-5E5F-BA4C11696C31}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8565AA22-9224-29E0-2658-BEE9146C0BF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8565AA22-9224-29E0-2658-BEE9146C0BF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8565AA22-9224-29E0-2658-BEE9146C0BF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8565AA22-9224-29E0-2658-BEE9146C0BF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34A2119A-E229-CD50-5E5F-BA4C11696C31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34A2119A-E229-CD50-5E5F-BA4C11696C31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34A2119A-E229-CD50-5E5F-BA4C11696C31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34A2119A-E229-CD50-5E5F-BA4C11696C31}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
