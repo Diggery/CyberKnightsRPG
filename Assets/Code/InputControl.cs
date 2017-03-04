@@ -33,14 +33,15 @@ public class InputControl : MonoBehaviour {
                 swipeTimer -= Time.deltaTime;
             
             if (swipeTimer > 0 && GvrController.TouchUp) {
-                Debug.Log(touchPos.x - swipeStart.x);
+                float swipeDistance = touchPos.x - swipeStart.x; 
 
-                if (touchPos.x - swipeStart.x > 0.5f) {
-                    
+                if (Mathf.Abs(swipeDistance) > 0.5f) {
+                    if (swipeDistance > 0) {
+                        squad.Move(-squad.transform.right);
+                    } else {
+                        squad.Move(squad.transform.right);
+                    }
                 }
-
-                swipeTimer = swipeTime;
-                swipeStart = touchPos;
             }           
 
 
