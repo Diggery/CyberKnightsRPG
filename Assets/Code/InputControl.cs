@@ -32,6 +32,9 @@ public class InputControl : MonoBehaviour {
                 squad.Move(squad.transform.right);
             }
 
+
+
+
             if (GvrController.AppButtonDown || Input.GetKeyDown(KeyCode.Space)) {
                 Vector3 viewerDir = Camera.main.transform.forward;
                 viewerDir.y = 0;
