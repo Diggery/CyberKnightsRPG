@@ -36,7 +36,7 @@ public class InputControl : MonoBehaviour {
                 float swipeDistance = touchPos.x - swipeStart.x; 
 
                 if (Mathf.Abs(swipeDistance) > 0.5f) {
-                    if (swipeDistance > 0) {
+                    if (swipeDistance < 0) {
                         squad.Move(-squad.transform.right);
                     } else {
                         squad.Move(squad.transform.right);
@@ -47,7 +47,13 @@ public class InputControl : MonoBehaviour {
 
 
             if ((GvrController.ClickButtonDown && touchPos.y < 0) || Input.GetKeyDown(KeyCode.W)) {
-                squad.Move(squad.transform.forward);
+                int offset = GetDirectionOffset();
+                if (offset == 0) {
+                    squad.Move(squad.transform.forward);
+                } else {
+                    squad.Rotate(GetDirectionOffset());
+                }
+                    
             }
             if ((GvrController.ClickButtonDown && touchPos.y > 0) || Input.GetKeyDown(KeyCode.S)) {
                 squad.Move(-squad.transform.forward);
@@ -63,14 +69,16 @@ public class InputControl : MonoBehaviour {
 
 
             if (GvrController.AppButtonDown || Input.GetKeyDown(KeyCode.Space)) {
-                Vector3 viewerDir = Camera.main.transform.forward;
-                viewerDir.y = 0;
-
-                float newHeading = Vector3.Angle(viewerDir, squad.transform.forward) * Mathf.Sign(Vector3.Dot(viewerDir, squad.transform.right));
-                int rotations = Mathf.RoundToInt(newHeading / 90);
-                squad.Rotate(rotations);
-
+                squad.Rotate(GetDirectionOffset());
             }
         }
 	}
+
+    int GetDirectionOffset() {
+        Vector3 viewerDir = Camera.main.transform.forward;
+        viewerDir.y = 0;
+
+        float newHeading = Vector3.Angle(viewerDir, squad.transform.forward) * Mathf.Sign(Vector3.Dot(viewerDir, squad.transform.right));
+        return Mathf.RoundToInt(newHeading / 90);        
+    }
 }

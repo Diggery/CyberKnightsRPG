@@ -53,7 +53,6 @@ public class UnitMover : MonoBehaviour {
 
     IEnumerator SetTrigger(string name, float delay) {
         yield return new WaitForSeconds(delay);
-        Debug.Log("Setting Trigger"); 
         animator.SetTrigger(name);
     }
         

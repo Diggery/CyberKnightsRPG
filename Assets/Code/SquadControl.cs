@@ -70,7 +70,6 @@ public class SquadControl : MonoBehaviour {
     }
 
     public void Rotate(int amount) {
-        Debug.Log("Rotating " + amount);
         transform.rotation *= Quaternion.AngleAxis(90 * amount, Vector3.up);
         foreach(UnitControl unit in units) {
             if (unit.InSquad)
