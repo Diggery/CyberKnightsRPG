@@ -39,6 +39,7 @@ public class UnitControl : MonoBehaviour {
         gameObject.layer = LayerMask.NameToLayer("Units");
 
         animator = GetComponent<Animator>();
+
         unitMover = gameObject.AddComponent<UnitMover>();
 
         TeamName = teamName;
@@ -48,6 +49,8 @@ public class UnitControl : MonoBehaviour {
         //navAgent = gameObject.AddComponent<NavMeshAgent>();
         squad = gameManager.Squad;
         UnitId = squad.AddUnit(this);
+        animator.SetFloat("AnimOffset", (float)UnitId/4.0f);
+
         transform.position = squad.GetUnitPosition(unitId);
 	}
 
@@ -102,7 +105,11 @@ public class UnitControl : MonoBehaviour {
     }
 
     public void MoveTo(Vector3 newPos) {
-        unitMover.MoveTo(newPos);
+        unitMover.MoveTo(newPos, 0);
+    }
+
+    public void MoveTo(Vector3 newPos, int sideStep) {
+        unitMover.MoveTo(newPos, sideStep);
     }
 
     public void RotateTo(int direction, Vector3 newPos) {

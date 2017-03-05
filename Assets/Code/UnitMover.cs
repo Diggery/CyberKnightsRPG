@@ -33,11 +33,12 @@ public class UnitMover : MonoBehaviour {
         }
     }
 
-    public void MoveTo(Vector3 newPos) {
+    public void MoveTo(Vector3 newPos, int sideStep) {
         IsMoving = true;
         startPos = transform.position;
         endPos = newPos;
         moveTimer = 0;
+        animator.SetInteger("MoveDir", sideStep);
     }
 
     public void RotateTo(int direction, Vector3 newPos) {

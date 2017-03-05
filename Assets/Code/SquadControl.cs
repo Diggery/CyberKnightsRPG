@@ -26,7 +26,6 @@ public class SquadControl : MonoBehaviour {
 
     Vector3[] unitOffsets;
 
-
 	void Start () {
         gameManager = GameManager.instance;
         gameManager.Squad = this;
@@ -48,11 +47,20 @@ public class SquadControl : MonoBehaviour {
     public void Move(Vector3 direction) {
         if (IsMoving) 
             return;
+        
+        Ray ray = new Ray(transform.position + Vector3.up, direction);
+        LayerMask terrainMask = 1 << LayerMask.NameToLayer("Terrain");
+        if (Physics.Raycast(ray, 100, terrainMask))
+            return;
+
         transform.position += (direction * gameManager.GridSize);
         cameraControl.Move(transform.position);
+
+        float heading = Vector3.Angle(direction, transform.forward) * Mathf.Sign(Vector3.Dot(direction, transform.right));
+
         foreach(UnitControl unit in units) {
             if (unit.InSquad)
-                unit.MoveTo(GetUnitPosition(unit.UnitId));
+                unit.MoveTo(GetUnitPosition(unit.UnitId), Mathf.RoundToInt(heading / 90));
         }
     }
 
