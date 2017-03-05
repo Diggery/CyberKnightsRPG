@@ -75,7 +75,7 @@ public class InputControl : MonoBehaviour {
 	}
 
     int GetDirectionOffset() {
-        Vector3 viewerDir = Camera.main.transform.forward;
+        Vector3 viewerDir = GvrController.Orientation * Vector3.forward;
         viewerDir.y = 0;
 
         float newHeading = Vector3.Angle(viewerDir, squad.transform.forward) * Mathf.Sign(Vector3.Dot(viewerDir, squad.transform.right));
