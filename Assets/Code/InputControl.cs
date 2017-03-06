@@ -14,12 +14,12 @@ public class InputControl : MonoBehaviour {
 
 	void Start () {
         gameManager = GameManager.instance;
-        squad = gameManager.Squad;
+        squad = gameManager.PlayerSquad;
 	}
 
 	void Update () {
         if (!squad)
-            squad = gameManager.Squad;
+            squad = gameManager.PlayerSquad;
 
         if (squad) {
             Vector2 touchPos = (GvrController.TouchPos * 2) - Vector2.one;
@@ -70,6 +70,10 @@ public class InputControl : MonoBehaviour {
             }
         }
 	}
+
+    public void SquadSelected(SquadControl selectedSquad) {
+        Debug.Log("Squad Selected");
+    }
 
     Vector3 ControllerHeading() {
         Vector3 controllerDir = GvrController.Orientation * Vector3.forward;

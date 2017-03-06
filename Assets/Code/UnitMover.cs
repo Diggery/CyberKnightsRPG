@@ -25,7 +25,7 @@ public class UnitMover : MonoBehaviour {
     }
 
     void Start () {
-        moveDuration = GameManager.instance.Squad.MoveDuration;
+        moveDuration = GameManager.instance.PlayerSquad.MoveDuration;
         unitControl = GetComponent<UnitControl>();
         animator = GetComponent<Animator>();
     }

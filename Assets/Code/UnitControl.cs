@@ -21,7 +21,7 @@ public class UnitControl : MonoBehaviour {
         get { return unitMover.AlmostDoneMoving; }
     }
 
-    public string teamName = "Team1";
+    public string teamName = "Enemy";
 
     int unitId = -1;
     public int UnitId {
@@ -48,17 +48,23 @@ public class UnitControl : MonoBehaviour {
 
         unitMover = gameObject.AddComponent<UnitMover>();
         unitAttack = gameObject.AddComponent<UnitAttack>();
+        //navAgent = gameObject.AddComponent<NavMeshAgent>();
+
 
         TeamName = teamName;
 
         AttachWeapon("ChainSword", "Right");
 
-        //navAgent = gameObject.AddComponent<NavMeshAgent>();
-        squad = gameManager.Squad;
+        if (!squad && teamName.Equals("Player")) {
+            squad = gameManager.PlayerSquad;
+        }
+
         UnitId = squad.AddUnit(this);
+
         animator.SetFloat("AnimOffset", (float)UnitId/4.0f);
 
         transform.position = squad.GetUnitPosition(unitId);
+        transform.rotation = squad.transform.rotation;
 	}
 
     public string TeamName {
@@ -86,6 +92,10 @@ public class UnitControl : MonoBehaviour {
         animator.SetFloat("random", Random.value);
 
 	}
+
+    public void SetSquad(SquadControl newSquad) {
+        squad = newSquad;
+    }
 
     public bool AttachWeapon(string weaponName, string hand) {
         

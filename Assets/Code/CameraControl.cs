@@ -26,7 +26,7 @@ public class CameraControl : MonoBehaviour {
 	
 	void LateUpdate () {
         if (!squad)
-            squad = gameManager.Squad;
+            squad = gameManager.PlayerSquad;
 
         if (moveTimer >= 0) {
             moveTimer += Time.deltaTime / squad.MoveDuration;

@@ -16,8 +16,8 @@ MonoBehaviour:
     prefab: {fileID: 1000013675673570, guid: c53f2dfec6273421297af7a9f23d8ed3, type: 2}
   - name: ActionButton
     prefab: {fileID: 1000013601114638, guid: 0c1bd403e09ec4fa4bb9da427047c5c4, type: 2}
-  - name: AttackUI
-    prefab: {fileID: 1000011827261560, guid: 05694840214394360a5047d6623e25e2, type: 2}
+  - name: EnemyCombot
+    prefab: {fileID: 1000013624454752, guid: 860007de22d2445518db44c3b3455fb3, type: 2}
   equipment:
   - name: ChainSword
     prefab: {fileID: 1000011669730198, guid: 23a8af3571d8046eea67190d007db6cc, type: 2}

@@ -1,14 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class SquadControl : MonoBehaviour {
 
     GameManager gameManager;
     CameraControl cameraControl;
+    InputControl input;
     List<UnitControl> units = new List<UnitControl>();
 
     Vector3 nextMove = Vector3.zero;
+
+    public bool isPlayer = false;
+    public bool autoFill = false;
 
     float moveDuration = 2.0f;
     public float MoveDuration {
@@ -39,11 +44,27 @@ public class SquadControl : MonoBehaviour {
 
     void Start() {
         gameManager = GameManager.instance;
-        gameManager.Squad = this;
+        input = gameManager.Input;
 
-        cameraControl = gameManager.CameraControl;
+        if (isPlayer) {
+            gameManager.PlayerSquad = this;
+            transform.tag = "Player";
+            cameraControl = gameManager.CameraControl;
+        } else {
+            gameManager.AddEnemySquad(this);
+            transform.tag = "Enemy";
+        }
+
+        if (autoFill) 
+            FillSquad();
 
         SetupOffsets();
+
+        SetupInteraction();
+
+        BoxCollider collision = gameObject.AddComponent<BoxCollider>();
+        collision.size = new Vector3(2, 2, 2);
+        collision.center = new Vector3(0, 1, 0);
     }
 
     void Update() {
@@ -88,6 +109,34 @@ public class SquadControl : MonoBehaviour {
         unitOffsets[3] = new Vector3(gridSize, 0, -gridSize);
     }
 
+    void SetupInteraction() {
+
+        EventTrigger trigger = gameObject.AddComponent<EventTrigger>( );
+
+        EventTrigger.Entry clickEvent = new EventTrigger.Entry( );
+        clickEvent.eventID = EventTriggerType.PointerClick;
+        clickEvent.callback.AddListener( ( data ) => { Clicked(); } );
+        trigger.triggers.Add( clickEvent );
+
+        EventTrigger.Entry enterEvent = new EventTrigger.Entry( );
+        enterEvent.eventID = EventTriggerType.PointerEnter;
+        enterEvent.callback.AddListener( ( data ) => { Hover(true); } );
+        trigger.triggers.Add( enterEvent );
+
+        EventTrigger.Entry exitEvent = new EventTrigger.Entry( );
+        exitEvent.eventID = EventTriggerType.PointerExit;
+        exitEvent.callback.AddListener( ( data ) => { Hover(false); } );
+        trigger.triggers.Add( exitEvent );
+    }
+
+    void Clicked() {
+        input.SquadSelected(this);
+    }
+
+    void Hover(bool setting) {
+        
+    }
+
     public Vector3 GetUnitPosition(int id) {
         return transform.TransformPoint(unitOffsets[id]);
     }
@@ -113,6 +162,18 @@ public class SquadControl : MonoBehaviour {
     public void Attack(int direction) {
         foreach (UnitControl unit in units) {
             unit.Attack(direction);
+        }
+    }
+
+    public void FillSquad() {
+        GameObject combotPrefab = gameManager.inventory.GetPrefab("EnemyCombot");
+
+        Debug.Log("Filling squad " + transform.name);
+
+        for (int i = 0; i < 4; i++) {
+            GameObject combotObj = Instantiate(combotPrefab);
+            UnitControl combot = combotObj.GetComponent<UnitControl>();
+            combot.SetSquad(this);
         }
     }
 }
