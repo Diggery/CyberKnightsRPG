@@ -31,19 +31,7 @@ public class InputControl : MonoBehaviour {
 
             if (swipeTimer > 0)
                 swipeTimer -= Time.deltaTime;
-            
-            if (swipeTimer > 0 && GvrController.TouchUp) {
-                float swipeDistance = touchPos.x - swipeStart.x; 
-
-                if (Mathf.Abs(swipeDistance) > 0.5f) {
-                    if (swipeDistance < 0) {
-                        squad.Move(-squad.transform.right);
-                    } else {
-                        squad.Move(squad.transform.right);
-                    }
-                }
-            }           
-
+   
             if ((GvrController.ClickButtonDown && touchPos.y < 0) || Input.GetKeyDown(KeyCode.W)) {
                 int offset = GetDirectionOffset();
                 if (offset == 0) {
@@ -51,8 +39,8 @@ public class InputControl : MonoBehaviour {
                 } else {
                     squad.Rotate(GetDirectionOffset());
                 }
-                    
             }
+
             if ((GvrController.ClickButtonDown && touchPos.y > 0) || Input.GetKeyDown(KeyCode.S)) {
                 squad.Move(-squad.transform.forward);
             }
@@ -65,18 +53,33 @@ public class InputControl : MonoBehaviour {
                 squad.Move(squad.transform.right);
             }
 
+            if (swipeTimer > 0 && GvrController.TouchUp) {
+                float swipeDistance = touchPos.x - swipeStart.x;
 
-            if (GvrController.AppButtonDown || Input.GetKeyDown(KeyCode.Space)) {
-                squad.Rotate(GetDirectionOffset());
+                if (Mathf.Abs(swipeDistance) > 0.5f) {
+                    if (swipeDistance < 0) {
+                        squad.Move(-squad.transform.right);
+                    } else {
+                        squad.Move(squad.transform.right);
+                    }
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                squad.Attack(GetDirectionOffset());
             }
         }
 	}
 
-    int GetDirectionOffset() {
-        Vector3 viewerDir = GvrController.Orientation * Vector3.forward;
-        viewerDir.y = 0;
+    Vector3 ControllerHeading() {
+        Vector3 controllerDir = GvrController.Orientation * Vector3.forward;
+        controllerDir.y = 0;
+        return controllerDir;
+    }
 
-        float newHeading = Vector3.Angle(viewerDir, squad.transform.forward) * Mathf.Sign(Vector3.Dot(viewerDir, squad.transform.right));
+    int GetDirectionOffset() {
+        Vector3 controllerDir = ControllerHeading();
+        float newHeading = Vector3.Angle(controllerDir, squad.transform.forward) * Mathf.Sign(Vector3.Dot(controllerDir, squad.transform.right));
         return Mathf.RoundToInt(newHeading / 90);        
     }
 }

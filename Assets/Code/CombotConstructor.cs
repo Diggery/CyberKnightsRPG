@@ -164,7 +164,4 @@ public class CombotConstructor : MonoBehaviour {
                 child.name = "Combot:" + child.name;
         }
     }
-
-
-     
 }

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class UnitMover : MonoBehaviour {
 
+    UnitControl unitControl;
     Animator animator;
 
     float moveTimer = -1;
@@ -19,11 +20,16 @@ public class UnitMover : MonoBehaviour {
         }
     }
 
-	void Start () {
-        animator = GetComponent<Animator>();
+    public bool AlmostDoneMoving {
+        get { return moveTimer > 0.5f; }
+    }
+
+    void Start () {
         moveDuration = GameManager.instance.Squad.MoveDuration;
-	}
-	
+        unitControl = GetComponent<UnitControl>();
+        animator = GetComponent<Animator>();
+    }
+
     void Update () {
         if (moveTimer >= 0) {
             moveTimer += Time.deltaTime / moveDuration;
@@ -61,5 +67,6 @@ public class UnitMover : MonoBehaviour {
     public void StopMoving() {
         IsMoving = false;
         moveTimer = - 1;
+        unitControl.MoveComplete();
     }
 }

@@ -39,9 +39,6 @@ public class CameraControl : MonoBehaviour {
 	}
 
     public void Move(Vector3 newPos) {
-        if (IsMoving) 
-            return;
-        Debug.Log("Camera Moving");
         moveTimer = 0;
         startPos = transform.position;
         endPos = newPos + cameraOffset;

@@ -8,6 +8,7 @@ public class UnitControl : MonoBehaviour {
 
     Animator animator;
     UnitMover unitMover;
+    UnitAttack unitAttack;
 
     NavMeshAgent navAgent;
     SquadControl squad;
@@ -16,7 +17,12 @@ public class UnitControl : MonoBehaviour {
         get { return unitMover.IsMoving; }
     }
 
+    public bool AlmostDoneMoving {
+        get { return unitMover.AlmostDoneMoving; }
+    }
+
     public string teamName = "Team1";
+
     int unitId = -1;
     public int UnitId {
         get { return unitId; }
@@ -41,6 +47,7 @@ public class UnitControl : MonoBehaviour {
         animator = GetComponent<Animator>();
 
         unitMover = gameObject.AddComponent<UnitMover>();
+        unitAttack = gameObject.AddComponent<UnitAttack>();
 
         TeamName = teamName;
 
@@ -99,8 +106,14 @@ public class UnitControl : MonoBehaviour {
             Debug.Log ("Not attach at " + pathToHand );
             return false;
         } 
-        GameObject weapon = gameManager.GetEquipment(weaponName);
-        weapon.transform.SetParent(attach, false);
+        GameObject weaponObj = gameManager.GetEquipment(weaponName);
+        weaponObj.transform.SetParent(attach, false);
+
+        Weapon weapon = weaponObj.GetComponent<Weapon>();
+        if (weapon) {
+            unitAttack.SetWeapon(weapon, hand.Contains("Right") || hand.Contains("right"));
+        }
+        
         return true;
     }
 
@@ -114,5 +127,13 @@ public class UnitControl : MonoBehaviour {
 
     public void RotateTo(int direction, Vector3 newPos) {
         unitMover.RotateTo(direction, newPos);
+    }
+
+    public void MoveComplete() {
+        squad.MoveComplete();
+    }
+
+    public void Attack(int direction) {
+        unitAttack.Attack(direction);
     }
 }
