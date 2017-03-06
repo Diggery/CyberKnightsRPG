@@ -117,7 +117,7 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 0
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -203,7 +203,7 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 0
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -258,6 +258,8 @@ ModelImporter:
         weight: 1
       - path: Combot:Combot_Skeleton/Combot:RootMotion_Skel/Combot:Hips_Skel/Combot:MidSection_Skel/Combot:Torso_Skel/Combot:LeftClav_Skel/Combot:LeftShoulder_Skel/Combot:LeftUpperArm_Skel/Combot:LeftLowerArm_Skel/Combot:LeftHand_Skel
         weight: 1
+      - path: Combot:Combot_Skeleton/Combot:RootMotion_Skel/Combot:Hips_Skel/Combot:MidSection_Skel/Combot:Torso_Skel/Combot:LeftClav_Skel/Combot:LeftShoulder_Skel/Combot:LeftUpperArm_Skel/Combot:LeftLowerArm_Skel/Combot:LeftHand_Skel/Combot:LeftHand_Attach
+        weight: 1
       - path: Combot:Combot_Skeleton/Combot:RootMotion_Skel/Combot:Hips_Skel/Combot:MidSection_Skel/Combot:Torso_Skel/Combot:RightClav_Skel
         weight: 1
       - path: Combot:Combot_Skeleton/Combot:RootMotion_Skel/Combot:Hips_Skel/Combot:MidSection_Skel/Combot:Torso_Skel/Combot:RightClav_Skel/Combot:RightShoulder_Skel
@@ -267,6 +269,8 @@ ModelImporter:
       - path: Combot:Combot_Skeleton/Combot:RootMotion_Skel/Combot:Hips_Skel/Combot:MidSection_Skel/Combot:Torso_Skel/Combot:RightClav_Skel/Combot:RightShoulder_Skel/Combot:RightUpperArm_Skel/Combot:RightLowerArm_Skel
         weight: 1
       - path: Combot:Combot_Skeleton/Combot:RootMotion_Skel/Combot:Hips_Skel/Combot:MidSection_Skel/Combot:Torso_Skel/Combot:RightClav_Skel/Combot:RightShoulder_Skel/Combot:RightUpperArm_Skel/Combot:RightLowerArm_Skel/Combot:RightHand_Skel
+        weight: 1
+      - path: Combot:Combot_Skeleton/Combot:RootMotion_Skel/Combot:Hips_Skel/Combot:MidSection_Skel/Combot:Torso_Skel/Combot:RightClav_Skel/Combot:RightShoulder_Skel/Combot:RightUpperArm_Skel/Combot:RightLowerArm_Skel/Combot:RightHand_Skel/Combot:RightHand_Attach
         weight: 1
       - path: Combot:Combot_Skeleton/Combot:RootMotion_Skel/Combot:Hips_Skel/Combot:RightUpperLeg_Skel
         weight: 1
@@ -289,7 +293,7 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 0
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -375,7 +379,7 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 0
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -465,7 +469,7 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 0
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0

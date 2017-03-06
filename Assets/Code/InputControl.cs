@@ -44,8 +44,6 @@ public class InputControl : MonoBehaviour {
                 }
             }           
 
-
-
             if ((GvrController.ClickButtonDown && touchPos.y < 0) || Input.GetKeyDown(KeyCode.W)) {
                 int offset = GetDirectionOffset();
                 if (offset == 0) {
