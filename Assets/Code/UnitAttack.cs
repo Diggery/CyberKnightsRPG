@@ -59,7 +59,7 @@ public class UnitAttack : MonoBehaviour {
 	
 	}
 
-    public void Attack(int direction) {
+    public void Attack(SquadControl targetSquad) {
         if (!CanAttack) {
             Debug.Log(transform.name + " has no way to attack");
             return;

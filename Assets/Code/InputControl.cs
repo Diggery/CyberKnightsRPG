@@ -64,15 +64,23 @@ public class InputControl : MonoBehaviour {
                     }
                 }
             }
-
-            if (Input.GetKeyDown(KeyCode.Space)) {
-                squad.Attack(GetDirectionOffset());
-            }
         }
 	}
 
     public void SquadSelected(SquadControl selectedSquad) {
         Debug.Log("Squad Selected");
+
+        // try melee attack
+
+        Vector3 offsetFromSquad = selectedSquad.transform.position - transform.position;
+        if (offsetFromSquad.magnitude < (gameManager.GridSize * 1.1f)) {
+            offsetFromSquad.Normalize();
+            float heading = Vector3.Angle(offsetFromSquad, squad.transform.forward) * Mathf.Sign(Vector3.Dot(offsetFromSquad, squad.transform.right));
+            int attackDir = Mathf.RoundToInt(heading / 90);
+            squad.Attack(selectedSquad);
+        }
+
+        // try missle attack
     }
 
     Vector3 ControllerHeading() {

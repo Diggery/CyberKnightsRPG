@@ -143,7 +143,7 @@ public class UnitControl : MonoBehaviour {
         squad.MoveComplete();
     }
 
-    public void Attack(int direction) {
-        unitAttack.Attack(direction);
+    public void Attack(SquadControl targetSquad) {
+        unitAttack.Attack(targetSquad);
     }
 }

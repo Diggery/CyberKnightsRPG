@@ -159,9 +159,9 @@ public class SquadControl : MonoBehaviour {
         }
     }
 
-    public void Attack(int direction) {
+    public void Attack(SquadControl targetSquad) {
         foreach (UnitControl unit in units) {
-            unit.Attack(direction);
+            unit.Attack(targetSquad);
         }
     }
 
