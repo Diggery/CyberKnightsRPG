@@ -4,7 +4,6 @@ using System.Collections;
 public class Weapon : MonoBehaviour {
 
     public enum WeaponType { Melee, Ranged }
-
     public WeaponType type = WeaponType.Melee;
 
     bool hasReach = false;
@@ -32,6 +31,10 @@ public class Weapon : MonoBehaviour {
         get { return initiativeBonus; }
     }
 
+    int range = 0;
+    public float Range {
+        get { return range; }
+    }
 
     void Start () {
 	

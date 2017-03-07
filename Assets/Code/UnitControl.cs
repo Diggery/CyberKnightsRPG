@@ -21,6 +21,10 @@ public class UnitControl : MonoBehaviour {
         get { return unitMover.AlmostDoneMoving; }
     }
 
+    public SquadControl Squad {
+        get { return squad; }
+    }
+
     public string teamName = "Enemy";
 
     int unitId = -1;
@@ -36,6 +40,15 @@ public class UnitControl : MonoBehaviour {
     public bool InSquad {
         get { return inSquad; }
         set { inSquad = value; }
+    }
+
+    bool inAttackMode = false;
+    public bool InAttackMode {
+        get { return inAttackMode; }
+        set { 
+            inAttackMode = value; 
+            animator.SetBool("InAttackMode", value);
+        }
     }
 
     public void Init() {

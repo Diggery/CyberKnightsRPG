@@ -1934,7 +1934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb60b42bc5a0a455f90e9979b5d695eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayer: 1
+  type: 0
   autoFill: 0
 --- !u!4 &1838789975
 Transform:
@@ -1981,7 +1981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb60b42bc5a0a455f90e9979b5d695eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayer: 0
+  type: 2
   autoFill: 1
 --- !u!4 &1882835781
 Transform:

@@ -12,7 +12,9 @@ public class SquadControl : MonoBehaviour {
 
     Vector3 nextMove = Vector3.zero;
 
-    public bool isPlayer = false;
+    public enum SquadType { Player, Friendly, Enemy }
+    public SquadType type = SquadType.Enemy;
+
     public bool autoFill = false;
 
     float moveDuration = 2.0f;
@@ -30,6 +32,21 @@ public class SquadControl : MonoBehaviour {
         }
     }
 
+    bool inAttackMode = false;
+    public bool InAttackMode {
+        get {
+            return inAttackMode;
+        }
+        set { 
+            if (inAttackMode == value)
+                return;
+            
+            inAttackMode = value;
+            foreach (UnitControl unit in units)
+                unit.InAttackMode = value;
+        }
+    }
+
     public bool AlmostDoneMoving {
         get {
             bool almostDoneMoving = false;
@@ -40,16 +57,24 @@ public class SquadControl : MonoBehaviour {
         }
     }
 
+    bool inFormation = true;
+    public bool InFormation {
+        get { return inFormation; }
+    }
+
     Vector3[] unitOffsets;
 
     void Start() {
         gameManager = GameManager.instance;
         input = gameManager.Input;
 
-        if (isPlayer) {
+        if (type == SquadType.Player) {
             gameManager.PlayerSquad = this;
             transform.tag = "Player";
             cameraControl = gameManager.CameraControl;
+        } else if (type == SquadType.Friendly) {
+            gameManager.AddFrientlySquad(this);
+            transform.tag = "Friendly";
         } else {
             gameManager.AddEnemySquad(this);
             transform.tag = "Enemy";
@@ -62,9 +87,11 @@ public class SquadControl : MonoBehaviour {
 
         SetupInteraction();
 
-        BoxCollider collision = gameObject.AddComponent<BoxCollider>();
-        collision.size = new Vector3(2, 2, 2);
-        collision.center = new Vector3(0, 1, 0);
+        if (type != SquadType.Player) {
+            BoxCollider collision = gameObject.AddComponent<BoxCollider>();
+            collision.size = new Vector3(2, 2, 2);
+            collision.center = new Vector3(0, 1, 0);
+        }
     }
 
     void Update() {
@@ -94,9 +121,20 @@ public class SquadControl : MonoBehaviour {
 
         float heading = Vector3.Angle(direction, transform.forward) * Mathf.Sign(Vector3.Dot(direction, transform.right));
 
+
+        SquadControl[] enemiesInRange = gameManager.CheckMeleeRange(transform.position);
+
+        if (enemiesInRange.Length > 0) {
+            InAttackMode = true;
+            foreach(SquadControl enemy in enemiesInRange) {
+                enemy.InAttackMode = true;
+            }            
+        }
+      
         foreach (UnitControl unit in units) {
-            if (unit.InSquad)
+            if (unit.InSquad) {
                 unit.MoveTo(GetUnitPosition(unit.UnitId), Mathf.RoundToInt(heading / 90));
+            }
         }
     }
 

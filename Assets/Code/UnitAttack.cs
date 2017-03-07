@@ -65,41 +65,77 @@ public class UnitAttack : MonoBehaviour {
             return;
         }
 
-        Debug.Log("Attack");
+        Transform mySquad = unitControl.Squad.transform;
+        Vector3 offsetFromSquad = targetSquad.transform.position - mySquad.position;
 
-        bool attackCompleted = AttackMelee(direction);
+        float heading = Vector3.Angle(offsetFromSquad.normalized, mySquad.forward) * 
+            Mathf.Sign(Vector3.Dot(offsetFromSquad.normalized, mySquad.right));
+        
+        int attackDir = Mathf.RoundToInt(heading / 90);
+       
+        bool attackCompleted = false;
 
-        if (!attackCompleted) {
-            AttackRanged(direction);
+        if (offsetFromSquad.magnitude < (GameManager.instance.GridSize * 1.1f)) {
+
+            attackCompleted = TryMeleeAttack(primaryWeapon, attackDir);
+
+            if (!attackCompleted)
+                attackCompleted = TryMeleeAttack(secondaryWeapon, attackDir);
         }
+
+        if (!attackCompleted) 
+            attackCompleted = TryAttackRanged(primaryWeapon, attackDir);
+
+        if (!attackCompleted)
+            attackCompleted = TryAttackRanged(secondaryWeapon, attackDir);
     }
 
-    bool AttackMelee(int direction) {
+    bool TryMeleeAttack(Weapon weapon, int direction) {
+
+        if (!weapon)
+            return false;
+
         bool madeMeleeAttack = false;
+
         switch (direction) {
             case 0:
-                if (unitControl.UnitId < 2) {
-                    animator.SetTrigger("Attack");
-                    madeMeleeAttack = true;
-                }
-                break;
-            case 1:
-                if (unitControl.UnitId == 0 || unitControl.UnitId == 2) {
-                    animator.SetTrigger("Attack");
+                if (unitControl.UnitId == 0 || unitControl.UnitId == 1 || weapon.HasReach) {
+                    transform.rotation *= Quaternion.AngleAxis(90 * direction, Vector3.up);
+                    Debug.Log(gameObject.name + " is attacking forward");
+
+                    string attackAnim = "AttackForward";
+                    if (unitControl.UnitId != 0 && unitControl.UnitId != 1)
+                        attackAnim = "AttackForwardWithReach";
+
+                    animator.SetTrigger(attackAnim);
                     madeMeleeAttack = true;
                 }
                 break;
             case -1:
-                if (unitControl.UnitId == 1 || unitControl.UnitId == 3) {
+                if (unitControl.UnitId == 0 || unitControl.UnitId == 2 || weapon.HasReach) {
                     animator.SetTrigger("Attack");
+                    Debug.Log(gameObject.name + " is attacking right");
+                    madeMeleeAttack = true;
+                }
+                break;
+            case 1:
+                if (unitControl.UnitId == 1 || unitControl.UnitId == 3 || weapon.HasReach) {
+                    animator.SetTrigger("Attack");
+                    Debug.Log(gameObject.name + " is attacking left");
+                    madeMeleeAttack = true;
+                }
+                break;
+            case -2:
+                if (unitControl.UnitId == 2 || unitControl.UnitId == 3 || weapon.HasReach) {
+                    animator.SetTrigger("Attack");
+                    Debug.Log(gameObject.name + " is attacking behind");
                     madeMeleeAttack = true;
                 }
                 break;
             case 2:
-            // fall through to next case
-            case -2:
-                if (unitControl.UnitId == 2 || unitControl.UnitId == 3) {
+                if (unitControl.UnitId == 2 || unitControl.UnitId == 3 || weapon.HasReach) {
                     animator.SetTrigger("Attack");
+                    Debug.Log(gameObject.name + " is attacking behind");
                     madeMeleeAttack = true;
                 }
                 break;
@@ -111,7 +147,7 @@ public class UnitAttack : MonoBehaviour {
         return madeMeleeAttack;
     }
 
-    bool AttackRanged(int direction) {
+    bool TryAttackRanged(Weapon weapon, int direction) {
         return true;
     }
 

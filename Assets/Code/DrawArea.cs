@@ -33,7 +33,7 @@ public class DrawArea : MonoBehaviour {
         viewRenderer.material = areaMaterial;
         viewMeshFilter.mesh = viewMesh;
 
-        terrainMask = 1 << LayerMask.NameToLayer("Ground");
+        terrainMask = 1 << LayerMask.NameToLayer("Terrain");
         SetRange(range);
         Draw();
 

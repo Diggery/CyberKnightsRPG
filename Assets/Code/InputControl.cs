@@ -53,6 +53,14 @@ public class InputControl : MonoBehaviour {
                 squad.Move(squad.transform.right);
             }
 
+            if (Input.GetKeyDown(KeyCode.Q)) {
+                squad.Rotate(-1);
+            }       
+
+            if (Input.GetKeyDown(KeyCode.E)) {
+                squad.Rotate(1);
+            }
+
             if (swipeTimer > 0 && GvrController.TouchUp) {
                 float swipeDistance = touchPos.x - swipeStart.x;
 
@@ -68,19 +76,11 @@ public class InputControl : MonoBehaviour {
 	}
 
     public void SquadSelected(SquadControl selectedSquad) {
-        Debug.Log("Squad Selected");
+        Debug.Log(selectedSquad.name + " Squad Selected");
 
-        // try melee attack
-
-        Vector3 offsetFromSquad = selectedSquad.transform.position - transform.position;
-        if (offsetFromSquad.magnitude < (gameManager.GridSize * 1.1f)) {
-            offsetFromSquad.Normalize();
-            float heading = Vector3.Angle(offsetFromSquad, squad.transform.forward) * Mathf.Sign(Vector3.Dot(offsetFromSquad, squad.transform.right));
-            int attackDir = Mathf.RoundToInt(heading / 90);
+        if (selectedSquad.type == SquadControl.SquadType.Enemy)
             squad.Attack(selectedSquad);
-        }
 
-        // try missle attack
     }
 
     Vector3 ControllerHeading() {
