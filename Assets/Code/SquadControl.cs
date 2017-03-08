@@ -8,7 +8,10 @@ public class SquadControl : MonoBehaviour {
     GameManager gameManager;
     CameraControl cameraControl;
     InputControl input;
-    List<UnitControl> units = new List<UnitControl>();
+
+    UnitControl centerSpot = null;
+
+    UnitControl[] units = new UnitControl[4];
 
     Vector3 nextMove = Vector3.zero;
 
@@ -62,6 +65,10 @@ public class SquadControl : MonoBehaviour {
         get { return inFormation; }
     }
 
+    public bool HasCenterTarget {
+        get { return centerSpot; }
+    }
+
     Vector3[] unitOffsets;
 
     void Start() {
@@ -99,8 +106,18 @@ public class SquadControl : MonoBehaviour {
     }
 
     public int AddUnit(UnitControl newUnit) {
-        units.Add(newUnit);
-        return units.IndexOf(newUnit);
+        int unitId = -1;
+        for(int i = 0; i < 4; i++) {
+            if (units[i] == null) {
+                units[i] = newUnit;
+                unitId = i;
+                break;
+            }
+        }
+        if (unitId < 0)
+            Debug.Log("Can't add unit, squad is full");
+
+        return unitId;
     }
 
     public void Move(Vector3 direction) {
@@ -205,5 +222,9 @@ public class SquadControl : MonoBehaviour {
             UnitControl combot = combotObj.GetComponent<UnitControl>();
             combot.SetSquad(this);
         }
+    }
+
+    public UnitControl GetUnitByID(int id) {
+        return units[id];
     }
 }

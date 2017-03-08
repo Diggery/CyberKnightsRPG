@@ -13,6 +13,8 @@ public class UnitControl : MonoBehaviour {
     NavMeshAgent navAgent;
     SquadControl squad;
 
+    public string TempWeapon = "ChainSword";
+
     public bool IsMoving {
         get { return unitMover.IsMoving; }
     }
@@ -48,6 +50,7 @@ public class UnitControl : MonoBehaviour {
         set { 
             inAttackMode = value; 
             animator.SetBool("InAttackMode", value);
+            ResetAttackTriggers();
         }
     }
 
@@ -66,7 +69,8 @@ public class UnitControl : MonoBehaviour {
 
         TeamName = teamName;
 
-        AttachWeapon("ChainSword", "Right");
+
+        AttachWeapon(TempWeapon, "Right");
 
         if (!squad && teamName.Equals("Player")) {
             squad = gameManager.PlayerSquad;
@@ -159,4 +163,12 @@ public class UnitControl : MonoBehaviour {
     public void Attack(SquadControl targetSquad) {
         unitAttack.Attack(targetSquad);
     }
+
+    void ResetAttackTriggers() {
+        animator.ResetTrigger("AttackForward");
+        animator.ResetTrigger("AttackRight");
+        animator.ResetTrigger("AttackLeft");
+        animator.ResetTrigger("AttackBack");
+    }
+
 }

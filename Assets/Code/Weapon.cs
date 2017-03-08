@@ -6,10 +6,7 @@ public class Weapon : MonoBehaviour {
     public enum WeaponType { Melee, Ranged }
     public WeaponType type = WeaponType.Melee;
 
-    bool hasReach = false;
-    public bool HasReach {
-       get { return hasReach; }
-    }
+    public bool hasReach = false;
 
     float damage = 0;
     public float Damage {

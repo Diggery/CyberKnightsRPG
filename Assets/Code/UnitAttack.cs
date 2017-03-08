@@ -73,69 +73,77 @@ public class UnitAttack : MonoBehaviour {
         
         int attackDir = Mathf.RoundToInt(heading / 90);
        
-        bool attackCompleted = false;
+        bool attackAttempted = false;
 
         if (offsetFromSquad.magnitude < (GameManager.instance.GridSize * 1.1f)) {
 
-            attackCompleted = TryMeleeAttack(primaryWeapon, attackDir);
+            attackAttempted = TryMeleeAttack(primaryWeapon, targetSquad, attackDir);
 
-            if (!attackCompleted)
-                attackCompleted = TryMeleeAttack(secondaryWeapon, attackDir);
+            if (!attackAttempted)
+                attackAttempted = TryMeleeAttack(secondaryWeapon, targetSquad, attackDir);
         }
 
-        if (!attackCompleted) 
-            attackCompleted = TryAttackRanged(primaryWeapon, attackDir);
+        if (!attackAttempted) 
+            attackAttempted = TryAttackRanged(primaryWeapon, targetSquad, attackDir);
 
-        if (!attackCompleted)
-            attackCompleted = TryAttackRanged(secondaryWeapon, attackDir);
+        if (!attackAttempted)
+            attackAttempted = TryAttackRanged(secondaryWeapon, targetSquad, attackDir);
     }
 
-    bool TryMeleeAttack(Weapon weapon, int direction) {
+    bool TryMeleeAttack(Weapon weapon, SquadControl target, int direction) {
 
         if (!weapon)
             return false;
 
         bool madeMeleeAttack = false;
+        bool attackedUsingReach = false;
+        string attackAnim = "Attack";
 
         switch (direction) {
             case 0:
-                if (unitControl.UnitId == 0 || unitControl.UnitId == 1 || weapon.HasReach) {
-                    transform.rotation *= Quaternion.AngleAxis(90 * direction, Vector3.up);
-                    Debug.Log(gameObject.name + " is attacking forward");
+                if (unitControl.UnitId == 0 || unitControl.UnitId == 1 || weapon.hasReach) {
 
-                    string attackAnim = "AttackForward";
+                    attackAnim += "Forward";
+
                     if (unitControl.UnitId != 0 && unitControl.UnitId != 1)
-                        attackAnim = "AttackForwardWithReach";
+                        attackedUsingReach = true;
 
-                    animator.SetTrigger(attackAnim);
                     madeMeleeAttack = true;
                 }
                 break;
             case -1:
-                if (unitControl.UnitId == 0 || unitControl.UnitId == 2 || weapon.HasReach) {
-                    animator.SetTrigger("Attack");
-                    Debug.Log(gameObject.name + " is attacking right");
+                if (unitControl.UnitId == 0 || unitControl.UnitId == 2 || weapon.hasReach) {
+                    attackAnim += "Left";
+                    if (unitControl.UnitId != 0 && unitControl.UnitId != 2)
+                        attackedUsingReach = true;
+
                     madeMeleeAttack = true;
                 }
                 break;
             case 1:
-                if (unitControl.UnitId == 1 || unitControl.UnitId == 3 || weapon.HasReach) {
-                    animator.SetTrigger("Attack");
-                    Debug.Log(gameObject.name + " is attacking left");
+                if (unitControl.UnitId == 1 || unitControl.UnitId == 3 || weapon.hasReach) {
+                    attackAnim += "Right";
+                    if (unitControl.UnitId != 1 && unitControl.UnitId != 3)
+                        attackedUsingReach = true;
+
                     madeMeleeAttack = true;
                 }
                 break;
             case -2:
-                if (unitControl.UnitId == 2 || unitControl.UnitId == 3 || weapon.HasReach) {
-                    animator.SetTrigger("Attack");
-                    Debug.Log(gameObject.name + " is attacking behind");
+                if (unitControl.UnitId == 2 || unitControl.UnitId == 3 || weapon.hasReach) {
+                    attackAnim += "Back";
+                    if (unitControl.UnitId != 2 && unitControl.UnitId != 3)
+                        attackedUsingReach = true;
+
                     madeMeleeAttack = true;
                 }
                 break;
             case 2:
-                if (unitControl.UnitId == 2 || unitControl.UnitId == 3 || weapon.HasReach) {
-                    animator.SetTrigger("Attack");
-                    Debug.Log(gameObject.name + " is attacking behind");
+                if (unitControl.UnitId == 2 || unitControl.UnitId == 3 || weapon.hasReach) {
+                    attackAnim += "Back";
+                    if (unitControl.UnitId != 2 && unitControl.UnitId != 3)
+                        attackedUsingReach = true;
+
                     madeMeleeAttack = true;
                 }
                 break;
@@ -143,11 +151,16 @@ public class UnitAttack : MonoBehaviour {
                 Debug.Log(direction + " isn't a valid direction");
                 break;
         }
+        if (madeMeleeAttack) {
+            Debug.Log(gameObject.name + " is playing anim " + attackAnim);
+            animator.SetBool("UseReachAttack", attackedUsingReach);
+            animator.SetTrigger(attackAnim);
+        }
 
         return madeMeleeAttack;
     }
 
-    bool TryAttackRanged(Weapon weapon, int direction) {
+    bool TryAttackRanged(Weapon weapon, SquadControl targetSquad, int direction) {
         return true;
     }
 

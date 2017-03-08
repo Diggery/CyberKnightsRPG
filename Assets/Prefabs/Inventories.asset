@@ -22,3 +22,6 @@ MonoBehaviour:
   - name: ChainSword
     prefab: {fileID: 1000011669730198, guid: 23a8af3571d8046eea67190d007db6cc, type: 2}
     offset: {x: 0, y: 0, z: 0}
+  - name: Spear
+    prefab: {fileID: 1000011669730198, guid: 020f77ad98ef5ab419ec307c092be901, type: 2}
+    offset: {x: 0, y: 0, z: 0}

@@ -70,6 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0411b969606c4b70b5e22e5dbbf651f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TempWeapon: ChainSword
   teamName: Enemy
 --- !u!114 &114000013449673460
 MonoBehaviour:
