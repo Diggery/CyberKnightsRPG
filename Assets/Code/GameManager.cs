@@ -74,25 +74,49 @@ public class GameManager : MonoBehaviour {
             enemySquads.Remove(oldSquad);
     }
 
-    public SquadControl[] CheckMeleeRange(Vector3 pos) {
+    public SquadControl[] FindEnemiesAtPosition(Vector3 pos, SquadControl.SquadType squadType) {
         List<SquadControl> squads = new List<SquadControl>();
-        LayerMask enemyMask = 1 << LayerMask.NameToLayer("Enemies");
+        LayerMask enemyMask = 1 << LayerMask.NameToLayer("Squads");
+        LayerMask playerMask = 1 << LayerMask.NameToLayer("Player");
         pos.y += 1.0f;
 
         for(int i = 0; i < 4; i++) {
-            Vector3 dir = Quaternion.AngleAxis(90 * i, Vector3.up) * Vector3.forward;
-            RaycastHit hit;
-            if (Physics.Raycast (pos, dir, out hit, GridSize, enemyMask)) {
-                Debug.Log("Close to " + hit.transform.name);
-                SquadControl enemySquad = hit.transform.GetComponent<SquadControl>();
-                if (enemySquad)
-                    squads.Add(enemySquad);
-                Debug.DrawRay(pos, dir, Color.green, 1);
+            Vector3 dir = Quaternion.AngleAxis(90 * i, Vector3.up) * (Vector3.forward * GridSize);
+
+            Collider[] hits = Physics.OverlapSphere(pos + dir, 1.0f, enemyMask | playerMask);
+
+            if (hits.Length > 0) {
+                SquadControl enemySquad = hits[0].transform.GetComponent<SquadControl>();
+                if (enemySquad) {
+                    if ((squadType == SquadControl.SquadType.Enemy && enemySquad.type == SquadControl.SquadType.Player) ||
+                        (squadType == SquadControl.SquadType.Player && enemySquad.type == SquadControl.SquadType.Enemy) ||
+                        (squadType == SquadControl.SquadType.Enemy && enemySquad.type == SquadControl.SquadType.Friendly) ||
+                        (squadType == SquadControl.SquadType.Friendly && enemySquad.type == SquadControl.SquadType.Enemy)) {
+                        squads.Add(enemySquad);
+                    }
+                }
+                Debug.DrawRay(pos + dir, Vector3.up, Color.green, 5);
             } else {
-                Debug.DrawRay(pos, dir, Color.red, 1);
+                Debug.DrawRay(pos + dir, Vector3.up, Color.red, 5);
             }
         }
         return squads.ToArray();
+    }
+
+    public void ProcessSquadPositions() {
+        SquadControl[] opponentSquads = FindEnemiesAtPosition(playerSquad.transform.position, playerSquad.type);
+        playerSquad.InAttackMode = opponentSquads.Length > 0;
+
+        foreach (SquadControl squad in enemySquads) {
+            opponentSquads = FindEnemiesAtPosition(squad.transform.position, squad.type);
+            squad.InAttackMode = opponentSquads.Length > 0;
+        }
+
+        foreach (SquadControl squad in friendlySquads) {
+            opponentSquads = FindEnemiesAtPosition(squad.transform.position, squad.type);
+            squad.InAttackMode = opponentSquads.Length > 0;
+
+        }
     }
 }
 

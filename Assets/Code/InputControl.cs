@@ -32,7 +32,7 @@ public class InputControl : MonoBehaviour {
             if (swipeTimer > 0)
                 swipeTimer -= Time.deltaTime;
    
-            if ((GvrController.ClickButtonDown && touchPos.y < 0) || Input.GetKeyDown(KeyCode.W)) {
+            if (Input.GetKeyDown(KeyCode.W)) {
                 int offset = GetDirectionOffset();
                 if (offset == 0) {
                     squad.Move(squad.transform.forward);
@@ -41,7 +41,7 @@ public class InputControl : MonoBehaviour {
                 }
             }
 
-            if ((GvrController.ClickButtonDown && touchPos.y > 0) || Input.GetKeyDown(KeyCode.S)) {
+            if (Input.GetKeyDown(KeyCode.S)) {
                 squad.Move(-squad.transform.forward);
             }
 
@@ -62,13 +62,22 @@ public class InputControl : MonoBehaviour {
             }
 
             if (swipeTimer > 0 && GvrController.TouchUp) {
-                float swipeDistance = touchPos.x - swipeStart.x;
+                float horizontalDistance = touchPos.x - swipeStart.x;
+                float verticleDistance = touchPos.y - swipeStart.y;
 
-                if (Mathf.Abs(swipeDistance) > 0.5f) {
-                    if (swipeDistance < 0) {
-                        squad.Move(-squad.transform.right);
+                if (Mathf.Abs(horizontalDistance) > 0.5f || Mathf.Abs(verticleDistance) > 0.5f) {
+                    Vector3 direction = Vector3.zero;
+                    if (Mathf.Abs(horizontalDistance) > Mathf.Abs(verticleDistance)) {
+                        direction = horizontalDistance < 0 ? -squad.transform.right : squad.transform.right;
                     } else {
-                        squad.Move(squad.transform.right);
+                        direction = verticleDistance < 0 ? squad.transform.forward : -squad.transform.forward;
+                    }
+
+                    int offset = GetDirectionOffset();
+                    if (offset == 0) {
+                        squad.Move(direction);
+                    } else {
+                        squad.Rotate(GetDirectionOffset());
                     }
                 }
             }
@@ -76,11 +85,8 @@ public class InputControl : MonoBehaviour {
 	}
 
     public void SquadSelected(SquadControl selectedSquad) {
-        Debug.Log(selectedSquad.name + " Squad Selected");
-
         if (selectedSquad.type == SquadControl.SquadType.Enemy)
             squad.Attack(selectedSquad);
-
     }
 
     Vector3 ControllerHeading() {

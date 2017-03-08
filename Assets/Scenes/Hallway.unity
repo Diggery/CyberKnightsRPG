@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44692534, g: 0.49678725, b: 0.57508564, a: 1}
+  m_IndirectSpecularColor: {r: 0.44692558, g: 0.49678743, b: 0.57508624, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -151,7 +151,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1422168469, guid: 463285ecd6702471a909ba810832bf0e, type: 2}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 463285ecd6702471a909ba810832bf0e, type: 2}
@@ -844,6 +844,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 744010112}
   - 114: {fileID: 744010113}
+  - 114: {fileID: 744010114}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -880,6 +881,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joint: 1
   debugDrawTo: {fileID: 0}
+--- !u!114 &744010114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 744010111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb5dd43baba2d4dc1bab789615567e3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  raycastMode: 0
+  raycasterEventMask:
+    serializedVersion: 2
+    m_Bits: 4294965247
 --- !u!1 &774032380
 GameObject:
   m_ObjectHideFlags: 0
@@ -1916,7 +1932,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1838789975}
   - 114: {fileID: 1838789974}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Squad-Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}

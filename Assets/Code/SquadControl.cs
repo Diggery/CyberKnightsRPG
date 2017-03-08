@@ -87,11 +87,11 @@ public class SquadControl : MonoBehaviour {
 
         SetupInteraction();
 
-        if (type != SquadType.Player) {
-            BoxCollider collision = gameObject.AddComponent<BoxCollider>();
-            collision.size = new Vector3(2, 2, 2);
-            collision.center = new Vector3(0, 1, 0);
-        }
+        BoxCollider collision = gameObject.AddComponent<BoxCollider>();
+        collision.size = new Vector3(2, 2, 2);
+        collision.center = new Vector3(0, 1, 0);
+
+        //gameObject.layer = LayerMask.NameToLayer("Squads");
     }
 
     void Update() {
@@ -121,16 +121,8 @@ public class SquadControl : MonoBehaviour {
 
         float heading = Vector3.Angle(direction, transform.forward) * Mathf.Sign(Vector3.Dot(direction, transform.right));
 
+        gameManager.ProcessSquadPositions();
 
-        SquadControl[] enemiesInRange = gameManager.CheckMeleeRange(transform.position);
-
-        if (enemiesInRange.Length > 0) {
-            InAttackMode = true;
-            foreach(SquadControl enemy in enemiesInRange) {
-                enemy.InAttackMode = true;
-            }            
-        }
-      
         foreach (UnitControl unit in units) {
             if (unit.InSquad) {
                 unit.MoveTo(GetUnitPosition(unit.UnitId), Mathf.RoundToInt(heading / 90));
