@@ -45,8 +45,10 @@ public class SquadControl : MonoBehaviour {
                 return;
             
             inAttackMode = value;
-            foreach (UnitControl unit in units)
-                unit.InAttackMode = value;
+            foreach (UnitControl unit in units) {
+                if (unit)
+                    unit.InAttackMode = value;
+            }
         }
     }
 
@@ -148,12 +150,12 @@ public class SquadControl : MonoBehaviour {
     }
 
     void SetupOffsets() {
-        float gridSize = gameManager.GridSize / (float)4;
+        float centerOffset = 1;
         unitOffsets = new Vector3[4];
-        unitOffsets[0] = new Vector3(-gridSize, 0, gridSize);
-        unitOffsets[1] = new Vector3(gridSize, 0, gridSize);
-        unitOffsets[2] = new Vector3(-gridSize, 0, -gridSize);
-        unitOffsets[3] = new Vector3(gridSize, 0, -gridSize);
+        unitOffsets[0] = new Vector3(-centerOffset, 0, centerOffset);
+        unitOffsets[1] = new Vector3(centerOffset, 0, centerOffset);
+        unitOffsets[2] = new Vector3(-centerOffset, 0, -centerOffset);
+        unitOffsets[3] = new Vector3(centerOffset, 0, -centerOffset);
     }
 
     void SetupInteraction() {
@@ -219,6 +221,7 @@ public class SquadControl : MonoBehaviour {
 
         for (int i = 0; i < 4; i++) {
             GameObject combotObj = Instantiate(combotPrefab);
+            combotObj.name = "Enemy-" + i;
             UnitControl combot = combotObj.GetComponent<UnitControl>();
             combot.SetSquad(this);
         }

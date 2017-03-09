@@ -49,6 +49,7 @@ public class GvrPointerManager : MonoBehaviour {
   public static void OnPointerCreated(IGvrPointer createdPointer) {
     if (instance != null && GvrPointerManager.Pointer == null) {
       GvrPointerManager.Pointer = createdPointer;
+            Debug.Log("Pointer Created");
     }
   }
 

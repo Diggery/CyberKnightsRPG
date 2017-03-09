@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour {
     List<SquadControl> enemySquads = new List<SquadControl>();
     List<SquadControl> friendlySquads = new List<SquadControl>();
 
-    float gridSize = 4.0f;
+    float gridSize = 5.0f;
     public float GridSize {
         set { gridSize = value; }
         get { return gridSize; }

@@ -46,6 +46,19 @@ public class UnitAttack : MonoBehaviour {
         }
     }
 
+    public float WeaponDefenseBonus {
+        get {
+            float bonus = 0;
+            if (primaryWeapon)
+                bonus += primaryWeapon.DefenseBonus;
+            
+            if (secondaryWeapon)
+                bonus += secondaryWeapon.DefenseBonus; 
+            
+            return bonus; 
+        }
+    }
+
     Weapon primaryWeapon;
     Weapon secondaryWeapon;
 
@@ -91,73 +104,114 @@ public class UnitAttack : MonoBehaviour {
     }
 
     bool TryMeleeAttack(Weapon weapon, SquadControl target, int direction) {
-
         if (!weapon)
             return false;
 
-        bool madeMeleeAttack = false;
         bool attackedUsingReach = false;
-        string attackAnim = "Attack";
+        bool needsToAdvance = false;
+        string attackResult = "";
+        int attackDirection = direction;
+        UnitControl victim = null;
 
-        switch (direction) {
-            case 0:
-                if (unitControl.UnitId == 0 || unitControl.UnitId == 1 || weapon.hasReach) {
+        //check forward
+        Vector3 dir = Quaternion.AngleAxis(90 * direction, Vector3.up) * (transform.forward * 3);
+        Vector3 forwardPos = transform.position + dir;
+        victim = CheckForTarget(forwardPos);
 
-                    attackAnim += "Forward";
-
-                    if (unitControl.UnitId != 0 && unitControl.UnitId != 1)
-                        attackedUsingReach = true;
-
-                    madeMeleeAttack = true;
-                }
-                break;
-            case -1:
-                if (unitControl.UnitId == 0 || unitControl.UnitId == 2 || weapon.hasReach) {
-                    attackAnim += "Left";
-                    if (unitControl.UnitId != 0 && unitControl.UnitId != 2)
-                        attackedUsingReach = true;
-
-                    madeMeleeAttack = true;
-                }
-                break;
-            case 1:
-                if (unitControl.UnitId == 1 || unitControl.UnitId == 3 || weapon.hasReach) {
-                    attackAnim += "Right";
-                    if (unitControl.UnitId != 1 && unitControl.UnitId != 3)
-                        attackedUsingReach = true;
-
-                    madeMeleeAttack = true;
-                }
-                break;
-            case -2:
-                if (unitControl.UnitId == 2 || unitControl.UnitId == 3 || weapon.hasReach) {
-                    attackAnim += "Back";
-                    if (unitControl.UnitId != 2 && unitControl.UnitId != 3)
-                        attackedUsingReach = true;
-
-                    madeMeleeAttack = true;
-                }
-                break;
-            case 2:
-                if (unitControl.UnitId == 2 || unitControl.UnitId == 3 || weapon.hasReach) {
-                    attackAnim += "Back";
-                    if (unitControl.UnitId != 2 && unitControl.UnitId != 3)
-                        attackedUsingReach = true;
-
-                    madeMeleeAttack = true;
-                }
-                break;
-            default:
-                Debug.Log(direction + " isn't a valid direction");
-                break;
-        }
-        if (madeMeleeAttack) {
-            Debug.Log(gameObject.name + " is playing anim " + attackAnim);
-            animator.SetBool("UseReachAttack", attackedUsingReach);
-            animator.SetTrigger(attackAnim);
+        //check forward with reach
+        if (!victim && weapon.hasReach) {
+            dir =  Quaternion.AngleAxis(90 * direction, Vector3.up) * (transform.forward * 2);
+            victim = CheckForTarget(forwardPos + dir);
+            if (victim)
+                attackedUsingReach = true;
         }
 
-        return madeMeleeAttack;
+        //Special attacks if attacking forward
+        if (direction == 0) {
+
+            //no special attacks from the backrow
+            if (!victim) {
+                float distanceForMe = Vector3.Distance(transform.position, target.transform.position); 
+                float distanceForSquad = Vector3.Distance(unitControl.Squad.transform.position, target.transform.position); 
+                if (distanceForMe > distanceForSquad) 
+                    return false;
+            }
+
+            // advance and check right
+            if (!victim) {
+                dir = Quaternion.AngleAxis(90 * -1, Vector3.up) * (transform.forward * 2);
+                victim = CheckForTarget(forwardPos + dir);
+                attackDirection = -1;
+                needsToAdvance = true;
+            }
+
+            // advance and check left
+            if (!victim) {
+                dir = Quaternion.AngleAxis(90 * 1, Vector3.up) * (transform.forward * 2);
+                victim = CheckForTarget(forwardPos + dir);
+                attackDirection = 1;
+                needsToAdvance = true;
+            }
+
+            // advance and check forward
+            if (!victim) {
+                dir = (transform.forward * 2);
+                victim = CheckForTarget(forwardPos + dir);
+                attackDirection = 0;
+                needsToAdvance = true;
+            }
+        }
+
+        if (victim) {
+            if (needsToAdvance) 
+                animator.SetTrigger("Advance");
+
+            if (attackedUsingReach) 
+                animator.SetBool("UseReachAttack", true);
+
+            //find if attack hits
+            float attackRoll = Random.value;
+            attackRoll += unitControl.AttackBonus;
+            attackRoll += weapon.AttackBonus;
+            attackRoll -= unitControl.ParryBonus;
+
+            if (attackRoll > 0.5f) {
+                attackResult = "Swing";
+                if (victim.DodgeBonus > Random.value) {
+                    victim.DodgeAttack(attackDirection);
+                } else {
+                    victim.HitByAttack(attackDirection);
+                }
+                    
+            } else {
+                attackResult = "Blocked";
+                victim.BlockAttack(attackDirection);
+            }
+
+            animator.SetInteger("AttackDirection", attackDirection);
+            animator.SetTrigger("Attack" + attackResult);
+            Debug.Log(transform.name + " is attacking " + victim.name + " to the " + attackDirection);
+            return true;
+        }
+
+        return false;
+    }
+
+    UnitControl CheckForTarget(Vector3 targetPos) {
+        UnitControl target = null;
+        RaycastHit hit;
+        LayerMask unitMask = 1 << LayerMask.NameToLayer("Units");
+        Ray targetRay = new Ray(targetPos + (Vector3.up * 5), Vector3.down);
+        if (Physics.Raycast(targetRay, out hit, 10, unitMask)) {
+            target = hit.transform.GetComponent<UnitControl>();
+            if (target && target.TeamName.Equals(unitControl.TeamName)) {
+                target = null;
+            } else {
+                
+            }
+                
+        }
+        return target;
     }
 
     bool TryAttackRanged(Weapon weapon, SquadControl targetSquad, int direction) {

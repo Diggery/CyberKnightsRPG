@@ -54,6 +54,23 @@ public class UnitControl : MonoBehaviour {
         }
     }
 
+    float attackBonus = 0;
+    public float AttackBonus {
+        get { return attackBonus; }
+    }
+
+    float parryBonus = 0;
+    public float ParryBonus {
+        get { return parryBonus + unitAttack.WeaponDefenseBonus; }
+    }
+
+    float dodgeBonus = 0;
+    public float DodgeBonus {
+        get { return dodgeBonus; }
+    }
+
+    bool defenseAnimPlaying = false;
+
     public void Init() {
         gameManager = GameManager.instance;
 
@@ -82,6 +99,11 @@ public class UnitControl : MonoBehaviour {
 
         transform.position = squad.GetUnitPosition(unitId);
         transform.rotation = squad.transform.rotation;
+
+        CapsuleCollider collision = gameObject.AddComponent<CapsuleCollider>();
+        collision.radius = 0.5f;
+        collision.height = 2.0f;
+        collision.center = new Vector3(0.0f, 1.0f, 0.0f);
 	}
 
     public string TeamName {
@@ -92,17 +114,6 @@ public class UnitControl : MonoBehaviour {
         }
     }
 
-    public float AttackBonus {
-        get { 
-            return 20.0f; 
-        }
-    }
-
-    public float DefenseBonus {
-        get { 
-            return 10.0f; 
-        }
-    }
 
 	void Update () {
         if (!animator) animator = GetComponent<Animator>();
@@ -164,11 +175,46 @@ public class UnitControl : MonoBehaviour {
         unitAttack.Attack(targetSquad);
     }
 
+
+    public void HitByAttack(int direction) {
+        if (defenseAnimPlaying)
+            return;
+        defenseAnimPlaying = true;
+        animator.SetInteger("AttackDirection", direction);
+        animator.SetTrigger("DefenseHit");
+    }
+
+    public void BlockAttack(int direction) {
+        if (defenseAnimPlaying)
+            return;
+        defenseAnimPlaying = true;
+        animator.SetInteger("AttackDirection", direction);
+        animator.SetTrigger("DefenseBlocked");
+    }
+
+    public void DodgeAttack(int direction) {
+        if (defenseAnimPlaying)
+            return;
+        defenseAnimPlaying = true;
+        animator.SetInteger("AttackDirection", direction);
+        animator.SetTrigger("DefenseDodge");
+    }
+
+    public void DefenseComplete() {
+        defenseAnimPlaying = false;
+    }
+
     void ResetAttackTriggers() {
-        animator.ResetTrigger("AttackForward");
-        animator.ResetTrigger("AttackRight");
-        animator.ResetTrigger("AttackLeft");
-        animator.ResetTrigger("AttackBack");
+        
+        animator.SetBool("UseReachAttack", false);
+        animator.SetInteger("AttackDirection", 0);
+
+        animator.ResetTrigger("AttackSwing");
+        animator.ResetTrigger("AttackBlocked");
+
+        animator.ResetTrigger("DefenseHit");
+        animator.ResetTrigger("DefenseBlocked");
+        animator.ResetTrigger("DefenseDodge");
     }
 
 }
