@@ -54,6 +54,11 @@ public class UnitControl : MonoBehaviour {
         }
     }
 
+    bool isAttacking = false;
+    public bool IsAttacking {
+        get { return isAttacking; }
+    }
+
     float attackBonus = 0;
     public float AttackBonus {
         get { return attackBonus; }
@@ -172,6 +177,8 @@ public class UnitControl : MonoBehaviour {
     }
 
     public void Attack(SquadControl targetSquad) {
+        Debug.Log(transform.name + " is Starting Attack");
+        isAttacking = true;
         unitAttack.Attack(targetSquad);
     }
 
@@ -202,6 +209,10 @@ public class UnitControl : MonoBehaviour {
 
     public void DefenseComplete() {
         defenseAnimPlaying = false;
+    }
+
+    public void AttackComplete() {
+        isAttacking = false;
     }
 
     void ResetAttackTriggers() {

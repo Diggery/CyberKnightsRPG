@@ -52,6 +52,16 @@ public class SquadControl : MonoBehaviour {
         }
     }
 
+    public bool IsAttacking {
+        get {
+            bool isAttacking = false;
+            foreach (UnitControl unit in units) {
+                if (unit.IsAttacking) isAttacking = true;
+            }
+            return isAttacking;
+        }
+    }
+
     public bool AlmostDoneMoving {
         get {
             bool almostDoneMoving = false;
@@ -123,6 +133,10 @@ public class SquadControl : MonoBehaviour {
     }
 
     public void Move(Vector3 direction) {
+
+        if (IsAttacking)
+            return;
+
         if (IsMoving) {
             if (AlmostDoneMoving)
                 nextMove = direction;
@@ -209,8 +223,16 @@ public class SquadControl : MonoBehaviour {
     }
 
     public void Attack(SquadControl targetSquad) {
+        if (IsAttacking)
+            return;
+        
+        StartCoroutine(StartAttack(targetSquad));
+    }
+
+    IEnumerator StartAttack(SquadControl targetSquad) {
         foreach (UnitControl unit in units) {
             unit.Attack(targetSquad);
+            yield return new WaitForSeconds(0.5f);
         }
     }
 

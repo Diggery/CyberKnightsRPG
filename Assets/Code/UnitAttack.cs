@@ -73,6 +73,7 @@ public class UnitAttack : MonoBehaviour {
 	}
 
     public void Attack(SquadControl targetSquad) {
+
         if (!CanAttack) {
             Debug.Log(transform.name + " has no way to attack");
             return;
@@ -101,6 +102,12 @@ public class UnitAttack : MonoBehaviour {
 
         if (!attackAttempted)
             attackAttempted = TryAttackRanged(secondaryWeapon, targetSquad, attackDir);
+
+        if (!attackAttempted) {
+            unitControl.AttackComplete();
+            Debug.Log(transform.name + " didnt attack");
+
+        }
     }
 
     bool TryMeleeAttack(Weapon weapon, SquadControl target, int direction) {
@@ -163,6 +170,8 @@ public class UnitAttack : MonoBehaviour {
         }
 
         if (victim) {
+            animator.SetInteger("AttackDirection", attackDirection);
+
             if (needsToAdvance) 
                 animator.SetTrigger("Advance");
 
@@ -175,25 +184,32 @@ public class UnitAttack : MonoBehaviour {
             attackRoll += weapon.AttackBonus;
             attackRoll -= unitControl.ParryBonus;
 
-            if (attackRoll > 0.5f) {
+
+            float victimOffset = Vector3.Dot(victim.transform.forward, 
+                Quaternion.AngleAxis(90 * attackDirection, Vector3.up) * transform.forward);
+
+            if (victimOffset > -0.75) {
+                attackResult = "Swing";
+                victim.HitByAttack(attackDirection);
+
+            } else if (attackRoll > 0.5f) {
                 attackResult = "Swing";
                 if (victim.DodgeBonus > Random.value) {
                     victim.DodgeAttack(attackDirection);
                 } else {
                     victim.HitByAttack(attackDirection);
                 }
-                    
             } else {
                 attackResult = "Blocked";
                 victim.BlockAttack(attackDirection);
             }
 
-            animator.SetInteger("AttackDirection", attackDirection);
-            animator.SetTrigger("Attack" + attackResult);
-            Debug.Log(transform.name + " is attacking " + victim.name + " to the " + attackDirection);
+
+            if (!needsToAdvance)
+                animator.SetTrigger("Attack" + attackResult);
+            
             return true;
         }
-
         return false;
     }
 
@@ -215,7 +231,7 @@ public class UnitAttack : MonoBehaviour {
     }
 
     bool TryAttackRanged(Weapon weapon, SquadControl targetSquad, int direction) {
-        return true;
+        return false;
     }
 
     public void SetWeapon(Weapon weapon, bool isPrimary) {
@@ -223,5 +239,9 @@ public class UnitAttack : MonoBehaviour {
             primaryWeapon = weapon;
         else
             secondaryWeapon = weapon;
+    }
+
+    public void AttackCompleted() {
+        unitControl.AttackComplete();
     }
 }

@@ -78,6 +78,8 @@ ModelImporter:
     7400006: Defense_Right_Blocked
     7400008: Defense_Left
     7400010: Defense_LeftBlocked
+    7400012: AdvanceForward
+    7400014: AdvanceReturn
     9500000: //RootNode
     13700000: Combot:Head_Geo
     13700002: Combot:LeftArm_Geo
