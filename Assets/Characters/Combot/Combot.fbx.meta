@@ -64,6 +64,7 @@ ModelImporter:
     100112: Combot:Root_Control
     100114: Combot:RootMotion_Control
     100116: Combot:Torso_Control
+    100118: Combot:Back_Attach
     400000: //RootNode
     400002: Head_Basic
     400004: LeftArm_Basic
@@ -123,6 +124,7 @@ ModelImporter:
     400112: Combot:Root_Control
     400114: Combot:RootMotion_Control
     400116: Combot:Torso_Control
+    400118: Combot:Back_Attach
     2300000: Head_Basic
     2300002: LeftArm_Basic
     2300004: Legs_Basic

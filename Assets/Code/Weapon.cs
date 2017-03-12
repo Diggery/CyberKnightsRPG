@@ -8,6 +8,8 @@ public class Weapon : MonoBehaviour {
 
     public bool hasReach = false;
 
+    public RuntimeAnimatorController animOverride;
+
     float damage = 0;
     public float Damage {
         get { return damage; }
@@ -33,11 +35,44 @@ public class Weapon : MonoBehaviour {
         get { return range; }
     }
 
-    void Start () {
+    protected bool attackInProgress = false;
+
+    protected virtual void Start () {
 	
 	}
 	
-	void Update () {
+	protected virtual void Update () {
 	
 	}
+
+    public virtual void Stowed() {
+    }
+
+    public virtual void Drawn() {
+    }        
+
+    public virtual void StartAttack() {
+        
+    }
+
+
+    public virtual void Activate() {
+
+    }
+
+    public virtual void EndAttack() {
+        
+    }
+
+    public virtual void AttackHit() {
+        EndAttack();
+    }
+
+    public virtual void AttackBlocked() {
+        EndAttack();
+    }
+
+    public virtual void AttackMissed() {
+        EndAttack();
+    }
 }

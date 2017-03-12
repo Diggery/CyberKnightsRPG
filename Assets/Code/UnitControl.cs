@@ -13,6 +13,10 @@ public class UnitControl : MonoBehaviour {
     NavMeshAgent navAgent;
     SquadControl squad;
 
+    [HideInInspector] public Transform attachRightHand;
+    [HideInInspector] public Transform attachLeftHand;
+    [HideInInspector] public Transform attachBack;
+
     public string TempWeapon = "ChainSword";
 
     public bool IsMoving {
@@ -88,11 +92,9 @@ public class UnitControl : MonoBehaviour {
         unitAttack = gameObject.AddComponent<UnitAttack>();
         //navAgent = gameObject.AddComponent<NavMeshAgent>();
 
-
         TeamName = teamName;
 
-
-        AttachWeapon(TempWeapon, "Right");
+        AddPrimaryWeapon(TempWeapon);
 
         if (!squad && teamName.Equals("Player")) {
             squad = gameManager.PlayerSquad;
@@ -130,33 +132,23 @@ public class UnitControl : MonoBehaviour {
         squad = newSquad;
     }
 
-    public bool AttachWeapon(string weaponName, string hand) {
+    public bool AddPrimaryWeapon(string weaponName) {
         
-        string pathToHand = 
-            "Combot:Combot_Skeleton/" +
-            "Combot:RootMotion_Skel/" +
-            "Combot:Hips_Skel/" +
-            "Combot:MidSection_Skel/" +
-            "Combot:Torso_Skel/" +
-            "Combot:" + hand + "Clav_Skel/" +
-            "Combot:" + hand + "Shoulder_Skel/" +
-            "Combot:" + hand + "UpperArm_Skel/" +
-            "Combot:" + hand + "LowerArm_Skel/" +
-            "Combot:" + hand + "Hand_Skel/" +
-            "Combot:" + hand + "Hand_Attach";
-        Transform attach = transform.Find(pathToHand);
-        if (!attach) {
-            Debug.Log ("Not attach at " + pathToHand );
+        if (!attachBack) {
+            Debug.Log ("Missing an attachPoint");
             return false;
         } 
         GameObject weaponObj = gameManager.GetEquipment(weaponName);
-        weaponObj.transform.SetParent(attach, false);
+        weaponObj.transform.SetParent(attachBack, false);
 
         Weapon weapon = weaponObj.GetComponent<Weapon>();
         if (weapon) {
-            unitAttack.SetWeapon(weapon, hand.Contains("Right") || hand.Contains("right"));
+            weapon.Stowed();
+            unitAttack.SetWeapon(weapon, true);
+            if (weapon.animOverride) {
+                animator.runtimeAnimatorController = weapon.animOverride;
+            }
         }
-        
         return true;
     }
 
@@ -177,18 +169,8 @@ public class UnitControl : MonoBehaviour {
     }
 
     public void Attack(SquadControl targetSquad) {
-        Debug.Log(transform.name + " is Starting Attack");
         isAttacking = true;
         unitAttack.Attack(targetSquad);
-    }
-
-
-    public void HitByAttack(int direction) {
-        if (defenseAnimPlaying)
-            return;
-        defenseAnimPlaying = true;
-        animator.SetInteger("AttackDirection", direction);
-        animator.SetTrigger("DefenseHit");
     }
 
     public void BlockAttack(int direction) {
@@ -215,17 +197,23 @@ public class UnitControl : MonoBehaviour {
         isAttacking = false;
     }
 
+    public void TakeDamage(DamageInfo damageInfo) {
+        animator.SetTrigger("GetHit" + damageInfo.GetOrthagonalDirection(transform));
+    }
+
     void ResetAttackTriggers() {
         
         animator.SetBool("UseReachAttack", false);
         animator.SetInteger("AttackDirection", 0);
 
+        animator.ResetTrigger("Advance");
+
         animator.ResetTrigger("AttackSwing");
         animator.ResetTrigger("AttackBlocked");
 
-        animator.ResetTrigger("DefenseHit");
         animator.ResetTrigger("DefenseBlocked");
         animator.ResetTrigger("DefenseDodge");
     }
+
 
 }

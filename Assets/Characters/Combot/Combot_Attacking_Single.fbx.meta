@@ -133,7 +133,7 @@ ModelImporter:
       events:
       - time: 0.39313984
         functionName: AttackCompleted
-        data: 
+        data: Hit
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
@@ -230,7 +230,7 @@ ModelImporter:
       events:
       - time: 0.4010554
         functionName: AttackCompleted
-        data: 
+        data: Blocked
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
@@ -327,7 +327,7 @@ ModelImporter:
       events:
       - time: 0.45910296
         functionName: AttackCompleted
-        data: 
+        data: Hit
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
@@ -424,7 +424,7 @@ ModelImporter:
       events:
       - time: 0.38522437
         functionName: AttackCompleted
-        data: 
+        data: Blocked
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
@@ -521,7 +521,7 @@ ModelImporter:
       events:
       - time: 0.3377309
         functionName: AttackCompleted
-        data: 
+        data: Hit
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
@@ -618,7 +618,7 @@ ModelImporter:
       events:
       - time: 0.3878625
         functionName: AttackCompleted
-        data: 
+        data: Blocked
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0

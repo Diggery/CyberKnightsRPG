@@ -49,6 +49,7 @@
      <Compile Include="Assets\Code\AnimBehaviors\SetMovingFlag.cs" />
      <Compile Include="Assets\Code\CameraControl.cs" />
      <Compile Include="Assets\Code\CombotConstructor.cs" />
+     <Compile Include="Assets\Code\DamageInfo.cs" />
      <Compile Include="Assets\Code\DrawArea.cs" />
      <Compile Include="Assets\Code\DrawCircle.cs" />
      <Compile Include="Assets\Code\Ease.cs" />
@@ -61,6 +62,7 @@
      <Compile Include="Assets\Code\UnitControl.cs" />
      <Compile Include="Assets\Code\UnitMover.cs" />
      <Compile Include="Assets\Code\Weapon.cs" />
+     <Compile Include="Assets\Code\WeaponSpear.cs" />
      <Compile Include="Assets\GoogleVR\Demos\Scripts\DemoInputManager.cs" />
      <Compile Include="Assets\GoogleVR\Demos\Scripts\GVRDemo\Teleport.cs" />
      <Compile Include="Assets\GoogleVR\Demos\Scripts\PermissionsDemo\PermissionsFlowManager.cs" />

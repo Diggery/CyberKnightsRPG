@@ -32,7 +32,9 @@ public class CombotConstructor : MonoBehaviour {
     IEnumerator BindAnimator() {
         yield return new WaitForEndOfFrame();
         animator.Rebind();
-        GetComponent<UnitControl>().Init();
+        UnitControl unitControl = GetComponent<UnitControl>();
+        SetupAttachPoints(unitControl); 
+        unitControl.Init();
         Destroy(this);
     }
 
@@ -163,5 +165,48 @@ public class CombotConstructor : MonoBehaviour {
             if (!child.name.Contains("Combot:"))
                 child.name = "Combot:" + child.name;
         }
+    }
+
+    void SetupAttachPoints(UnitControl unitControl) {
+        string pathToBackAttach = 
+            "Combot:Combot_Skeleton/" +
+            "Combot:RootMotion_Skel/" +
+            "Combot:Hips_Skel/" +
+            "Combot:MidSection_Skel/" +
+            "Combot:Torso_Skel/" +
+            "Combot:Back_Attach"; 
+        Transform attachBack = transform.Find(pathToBackAttach);
+
+        string pathToLeftHandAttach = 
+            "Combot:Combot_Skeleton/" +
+            "Combot:RootMotion_Skel/" +
+            "Combot:Hips_Skel/" +
+            "Combot:MidSection_Skel/" +
+            "Combot:Torso_Skel/" +
+            "Combot:LeftClav_Skel/" +
+            "Combot:LeftShoulder_Skel/" +
+            "Combot:LeftUpperArm_Skel/" +
+            "Combot:LeftLowerArm_Skel/" +
+            "Combot:LeftHand_Skel/" +
+            "Combot:LeftHand_Attach";
+        Transform attachLeftHand = transform.Find(pathToLeftHandAttach);
+
+        string pathToRightHandAttach = 
+            "Combot:Combot_Skeleton/" +
+            "Combot:RootMotion_Skel/" +
+            "Combot:Hips_Skel/" +
+            "Combot:MidSection_Skel/" +
+            "Combot:Torso_Skel/" +
+            "Combot:RightClav_Skel/" +
+            "Combot:RightShoulder_Skel/" +
+            "Combot:RightUpperArm_Skel/" +
+            "Combot:RightLowerArm_Skel/" +
+            "Combot:RightHand_Skel/" +
+            "Combot:RightHand_Attach";
+        Transform attachRightHand = transform.Find(pathToRightHandAttach);
+        unitControl.attachBack = attachBack;
+        unitControl.attachLeftHand = attachLeftHand;
+        unitControl.attachRightHand = attachRightHand;
+
     }
 }

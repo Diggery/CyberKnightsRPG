@@ -205,10 +205,14 @@ public class SquadControl : MonoBehaviour {
     }
 
     public void Rotate(int amount) {
+
         transform.rotation *= Quaternion.AngleAxis(90 * amount, Vector3.up);
         foreach (UnitControl unit in units) {
-            if (unit.InSquad)
+            if (unit.InSquad) {
+                unit.transform.position = GetUnitPosition(unit.UnitId);
+                unit.transform.rotation = transform.rotation;
                 unit.RotateTo(amount, GetUnitPosition(unit.UnitId));
+            }
         }
     }
 
@@ -230,10 +234,20 @@ public class SquadControl : MonoBehaviour {
     }
 
     IEnumerator StartAttack(SquadControl targetSquad) {
-        foreach (UnitControl unit in units) {
+
+        int[] normalOrder = new int[4] {0, 1, 2, 3};
+        int[] mixedOrder = new int[4] {1, 0, 3, 2};
+
+        int[] order = Random.value > 0.5f ? normalOrder : mixedOrder;
+
+        for (int i = 0; i < 4; i++) {
+            UnitControl unit = units[order[i]];
+            unit.transform.position = GetUnitPosition(unit.UnitId);
+            unit.transform.rotation = transform.rotation;
             unit.Attack(targetSquad);
             yield return new WaitForSeconds(0.5f);
         }
+
     }
 
     public void FillSquad() {

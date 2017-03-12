@@ -1,45 +1,54 @@
 fileFormatVersion: 2
-guid: ee158528d861143c69979aba8e94bf8e
-timeCreated: 1483815720
+guid: 48ece7e3426654e6abb42e17665d7f41
+timeCreated: 1489189030
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Head_Skel
-    100002: Hips_Skel
-    100004: LeftClav_Skel
-    100006: LeftShoulder_Skel
-    100008: LeftUpperLeg_Skel
-    100010: MidSection_Skel
-    100012: RightClav_Skel
-    100014: RightShoulder_Skel
-    100016: RightUpperLeg_Skel
-    100018: Torso_Basic
-    100020: //RootNode
-    100022: Torso_Skel
-    100024: Torso_Geo
-    100026: Attach_CenterPoint
-    100028: Back_Attach
-    400000: Head_Skel
-    400002: Hips_Skel
-    400004: LeftClav_Skel
-    400006: LeftShoulder_Skel
-    400008: LeftUpperLeg_Skel
-    400010: MidSection_Skel
-    400012: RightClav_Skel
-    400014: RightShoulder_Skel
-    400016: RightUpperLeg_Skel
-    400018: //RootNode
-    400020: Torso_Basic
-    400022: Torso_Skel
-    400024: Torso_Geo
-    400026: Attach_CenterPoint
-    400028: Back_Attach
-    4300000: Torso_Basic
-    4300002: Torso_Geo
+    100000: pCylinder1
+    100002: //RootNode
+    100004: SpearTop
+    100006: SpearTip
+    100008: SpearShaft
+    100010: polySurface2
+    100012: SpearHandleExtender
+    100014: transform1
+    100016: SpearHandle
+    400000: pCylinder1
+    400002: //RootNode
+    400004: SpearTop
+    400006: SpearTip
+    400008: SpearShaft
+    400010: polySurface2
+    400012: SpearHandleExtender
+    400014: transform1
+    400016: SpearHandle
+    2300000: pCylinder1
+    2300002: //RootNode
+    2300004: SpearTop
+    2300006: SpearTip
+    2300008: SpearShaft
+    2300010: polySurface2
+    2300012: SpearHandleExtender
+    2300014: SpearHandle
+    3300000: pCylinder1
+    3300002: //RootNode
+    3300004: SpearTop
+    3300006: SpearTip
+    3300008: SpearShaft
+    3300010: polySurface2
+    3300012: SpearHandleExtender
+    3300014: SpearHandle
+    4300000: pCylinder2
+    4300002: pCylinder1
+    4300004: SpearShaft
+    4300006: SpearTop
+    4300008: SpearTip
+    4300010: SpearGrip
+    4300012: polySurface2
+    4300014: SpearHandleExtender
+    4300016: SpearHandle
     9500000: //RootNode
-    13700000: Torso_Basic
-    13700002: Torso_Geo
   materials:
     importMaterials: 1
     materialName: 0

@@ -80,6 +80,11 @@ ModelImporter:
     7400010: Defense_LeftBlocked
     7400012: AdvanceForward
     7400014: AdvanceReturn
+    7400016: GetHit_Forward
+    7400018: GetHit_Left
+    7400020: GetHit_Right
+    7400022: GetHit_Back
+    7400024: Block
     9500000: //RootNode
     13700000: Combot:Head_Geo
     13700002: Combot:LeftArm_Geo

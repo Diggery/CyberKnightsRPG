@@ -62,10 +62,12 @@ public class UnitAttack : MonoBehaviour {
     Weapon primaryWeapon;
     Weapon secondaryWeapon;
 
+    UnitControl lastAttackTarget = null;
+    Weapon lastWeaponUsed = null;
+
     void Start () {
         unitControl = GetComponent<UnitControl>();
         animator = GetComponent<Animator>();
-
     }
 
     void Update () {
@@ -106,7 +108,6 @@ public class UnitAttack : MonoBehaviour {
         if (!attackAttempted) {
             unitControl.AttackComplete();
             Debug.Log(transform.name + " didnt attack");
-
         }
     }
 
@@ -115,6 +116,7 @@ public class UnitAttack : MonoBehaviour {
             return false;
 
         bool attackedUsingReach = false;
+        bool attackDodged = false;
         bool needsToAdvance = false;
         string attackResult = "";
         int attackDirection = direction;
@@ -176,7 +178,7 @@ public class UnitAttack : MonoBehaviour {
                 animator.SetTrigger("Advance");
 
             if (attackedUsingReach) 
-                animator.SetBool("UseReachAttack", true);
+                animator.SetTrigger("UseReachAttack");
 
             //find if attack hits
             float attackRoll = Random.value;
@@ -184,30 +186,32 @@ public class UnitAttack : MonoBehaviour {
             attackRoll += weapon.AttackBonus;
             attackRoll -= unitControl.ParryBonus;
 
-
             float victimOffset = Vector3.Dot(victim.transform.forward, 
                 Quaternion.AngleAxis(90 * attackDirection, Vector3.up) * transform.forward);
 
             if (victimOffset > -0.75) {
                 attackResult = "Swing";
-                victim.HitByAttack(attackDirection);
 
-            } else if (attackRoll > 0.5f) {
+            } else if (attackRoll > 0.5f || attackedUsingReach) {
                 attackResult = "Swing";
                 if (victim.DodgeBonus > Random.value) {
+                    attackDodged = true;
                     victim.DodgeAttack(attackDirection);
-                } else {
-                    victim.HitByAttack(attackDirection);
                 }
             } else {
                 attackResult = "Blocked";
                 victim.BlockAttack(attackDirection);
             }
 
-
-            if (!needsToAdvance)
+            if (!needsToAdvance && !attackedUsingReach) {
                 animator.SetTrigger("Attack" + attackResult);
-            
+            }
+
+            weapon.StartAttack();
+
+            lastAttackTarget = attackDodged ? null : victim;
+            lastWeaponUsed = weapon;
+
             return true;
         }
         return false;
@@ -241,7 +245,52 @@ public class UnitAttack : MonoBehaviour {
             secondaryWeapon = weapon;
     }
 
-    public void AttackCompleted() {
+    public void DrawWeapons() {
+        if (primaryWeapon && primaryWeapon.type == Weapon.WeaponType.Melee ) {
+            primaryWeapon.transform.SetParent(unitControl.attachRightHand);
+            primaryWeapon.transform.localPosition = Vector3.zero;
+            primaryWeapon.transform.localRotation = Quaternion.identity;
+            primaryWeapon.Drawn();
+        }
+        if (secondaryWeapon && secondaryWeapon.type == Weapon.WeaponType.Melee ) {
+            secondaryWeapon.transform.SetParent(unitControl.attachLeftHand);
+            secondaryWeapon.transform.localPosition = Vector3.zero;
+            secondaryWeapon.transform.localRotation = Quaternion.identity;
+            secondaryWeapon.Drawn();
+        }
+    }
+
+    public void StowWeapons() {
+        if (primaryWeapon && primaryWeapon.type == Weapon.WeaponType.Melee ) {
+            primaryWeapon.transform.SetParent(unitControl.attachBack);
+            primaryWeapon.transform.localPosition = Vector3.zero;
+            primaryWeapon.transform.localRotation = Quaternion.identity;
+            primaryWeapon.Stowed();
+        }
+        if (secondaryWeapon && secondaryWeapon.type == Weapon.WeaponType.Melee ) {
+            secondaryWeapon.transform.SetParent(unitControl.attachLeftHand);
+            secondaryWeapon.transform.localPosition = Vector3.zero;
+            secondaryWeapon.transform.localRotation = Quaternion.identity;
+            secondaryWeapon.Stowed();
+        }
+    }
+
+    public void ActivateWeapon() {
+        if (lastWeaponUsed)
+            lastWeaponUsed.Activate();
+    }
+
+    public void AttackCompleted(string result) {
         unitControl.AttackComplete();
+        if (lastAttackTarget && result.Equals("Hit")) {
+            DamageInfo damageInfo = new DamageInfo(1, DamageType.Other, unitControl);
+            lastAttackTarget.TakeDamage(damageInfo);
+            lastWeaponUsed.AttackHit();
+        } else if (result.Equals("Blocked")) {
+            lastWeaponUsed.AttackBlocked();
+        } else {
+            lastWeaponUsed.AttackMissed();
+        }
+        lastAttackTarget = null;
     }
 }
