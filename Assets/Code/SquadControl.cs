@@ -209,8 +209,6 @@ public class SquadControl : MonoBehaviour {
         transform.rotation *= Quaternion.AngleAxis(90 * amount, Vector3.up);
         foreach (UnitControl unit in units) {
             if (unit.InSquad) {
-                unit.transform.position = GetUnitPosition(unit.UnitId);
-                unit.transform.rotation = transform.rotation;
                 unit.RotateTo(amount, GetUnitPosition(unit.UnitId));
             }
         }
