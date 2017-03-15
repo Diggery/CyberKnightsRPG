@@ -74,11 +74,12 @@ public class UnitAttack : MonoBehaviour {
 	
 	}
 
-    public void Attack(SquadControl targetSquad) {
 
+    public bool Attack(SquadControl targetSquad, bool usePrimary) {
+        
         if (!CanAttack) {
             Debug.Log(transform.name + " has no way to attack");
-            return;
+            return false;
         }
 
         Transform mySquad = unitControl.Squad.transform;
@@ -93,22 +94,17 @@ public class UnitAttack : MonoBehaviour {
 
         if (offsetFromSquad.magnitude < (GameManager.instance.GridSize * 1.1f)) {
 
-            attackAttempted = TryMeleeAttack(primaryWeapon, targetSquad, attackDir);
-
-            if (!attackAttempted)
-                attackAttempted = TryMeleeAttack(secondaryWeapon, targetSquad, attackDir);
+            attackAttempted = TryMeleeAttack(usePrimary ? primaryWeapon : secondaryWeapon, targetSquad, attackDir);
         }
 
         if (!attackAttempted) 
-            attackAttempted = TryAttackRanged(primaryWeapon, targetSquad, attackDir);
-
-        if (!attackAttempted)
-            attackAttempted = TryAttackRanged(secondaryWeapon, targetSquad, attackDir);
+            attackAttempted = TryAttackRanged(usePrimary ? primaryWeapon: secondaryWeapon, targetSquad, attackDir);
 
         if (!attackAttempted) {
             unitControl.AttackComplete();
             Debug.Log(transform.name + " didnt attack");
         }
+        return attackAttempted;
     }
 
     bool TryMeleeAttack(Weapon weapon, SquadControl target, int direction) {
@@ -126,6 +122,16 @@ public class UnitAttack : MonoBehaviour {
         Vector3 dir = Quaternion.AngleAxis(90 * direction, Vector3.up) * (transform.forward * 3);
         Vector3 forwardPos = transform.position + dir;
         victim = CheckForTarget(forwardPos);
+
+
+        // secondary attack if direction is forward;
+        if (victim && weapon.isSecondary) {
+            animator.SetTrigger("AttackSecondary");
+            weapon.StartAttack();
+            lastAttackTarget = victim;
+            lastWeaponUsed = weapon;
+            return true;
+        }
 
         //check forward with reach
         if (!victim && weapon.hasReach) {
@@ -190,10 +196,10 @@ public class UnitAttack : MonoBehaviour {
                 Quaternion.AngleAxis(90 * attackDirection, Vector3.up) * transform.forward);
 
             if (victimOffset > -0.75) {
-                attackResult = "Swing";
+                attackResult = "Primary";
 
             } else if (attackRoll > 0.5f || attackedUsingReach) {
-                attackResult = "Swing";
+                attackResult = "Primary";
                 if (victim.DodgeBonus > Random.value) {
                     attackDodged = true;
                     victim.DodgeAttack(attackDirection);
@@ -283,14 +289,14 @@ public class UnitAttack : MonoBehaviour {
     public void AttackCompleted(string result) {
         unitControl.AttackComplete();
         if (lastAttackTarget && result.Equals("Hit")) {
-            DamageInfo damageInfo = new DamageInfo(1, DamageType.Other, unitControl);
-            lastAttackTarget.TakeDamage(damageInfo);
-            lastWeaponUsed.AttackHit();
+            lastWeaponUsed.AttackHit(lastAttackTarget);
+        } else if (result.Equals("Secondary")) {
+            secondaryWeapon.AttackHit(lastAttackTarget);
         } else if (result.Equals("Blocked")) {
             lastWeaponUsed.AttackBlocked();
         } else {
             lastWeaponUsed.AttackMissed();
         }
-        lastAttackTarget = null;
+        //lastAttackTarget = null;
     }
 }

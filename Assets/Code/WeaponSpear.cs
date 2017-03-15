@@ -16,8 +16,8 @@ public class WeaponSpear : Weapon {
     Transform spearShaft;
     Transform spearHandleExtender;
 
-	protected override void Start () {
-        base.Start();
+	public override void Init (UnitControl owner) {
+        base.Init(owner);
         spearTip = transform.Find("SpearTip");
         spearShaft = transform.Find("SpearTip/SpearShaft");
         spearHandleExtender = transform.Find("SpearHandle/SpearHandleExtender");

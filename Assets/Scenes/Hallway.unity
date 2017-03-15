@@ -127,7 +127,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000013021084378, guid: acacee50e0f1541db92126c89dca37f8, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1000012246453074, guid: acacee50e0f1541db92126c89dca37f8, type: 2}
       propertyPath: m_Name
@@ -167,7 +167,7 @@ Transform:
   - {fileID: 1957514910}
   - {fileID: 1493411153}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!1 &125883114
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,7 +246,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
 --- !u!1 &328475275
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,7 +422,8 @@ MonoBehaviour:
   attachRightHand: {fileID: 0}
   attachLeftHand: {fileID: 0}
   attachBack: {fileID: 0}
-  TempWeapon: ChainSword
+  TempPrimaryWeapon: ChainSword
+  TempSecondaryWeapon: 
   teamName: Player
 --- !u!114 &356183244
 MonoBehaviour:
@@ -453,7 +454,49 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
+--- !u!1001 &532582888
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4000010294281316, guid: 62e4bce50dc5a4c788bd8d35bd6ed382, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010294281316, guid: 62e4bce50dc5a4c788bd8d35bd6ed382, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010294281316, guid: 62e4bce50dc5a4c788bd8d35bd6ed382, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010294281316, guid: 62e4bce50dc5a4c788bd8d35bd6ed382, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010294281316, guid: 62e4bce50dc5a4c788bd8d35bd6ed382, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010294281316, guid: 62e4bce50dc5a4c788bd8d35bd6ed382, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010294281316, guid: 62e4bce50dc5a4c788bd8d35bd6ed382, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010294281316, guid: 62e4bce50dc5a4c788bd8d35bd6ed382, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 62e4bce50dc5a4c788bd8d35bd6ed382, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &584661423
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,7 +546,8 @@ MonoBehaviour:
   attachRightHand: {fileID: 0}
   attachLeftHand: {fileID: 0}
   attachBack: {fileID: 0}
-  TempWeapon: ChainSword
+  TempPrimaryWeapon: ChainSword
+  TempSecondaryWeapon: Hatchet
   teamName: Player
 --- !u!114 &584661426
 MonoBehaviour:
@@ -534,7 +578,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
 --- !u!1 &774032380
 GameObject:
   m_ObjectHideFlags: 0
@@ -663,7 +707,8 @@ MonoBehaviour:
   attachRightHand: {fileID: 0}
   attachLeftHand: {fileID: 0}
   attachBack: {fileID: 0}
-  TempWeapon: ChainSword
+  TempPrimaryWeapon: ChainSword
+  TempSecondaryWeapon: 
   teamName: Player
 --- !u!114 &930642483
 MonoBehaviour:
@@ -694,7 +739,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
 --- !u!1001 &964412607
 Prefab:
   m_ObjectHideFlags: 0
@@ -822,7 +867,8 @@ MonoBehaviour:
   attachRightHand: {fileID: 0}
   attachLeftHand: {fileID: 0}
   attachBack: {fileID: 0}
-  TempWeapon: Spear
+  TempPrimaryWeapon: Spear
+  TempSecondaryWeapon: 
   teamName: Player
 --- !u!114 &1029953308
 MonoBehaviour:
@@ -853,7 +899,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
 --- !u!1 &1205238078
 GameObject:
   m_ObjectHideFlags: 0
@@ -995,7 +1041,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!1 &1389000159
 GameObject:
   m_ObjectHideFlags: 0
@@ -1036,7 +1082,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
 --- !u!1 &1493411152
 GameObject:
   m_ObjectHideFlags: 0
@@ -1178,7 +1224,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
 --- !u!1 &1596341670
 GameObject:
   m_ObjectHideFlags: 0
@@ -1257,7 +1303,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
 --- !u!1 &1772502009
 GameObject:
   m_ObjectHideFlags: 0
@@ -1336,7 +1382,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
 --- !u!1 &1838789973
 GameObject:
   m_ObjectHideFlags: 0
@@ -1379,7 +1425,7 @@ Transform:
   m_Children:
   - {fileID: 774032384}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!1 &1882835779
 GameObject:
   m_ObjectHideFlags: 0
@@ -1423,7 +1469,7 @@ Transform:
   m_Children:
   - {fileID: 1205238079}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
 --- !u!114 &1882835782
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -25,3 +25,6 @@ MonoBehaviour:
   - name: Spear
     prefab: {fileID: 1000011669730198, guid: 020f77ad98ef5ab419ec307c092be901, type: 2}
     offset: {x: 0, y: 0, z: 0}
+  - name: Hatchet
+    prefab: {fileID: 1000011335984196, guid: 62e4bce50dc5a4c788bd8d35bd6ed382, type: 2}
+    offset: {x: 0, y: 0, z: 0}

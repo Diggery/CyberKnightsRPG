@@ -17,7 +17,8 @@ public class UnitControl : MonoBehaviour {
     [HideInInspector] public Transform attachLeftHand;
     [HideInInspector] public Transform attachBack;
 
-    public string TempWeapon = "ChainSword";
+    public string TempPrimaryWeapon = "ChainSword";
+    public string TempSecondaryWeapon = "";
 
     public bool IsMoving {
         get { return unitMover.IsMoving; }
@@ -94,7 +95,10 @@ public class UnitControl : MonoBehaviour {
 
         TeamName = teamName;
 
-        AddPrimaryWeapon(TempWeapon);
+        AddWeapon(TempPrimaryWeapon);
+
+        if (!TempSecondaryWeapon.Equals("")) 
+            AddWeapon(TempSecondaryWeapon);
 
         if (!squad && teamName.Equals("Player")) {
             squad = gameManager.PlayerSquad;
@@ -132,22 +136,26 @@ public class UnitControl : MonoBehaviour {
         squad = newSquad;
     }
 
-    public bool AddPrimaryWeapon(string weaponName) {
+    public bool AddWeapon(string weaponName) {
         
         if (!attachBack) {
             Debug.Log ("Missing an attachPoint");
             return false;
         } 
         GameObject weaponObj = gameManager.GetEquipment(weaponName);
+        Weapon weapon = weaponObj.GetComponent<Weapon>();
+
         weaponObj.transform.SetParent(attachBack, false);
 
-        Weapon weapon = weaponObj.GetComponent<Weapon>();
         if (weapon) {
+            weapon.Init(this);
             weapon.Stowed();
-            unitAttack.SetWeapon(weapon, true);
+            unitAttack.SetWeapon(weapon, !weapon.isSecondary);
             if (weapon.animOverride) {
                 animator.runtimeAnimatorController = weapon.animOverride;
             }
+        } else {
+            return false;
         }
         return true;
     }
@@ -168,9 +176,13 @@ public class UnitControl : MonoBehaviour {
         squad.MoveComplete();
     }
 
-    public void Attack(SquadControl targetSquad) {
+    public bool Attack(SquadControl targetSquad) {
+        return Attack(targetSquad, true);
+    }
+
+    public bool Attack(SquadControl targetSquad, bool usePrimary) {
         isAttacking = true;
-        unitAttack.Attack(targetSquad);
+        return unitAttack.Attack(targetSquad, usePrimary);
     }
 
     public void BlockAttack(int direction) {
@@ -208,12 +220,11 @@ public class UnitControl : MonoBehaviour {
 
         animator.ResetTrigger("Advance");
 
-        animator.ResetTrigger("AttackSwing");
+        animator.ResetTrigger("AttackPrimary");
+        animator.ResetTrigger("AttackSecondary");
         animator.ResetTrigger("AttackBlocked");
 
         animator.ResetTrigger("DefenseBlocked");
         animator.ResetTrigger("DefenseDodge");
     }
-
-
 }

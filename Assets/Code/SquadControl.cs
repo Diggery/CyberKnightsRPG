@@ -233,19 +233,20 @@ public class SquadControl : MonoBehaviour {
 
     IEnumerator StartAttack(SquadControl targetSquad) {
 
-        int[] normalOrder = new int[4] {0, 1, 2, 3};
-        int[] mixedOrder = new int[4] {1, 0, 3, 2};
+        int[] normalOrder = new int[6] {0, 1, 2, 3, 1, 0};
+        int[] mixedOrder = new int[6] {1, 0, 3, 2, 1, 0};
 
         int[] order = Random.value > 0.5f ? normalOrder : mixedOrder;
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 6; i++) {
             UnitControl unit = units[order[i]];
             unit.transform.position = GetUnitPosition(unit.UnitId);
             unit.transform.rotation = transform.rotation;
-            unit.Attack(targetSquad);
-            yield return new WaitForSeconds(0.5f);
-        }
 
+            if (unit.Attack(targetSquad, (i < 4))) {
+                yield return new WaitForSeconds(0.5f);
+            }
+        }
     }
 
     public void FillSquad() {

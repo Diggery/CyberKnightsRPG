@@ -7,8 +7,11 @@ public class Weapon : MonoBehaviour {
     public WeaponType type = WeaponType.Melee;
 
     public bool hasReach = false;
+    public bool isSecondary = false;
 
     public RuntimeAnimatorController animOverride;
+
+    UnitControl owner;
 
     float damage = 0;
     public float Damage {
@@ -37,8 +40,8 @@ public class Weapon : MonoBehaviour {
 
     protected bool attackInProgress = false;
 
-    protected virtual void Start () {
-	
+    public virtual void Init (UnitControl _owner) {
+        owner = _owner;
 	}
 	
 	protected virtual void Update () {
@@ -64,7 +67,9 @@ public class Weapon : MonoBehaviour {
         
     }
 
-    public virtual void AttackHit() {
+    public virtual void AttackHit(UnitControl victim) {
+        DamageInfo damageInfo = new DamageInfo(1, DamageType.Other, owner);
+        victim.TakeDamage(damageInfo);
         EndAttack();
     }
 

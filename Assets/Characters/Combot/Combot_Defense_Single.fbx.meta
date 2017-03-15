@@ -36,6 +36,7 @@ ModelImporter:
     100056: Combot:Torso_Geo
     100058: Combot:Torso_Skel
     100060: //RootNode
+    100062: Combot:Back_Attach
     400000: Combot:Combot_Geometry
     400002: Combot:Combot_Skeleton
     400004: Combot:Head_Geo
@@ -67,6 +68,7 @@ ModelImporter:
     400056: Combot:Torso_Geo
     400058: Combot:Torso_Skel
     400060: //RootNode
+    400062: Combot:Back_Attach
     4300000: Combot:LeftArm_Geo
     4300002: Combot:RightArm_Geo
     4300004: Combot:Head_Geo
