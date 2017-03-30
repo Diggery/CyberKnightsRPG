@@ -1,0 +1,305 @@
+fileFormatVersion: 2
+guid: ada3030813c6847a6bd85419c46cd85a
+timeCreated: 1490829062
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: ShieldPanel1
+    100004: ShieldPanel2
+    100006: ShieldPanel3
+    100008: ShieldPanel4
+    100010: ShieldPanel5
+    100012: ShieldPanel6
+    100014: ShieldPanel7
+    100016: ShieldPanel8
+    400000: //RootNode
+    400002: ShieldPanel1
+    400004: ShieldPanel2
+    400006: ShieldPanel3
+    400008: ShieldPanel4
+    400010: ShieldPanel5
+    400012: ShieldPanel6
+    400014: ShieldPanel7
+    400016: ShieldPanel8
+    2300000: //RootNode
+    2300002: ShieldPanel1
+    2300004: ShieldPanel2
+    2300006: ShieldPanel3
+    2300008: ShieldPanel4
+    2300010: ShieldPanel5
+    2300012: ShieldPanel6
+    2300014: ShieldPanel7
+    2300016: ShieldPanel8
+    3300000: //RootNode
+    3300002: ShieldPanel1
+    3300004: ShieldPanel2
+    3300006: ShieldPanel3
+    3300008: ShieldPanel4
+    3300010: ShieldPanel5
+    3300012: ShieldPanel6
+    3300014: ShieldPanel7
+    3300016: ShieldPanel8
+    4300000: ShieldBoss
+    4300002: ShieldPanel1
+    4300004: ShieldPanel2
+    4300006: ShieldPanel3
+    4300008: ShieldPanel4
+    4300010: ShieldPanel5
+    4300012: ShieldPanel6
+    4300014: ShieldPanel7
+    4300016: ShieldPanel8
+    7400000: shield_close
+    7400002: shield_closed
+    7400004: shield_open
+    7400006: shield_opened
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: shield_close
+      takeName: Take 001
+      firstFrame: 35
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: ShieldPanel1
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3/ShieldPanel4
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3/ShieldPanel4/ShieldPanel5
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3/ShieldPanel4/ShieldPanel5/ShieldPanel6
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3/ShieldPanel4/ShieldPanel5/ShieldPanel6/ShieldPanel7
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3/ShieldPanel4/ShieldPanel5/ShieldPanel6/ShieldPanel7/ShieldPanel8
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: shield_closed
+      takeName: Take 001
+      firstFrame: 4
+      lastFrame: 5
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: ShieldPanel1
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3/ShieldPanel4
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3/ShieldPanel4/ShieldPanel5
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3/ShieldPanel4/ShieldPanel5/ShieldPanel6
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3/ShieldPanel4/ShieldPanel5/ShieldPanel6/ShieldPanel7
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3/ShieldPanel4/ShieldPanel5/ShieldPanel6/ShieldPanel7/ShieldPanel8
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: shield_open
+      takeName: Take 001
+      firstFrame: 5
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: ShieldPanel1
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3/ShieldPanel4
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3/ShieldPanel4/ShieldPanel5
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3/ShieldPanel4/ShieldPanel5/ShieldPanel6
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3/ShieldPanel4/ShieldPanel5/ShieldPanel6/ShieldPanel7
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3/ShieldPanel4/ShieldPanel5/ShieldPanel6/ShieldPanel7/ShieldPanel8
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: shield_opened
+      takeName: Take 001
+      firstFrame: 30
+      lastFrame: 35
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: ShieldPanel1
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3/ShieldPanel4
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3/ShieldPanel4/ShieldPanel5
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3/ShieldPanel4/ShieldPanel5/ShieldPanel6
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3/ShieldPanel4/ShieldPanel5/ShieldPanel6/ShieldPanel7
+        weight: 1
+      - path: ShieldPanel1/ShieldPanel2/ShieldPanel3/ShieldPanel4/ShieldPanel5/ShieldPanel6/ShieldPanel7/ShieldPanel8
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

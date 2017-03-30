@@ -1,8 +1,12 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Code/UnitControl.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Code/WeaponSpear.cs">
     <Files>
-      <File FileName="Assets/Code/UnitControl.cs" Line="116" Column="1" />
+      <File FileName="Assets/Code/UnitAttack.cs" Line="292" Column="1" />
+      <File FileName="Assets/Code/UnitControl.cs" Line="149" Column="9" />
+      <File FileName="Assets/Code/Weapon.cs" Line="43" Column="11" />
+      <File FileName="Assets/Code/SquadControl.cs" Line="246" Column="1" />
+      <File FileName="Assets/Code/WeaponSpear.cs" Line="16" Column="22" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

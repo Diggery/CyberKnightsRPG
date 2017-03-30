@@ -70,7 +70,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0411b969606c4b70b5e22e5dbbf651f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TempWeapon: ChainSword
+  attachRightHand: {fileID: 0}
+  attachLeftHand: {fileID: 0}
+  attachBack: {fileID: 0}
+  TempPrimaryWeapon: ChainSword
+  TempSecondaryWeapon: 
   teamName: Enemy
 --- !u!114 &114000013449673460
 MonoBehaviour:
@@ -83,9 +87,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8a0e41353a8d47808e5c748ccc0d9a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  headPrefab: {fileID: 100002, guid: 07f56623fd15a4621ab7967cdbd0601c, type: 3}
-  torsoPrefab: {fileID: 100020, guid: ee158528d861143c69979aba8e94bf8e, type: 3}
-  leftArmPrefab: {fileID: 100000, guid: f22a03c7d30d442fba7bdbe9d4b7ed89, type: 3}
-  rightArmPrefab: {fileID: 100000, guid: 16888ac7ddfb142c3a5758bb93e0211a, type: 3}
-  legsPrefab: {fileID: 100008, guid: 9415011586803499aad2b3f75af50c35, type: 3}
+  headPrefab: Head_Basic
+  torsoPrefab: Torso_Basic
+  leftArmPrefab: LeftArm_Basic
+  rightArmPrefab: RightArm_Basic
+  legsPrefab: Legs_Basic
   combotColor: {r: 0, g: 0, b: 0, a: 1}

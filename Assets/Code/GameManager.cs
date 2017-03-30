@@ -32,9 +32,13 @@ public class GameManager : MonoBehaviour {
     }
 
     public InventoryObject inventory;
-
+    public PartsInventory partsInventory;
 
     public static GameManager instance;
+
+    public GameManager Instance {
+        get { return instance; }
+    }
 
     private void CreateInstance() {
         if (instance == null) {
@@ -54,6 +58,10 @@ public class GameManager : MonoBehaviour {
 
     public void PlayerTurnComplete() {
         
+    }
+
+    public GameObject GetCombotPart(string name) {
+        return partsInventory.GetPart(name);
     }
 
     public GameObject GetEquipment(string name) {

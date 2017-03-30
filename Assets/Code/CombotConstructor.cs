@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CombotConstructor : MonoBehaviour {
 
 
-    public GameObject headPrefab;
-    public GameObject torsoPrefab;
-    public GameObject leftArmPrefab;
-    public GameObject rightArmPrefab;
-    public GameObject legsPrefab;
+    public string headPrefab;
+    public string torsoPrefab;
+    public string leftArmPrefab;
+    public string rightArmPrefab;
+    public string legsPrefab;
 
     Animator animator;
     Transform geoGroup;
@@ -21,11 +22,20 @@ public class CombotConstructor : MonoBehaviour {
     Transform rightLegAttach;
     Transform headAttach;
 
+    List<GameObject> partsToInitialize = new List<GameObject>();
+
     public Color combotColor = Color.white;
 
-	void Awake () {
+    GameManager gameManager;
+    UnitControl unitControl;
+
+
+	void Start () {
         animator = GetComponent<Animator>();
+        gameManager = GameManager.instance;
+        unitControl = GetComponent<UnitControl>();
         Build();
+        InitializeParts();
         StartCoroutine(BindAnimator());
 	}
    
@@ -66,8 +76,18 @@ public class CombotConstructor : MonoBehaviour {
         AddNameSpace(transform);
     }
 
+    void InitializeParts() {
+        foreach(GameObject part in partsToInitialize) {
+            CombotPart partControl = part.GetComponent<CombotPart>();
+            if (partControl) {
+                partControl.Init(unitControl);
+            }
+        }
+    }
+
     void AddTorso() {
-        GameObject part = Instantiate(torsoPrefab) as GameObject;
+
+        GameObject part = Instantiate(gameManager.GetCombotPart(torsoPrefab)) as GameObject;
         part.transform.position = transform.position;
         part.transform.rotation = transform.rotation;
         part.transform.localScale = transform.localScale;
@@ -84,10 +104,12 @@ public class CombotConstructor : MonoBehaviour {
         partGeo.GetComponent<Renderer>().material.color = combotColor;
         partGeo.SetParent(geoGroup, false);
         Destroy(part);
+
+        partsToInitialize.Add(rootSkel.gameObject);
     }
 
     void AddLeftArm() {
-        GameObject part = Instantiate(leftArmPrefab) as GameObject;
+        GameObject part = Instantiate(gameManager.GetCombotPart(leftArmPrefab)) as GameObject;
         part.transform.position = transform.position;
         part.transform.rotation = transform.rotation;
         part.transform.localScale = transform.localScale;
@@ -100,10 +122,11 @@ public class CombotConstructor : MonoBehaviour {
         partGeo.SetParent(geoGroup);
         Destroy(part);
 
+        partsToInitialize.Add(partSkel.gameObject);
     }
 
     void AddRightArm() {
-        GameObject part = Instantiate(rightArmPrefab) as GameObject;
+        GameObject part = Instantiate(gameManager.GetCombotPart(rightArmPrefab)) as GameObject;
         part.transform.position = transform.position;
         part.transform.rotation = transform.rotation;
         part.transform.localScale = transform.localScale;
@@ -111,15 +134,16 @@ public class CombotConstructor : MonoBehaviour {
         Transform partSkel = part.transform.Find("RightShoulder_Skel");
         partSkel.SetParent(rightArmAttach.parent);
         Destroy(rightArmAttach.gameObject);
-
+ 
         Transform partGeo = part.transform.Find("RightArm_Geo");
         partGeo.SetParent(geoGroup);
         Destroy(part);
 
+        partsToInitialize.Add(partSkel.gameObject);
     }
 
     void AddLegs() {
-        GameObject part = Instantiate(legsPrefab) as GameObject;
+        GameObject part = Instantiate(gameManager.GetCombotPart(legsPrefab)) as GameObject;
         part.transform.position = transform.position;
         part.transform.rotation = transform.rotation;
         part.transform.localScale = transform.localScale;
@@ -136,10 +160,12 @@ public class CombotConstructor : MonoBehaviour {
         partGeo.SetParent(geoGroup);
         Destroy(part);
 
+        partsToInitialize.Add(rightSkel.gameObject);
+
     }
 
     void AddHead() {
-        GameObject part = Instantiate(headPrefab) as GameObject;
+        GameObject part = Instantiate(gameManager.GetCombotPart(headPrefab)) as GameObject;
         part.transform.position = transform.position;
         part.transform.rotation = transform.rotation;
         part.transform.localScale = transform.localScale;
@@ -152,6 +178,9 @@ public class CombotConstructor : MonoBehaviour {
         Transform partGeo = part.transform.Find("Head_Geo");
         partGeo.SetParent(geoGroup);
         Destroy(part);
+
+        partsToInitialize.Add(partSkel.gameObject);
+
 
     }
 
