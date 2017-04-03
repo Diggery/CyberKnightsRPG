@@ -29,7 +29,7 @@ public class SquadControl : MonoBehaviour {
         get {
             bool isMoving = false;
             foreach (UnitControl unit in units)
-                if (unit.IsMoving) isMoving = true;
+                if (unit && unit.IsMoving) isMoving = true;
 
             return isMoving;
         }
@@ -56,7 +56,7 @@ public class SquadControl : MonoBehaviour {
         get {
             bool isAttacking = false;
             foreach (UnitControl unit in units) {
-                if (unit.IsAttacking) isAttacking = true;
+                if (unit && unit.IsAttacking) isAttacking = true;
             }
             return isAttacking;
         }
@@ -79,6 +79,16 @@ public class SquadControl : MonoBehaviour {
 
     public bool HasCenterTarget {
         get { return centerSpot; }
+    }
+
+    public bool IsTakingTurn {
+        get {
+            bool isTakingTurn = false;
+            foreach (UnitControl unit in units) {
+                if (unit && (unit.IsAttacking || unit.IsMoving)) isTakingTurn = true;
+            }
+            return isTakingTurn;
+        }
     }
 
     Vector3[] unitOffsets;
@@ -115,6 +125,10 @@ public class SquadControl : MonoBehaviour {
 
     void Update() {
 
+        if (Input.GetKeyDown(KeyCode.T) && units[2]) {
+            units[2].Die();
+        }
+
     }
 
     public int AddUnit(UnitControl newUnit) {
@@ -132,6 +146,19 @@ public class SquadControl : MonoBehaviour {
         return unitId;
     }
 
+    public void RemoveUnit(UnitControl deadUnit) {
+        bool unitRemoved = false;
+        for(int i = 0; i < 4; i++) {
+            if (units[i] == deadUnit) {
+                units[i] = null;
+                unitRemoved = true;
+            }
+        }
+        if (!unitRemoved) {
+            Debug.Log(deadUnit.name + " is not in squad " + transform.name);
+        }
+    }
+
     public void Move(Vector3 direction) {
 
         if (IsAttacking)
@@ -143,6 +170,7 @@ public class SquadControl : MonoBehaviour {
 
             return;
         }
+        ReCenterPosition();
 
         Ray ray = new Ray(transform.position + Vector3.up, direction);
         LayerMask terrainMask = 1 << LayerMask.NameToLayer("Terrain");
@@ -157,7 +185,7 @@ public class SquadControl : MonoBehaviour {
         gameManager.ProcessSquadPositions();
 
         foreach (UnitControl unit in units) {
-            if (unit.InSquad) {
+            if (unit && unit.InSquad) {
                 unit.MoveTo(GetUnitPosition(unit.UnitId), Mathf.RoundToInt(heading / 90));
             }
         }
@@ -221,13 +249,18 @@ public class SquadControl : MonoBehaviour {
         if (nextMove.sqrMagnitude > 0.5f) {
             Move(nextMove);
             nextMove = Vector3.zero;
+            return;
         }
+
+        if (!IsTakingTurn) 
+            gameManager.SquadTurnComplete();
     }
 
     public void Attack(SquadControl targetSquad) {
         if (IsAttacking)
             return;
-        
+
+        ReCenterPosition();
         StartCoroutine(StartAttack(targetSquad));
     }
 
@@ -240,15 +273,18 @@ public class SquadControl : MonoBehaviour {
 
         for (int i = 0; i < 6; i++) {
             UnitControl unit = units[order[i]];
-            unit.transform.position = GetUnitPosition(unit.UnitId);
-            unit.transform.rotation = transform.rotation;
-
-            if (unit.Attack(targetSquad, (i < 4))) {
+            if (unit && unit.Attack(targetSquad, (i < 4))) {
                 yield return new WaitForSeconds(0.5f);
             }
         }
     }
 
+    public void AttackComplete() {
+        if (!IsTakingTurn) 
+            gameManager.SquadTurnComplete();        
+    }
+
+        
     public void FillSquad() {
         GameObject combotPrefab = gameManager.inventory.GetPrefab("EnemyCombot");
 
@@ -260,6 +296,16 @@ public class SquadControl : MonoBehaviour {
             UnitControl combot = combotObj.GetComponent<UnitControl>();
             combot.SetSquad(this);
         }
+    }
+
+    void ReCenterPosition() {
+        for (int i = 0; i < units.Length; i++) {
+            UnitControl unit = units[i];
+            if (unit) {
+                unit.transform.position = GetUnitPosition(unit.UnitId);
+                unit.transform.rotation = transform.rotation;
+            }
+        }       
     }
 
     public UnitControl GetUnitByID(int id) {

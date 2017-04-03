@@ -21,14 +21,17 @@ public class InventoryObject : ScriptableObject {
     public EquipmentEntry[] equipment;
 
     public GameObject GetPrefab(string name) {
-        GameObject equipmentPrefab = null;
+        GameObject prefab = null;
         foreach (PrefabEntry entry in prefabs) {
             if (entry.name.Equals(name) && entry.prefab) {
-                equipmentPrefab = entry.prefab;
+                prefab = entry.prefab;
                 break;
             }
         }
-        return equipmentPrefab;
+        if (!prefab) 
+            Debug.Log("No prefab called" + name + " found");
+        
+        return prefab;
     }
 
 	public GameObject GetEquipment(string name) {

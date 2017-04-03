@@ -56,12 +56,16 @@ public class GameManager : MonoBehaviour {
     void Start () {
     }
 
-    public void PlayerTurnComplete() {
-        
+    public void SquadTurnComplete() {
+        Debug.Log("Turn Complete");
     }
 
     public GameObject GetCombotPart(string name) {
         return partsInventory.GetPart(name);
+    }
+
+    public GameObject GetPrefab(string name) {
+        return inventory.GetPrefab(name);
     }
 
     public GameObject GetEquipment(string name) {

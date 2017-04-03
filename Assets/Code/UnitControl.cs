@@ -10,7 +10,9 @@ public class UnitControl : MonoBehaviour {
     UnitMover unitMover;
     UnitAttack unitAttack;
 
-    NavMeshAgent navAgent;
+    RagdollControl ragdollControl;
+
+    UnityEngine.AI.NavMeshAgent navAgent;
     SquadControl squad;
 
     [HideInInspector] public Transform attachRightHand;
@@ -19,6 +21,12 @@ public class UnitControl : MonoBehaviour {
 
     public string TempPrimaryWeapon = "ChainSword";
     public string TempSecondaryWeapon = "";
+
+
+    protected bool isDead;
+    public bool IsDead {
+        get { return isDead; }
+    }
 
     public bool IsMoving {
         get { return unitMover.IsMoving; }
@@ -81,6 +89,9 @@ public class UnitControl : MonoBehaviour {
 
     bool defenseAnimPlaying = false;
 
+    float hitPoint;
+    float maxHits = 20;
+
     public void Init() {
         gameManager = GameManager.instance;
 
@@ -115,6 +126,13 @@ public class UnitControl : MonoBehaviour {
         collision.radius = 0.5f;
         collision.height = 2.0f;
         collision.center = new Vector3(0.0f, 1.0f, 0.0f);
+
+        hitPoint = maxHits;
+
+
+        RagdollConfig ragdollConfig = gameObject.AddComponent<RagdollConfigCombot>();
+        if (ragdollConfig) 
+            ragdollControl = ragdollConfig.Init();
 	}
 
     public string TeamName {
@@ -127,9 +145,11 @@ public class UnitControl : MonoBehaviour {
 
 
 	void Update () {
+        if (isDead)
+            return;
+        
         if (!animator) animator = GetComponent<Animator>();
         animator.SetFloat("random", Random.value);
-
 	}
 
     public void SetSquad(SquadControl newSquad) {
@@ -207,10 +227,40 @@ public class UnitControl : MonoBehaviour {
 
     public void AttackComplete() {
         isAttacking = false;
+        squad.AttackComplete();
     }
 
     public void TakeDamage(DamageInfo damageInfo) {
-        animator.SetTrigger("GetHit" + damageInfo.GetOrthagonalDirection(transform));
+        animator.SetTrigger("GetHit" + damageInfo.GetOrthagonalDirectionName(transform));
+        hitPoint -= damageInfo.damageAmount;
+
+
+        int damageDirection = damageInfo.GetOrthagonalDirection(transform);
+        string effectsName = "PointWeaponHit";
+
+        if (damageInfo.type == DamageType.Slash) 
+            effectsName = "SlashWeaponHit";
+
+        Vector3 damagePos = transform.position + new Vector3(0.0f, 1.5f, 0.0f);
+        Quaternion damageRot = Quaternion.AngleAxis(damageDirection * 90, Vector3.up);
+        Instantiate(gameManager.GetPrefab(effectsName), damagePos, damageRot);
+
+
+        if (hitPoint < 0) 
+            Die();
+    }
+
+    public void Die() {
+        Debug.Log(transform.name + " is Dead");
+        Invoke("EnterRagdoll", 0.5f);
+        isDead = true;
+        if (squad)
+            squad.RemoveUnit(this);
+    }
+
+    void EnterRagdoll() {
+        ragdollControl.SwitchToRagdoll();
+
     }
 
     void ResetAttackTriggers() {

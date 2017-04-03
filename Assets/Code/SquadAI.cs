@@ -14,7 +14,8 @@ public class SquadAI : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(KeyCode.X)) {
             UnitControl dead = squad.GetUnitByID(1);
-            Destroy(dead.gameObject);
+            if (dead)
+                Destroy(dead.gameObject);
         }
 	}
 }

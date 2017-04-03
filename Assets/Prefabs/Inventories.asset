@@ -18,6 +18,12 @@ MonoBehaviour:
     prefab: {fileID: 1000013601114638, guid: 0c1bd403e09ec4fa4bb9da427047c5c4, type: 2}
   - name: EnemyCombot
     prefab: {fileID: 1000013624454752, guid: 860007de22d2445518db44c3b3455fb3, type: 2}
+  - name: PointWeaponHit
+    prefab: {fileID: 1380275821872642, guid: a7ab88e4322f14c55a1a4a663265ecdf, type: 2}
+  - name: SlashWeaponHit
+    prefab: {fileID: 1967721203166878, guid: 19beba0e50ee04ace820373915d3a0a5, type: 2}
+  - name: WeaponsBlock
+    prefab: {fileID: 1983764260030408, guid: 749b8999914814647819dac3e0b9ce69, type: 2}
   equipment:
   - name: ChainSword
     prefab: {fileID: 1000011669730198, guid: 23a8af3571d8046eea67190d007db6cc, type: 2}

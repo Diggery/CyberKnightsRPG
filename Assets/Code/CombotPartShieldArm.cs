@@ -41,17 +41,14 @@ public class CombotPartShieldArm : CombotPart {
 	
     protected override void Update () {
         base.Update();
-        if (unitControl.InAttackMode != shieldOpen) {
-            shieldOpen = unitControl.InAttackMode;
-            shieldAnimator.SetBool("IsOpen", shieldOpen);
-        }
+
 	}
 
     public void OpenShield() {
-        Debug.Log("Shield Open");
+        shieldAnimator.SetBool("IsOpen", true);
     }
 
     public void CloseShield() {
-        Debug.Log("Shield Close");
+        shieldAnimator.SetBool("IsOpen", false);
     }
 }

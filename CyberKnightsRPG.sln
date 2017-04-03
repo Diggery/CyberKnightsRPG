@@ -1,9 +1,9 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2008
-
-Project("{277E294F-97D2-CA48-9569-68301BB979A5}") = "CyberKnightsRPG", "Assembly-CSharp.csproj", "{8565AA22-9224-29E0-2658-BEE9146C0BF9}"
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyberKnightsRPG", "Assembly-CSharp.csproj", "{8565AA22-9224-29E0-2658-BEE9146C0BF9}"
 EndProject
-Project("{277E294F-97D2-CA48-9569-68301BB979A5}") = "CyberKnightsRPG", "Assembly-CSharp-Editor.csproj", "{34A2119A-E229-CD50-5E5F-BA4C11696C31}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyberKnightsRPG", "Assembly-CSharp-Editor.csproj", "{34A2119A-E229-CD50-5E5F-BA4C11696C31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

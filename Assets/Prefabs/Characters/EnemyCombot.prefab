@@ -16,12 +16,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000014192282714}
-  - 114: {fileID: 114000013449673460}
-  - 114: {fileID: 114000011938686754}
-  - 95: {fileID: 95000013924485554}
+  - component: {fileID: 4000014192282714}
+  - component: {fileID: 114000013449673460}
+  - component: {fileID: 114000011938686754}
+  - component: {fileID: 95000013924485554}
   m_Layer: 0
   m_Name: EnemyCombot
   m_TagString: Untagged
@@ -38,10 +38,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.12, y: 0, z: 8.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &95000013924485554
 Animator:
   serializedVersion: 3
@@ -89,7 +89,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   headPrefab: Head_Basic
   torsoPrefab: Torso_Basic
-  leftArmPrefab: LeftArm_Basic
+  leftArmPrefab: LeftArm_Shield
   rightArmPrefab: RightArm_Basic
   legsPrefab: Legs_Basic
   combotColor: {r: 0, g: 0, b: 0, a: 1}

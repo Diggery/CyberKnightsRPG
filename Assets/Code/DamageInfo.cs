@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public enum DamageType { Kinetic, Energy, Other }
+public enum DamageType { Energy, Slash, Puncture, Other }
 
 public class DamageInfo {
     public float damageAmount;
@@ -23,7 +23,6 @@ public class DamageInfo {
         position = Vector3.zero;
         attacker = null;
         isDirectional = false;
-
     }
 
     public DamageInfo(float _amount, DamageType _type, Vector3 _position) {
@@ -56,7 +55,13 @@ public class DamageInfo {
         return angle > 0.75f;
     }
 
-    public string GetOrthagonalDirection(Transform victim) {
+    public int GetOrthagonalDirection(Transform victim) {
+        Vector3 incomingDir = (position - victim.position).normalized;
+        float angle = Vector3.Angle(incomingDir, victim.forward * Mathf.Sign(Vector3.Dot(incomingDir, victim.right)));
+        return Mathf.RoundToInt(angle / 90);
+    }
+
+    public string GetOrthagonalDirectionName(Transform victim) {
         Vector3 incomingDir = (position - victim.position).normalized;
         float angle = Vector3.Angle(incomingDir, victim.forward * Mathf.Sign(Vector3.Dot(incomingDir, victim.right)));
         int direction = Mathf.RoundToInt(angle / 90); 

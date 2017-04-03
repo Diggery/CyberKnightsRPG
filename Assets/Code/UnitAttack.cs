@@ -93,7 +93,6 @@ public class UnitAttack : MonoBehaviour {
         bool attackAttempted = false;
 
         if (offsetFromSquad.magnitude < (GameManager.instance.GridSize * 1.1f)) {
-
             attackAttempted = TryMeleeAttack(usePrimary ? primaryWeapon : secondaryWeapon, targetSquad, attackDir);
         }
 
@@ -122,7 +121,6 @@ public class UnitAttack : MonoBehaviour {
         Vector3 dir = Quaternion.AngleAxis(90 * direction, Vector3.up) * (transform.forward * 3);
         Vector3 forwardPos = transform.position + dir;
         victim = CheckForTarget(forwardPos);
-
 
         // secondary attack if direction is forward;
         if (victim && weapon.isSecondary) {
@@ -288,15 +286,17 @@ public class UnitAttack : MonoBehaviour {
 
     public void AttackCompleted(string result) {
         unitControl.AttackComplete();
-        if (lastAttackTarget && result.Equals("Hit")) {
-            lastWeaponUsed.AttackHit(lastAttackTarget);
-        } else if (result.Equals("Secondary")) {
-            secondaryWeapon.AttackHit(lastAttackTarget);
-        } else if (result.Equals("Blocked")) {
-            lastWeaponUsed.AttackBlocked();
-        } else {
-            lastWeaponUsed.AttackMissed();
-        }
+        if (lastAttackTarget) {
+            if (result.Equals("Hit")) {
+                lastWeaponUsed.AttackHit(lastAttackTarget);
+            } else if (result.Equals("Secondary")) {
+                secondaryWeapon.AttackHit(lastAttackTarget);
+            } else if (result.Contains("Blocked")) {
+                lastWeaponUsed.AttackBlocked(lastAttackTarget);
+            } else {
+                lastWeaponUsed.AttackMissed();
+            }
+        }   
         //lastAttackTarget = null;
     }
 }

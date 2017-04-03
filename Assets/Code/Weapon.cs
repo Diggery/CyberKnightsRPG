@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Weapon : MonoBehaviour {
 
+    GameManager gameManager;
+
     public enum WeaponType { Melee, Ranged }
     public WeaponType type = WeaponType.Melee;
 
@@ -42,6 +44,7 @@ public class Weapon : MonoBehaviour {
 
     public virtual void Init (UnitControl _owner) {
         owner = _owner;
+        gameManager = GameManager.instance;
 	}
 	
 	protected virtual void Update () {
@@ -68,13 +71,21 @@ public class Weapon : MonoBehaviour {
     }
 
     public virtual void AttackHit(UnitControl victim) {
-        DamageInfo damageInfo = new DamageInfo(1, DamageType.Other, owner);
+        DamageType damageType = DamageType.Puncture;
+
+        if (type == WeaponType.Melee && !isSecondary) {
+            damageType = DamageType.Slash;
+        }
+
+        DamageInfo damageInfo = new DamageInfo(1, damageType, owner);
         victim.TakeDamage(damageInfo);
         EndAttack();
     }
 
-    public virtual void AttackBlocked() {
+    public virtual void AttackBlocked(UnitControl victim) {
         EndAttack();
+        GameObject blockEffect = Instantiate(gameManager.GetPrefab("WeaponsBlock"), victim.transform) as GameObject;
+        blockEffect.transform.localPosition = new Vector3(0.0f, 1.8f, 0.5f);
     }
 
     public virtual void AttackMissed() {

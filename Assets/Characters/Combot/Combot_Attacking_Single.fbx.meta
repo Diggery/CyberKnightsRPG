@@ -98,6 +98,8 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -234,7 +236,7 @@ ModelImporter:
       events:
       - time: 0.4010554
         functionName: AttackCompleted
-        data: Blocked
+        data: BlockedForward
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
@@ -432,7 +434,7 @@ ModelImporter:
       events:
       - time: 0.38522437
         functionName: AttackCompleted
-        data: Blocked
+        data: BlockedRight
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
@@ -630,7 +632,7 @@ ModelImporter:
       events:
       - time: 0.3878625
         functionName: AttackCompleted
-        data: Blocked
+        data: BlockedLeft
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
@@ -728,6 +730,7 @@ ModelImporter:
   importAnimation: 1
   copyAvatar: 1
   humanDescription:
+    serializedVersion: 2
     human: []
     skeleton: []
     armTwist: 0.5
@@ -738,7 +741,10 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: Combot:RootMotion_Skel
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: e5857a10394c24a23a0cb1c8790525ef,
     type: 3}
   animationType: 2
