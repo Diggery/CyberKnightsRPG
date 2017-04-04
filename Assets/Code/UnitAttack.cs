@@ -101,7 +101,6 @@ public class UnitAttack : MonoBehaviour {
 
         if (!attackAttempted) {
             unitControl.AttackComplete();
-            Debug.Log(transform.name + " didnt attack");
         }
         return attackAttempted;
     }
@@ -119,16 +118,21 @@ public class UnitAttack : MonoBehaviour {
 
         //check forward
         Vector3 dir = Quaternion.AngleAxis(90 * direction, Vector3.up) * (transform.forward * 3);
-        Vector3 forwardPos = transform.position + dir;
+        Vector3 forwardPos = unitControl.SquadPosition + dir;
         victim = CheckForTarget(forwardPos);
 
         // secondary attack if direction is forward;
-        if (victim && weapon.isSecondary) {
-            animator.SetTrigger("AttackSecondary");
-            weapon.StartAttack();
-            lastAttackTarget = victim;
-            lastWeaponUsed = weapon;
-            return true;
+        if (weapon.isSecondary) {
+            if (victim) {
+                Debug.Log("Attacking with Secondary");
+                animator.SetTrigger("AttackSecondary");
+                weapon.StartAttack();
+                lastAttackTarget = victim;
+                lastWeaponUsed = weapon;   
+                return true;
+            } 
+            Debug.Log("No Target for Secondary");
+            return false;
         }
 
         //check forward with reach
@@ -144,7 +148,7 @@ public class UnitAttack : MonoBehaviour {
 
             //no special attacks from the backrow
             if (!victim) {
-                float distanceForMe = Vector3.Distance(transform.position, target.transform.position); 
+                float distanceForMe = Vector3.Distance(unitControl.SquadPosition, target.transform.position); 
                 float distanceForSquad = Vector3.Distance(unitControl.Squad.transform.position, target.transform.position); 
                 if (distanceForMe > distanceForSquad) 
                     return false;
@@ -228,12 +232,11 @@ public class UnitAttack : MonoBehaviour {
         Ray targetRay = new Ray(targetPos + (Vector3.up * 5), Vector3.down);
         if (Physics.Raycast(targetRay, out hit, 10, unitMask)) {
             target = hit.transform.GetComponent<UnitControl>();
+            Debug.Log(transform.name + " is attacking " + target.name );
             if (target && target.TeamName.Equals(unitControl.TeamName)) {
+                Debug.Log("Wait, thats a firendly!");
                 target = null;
-            } else {
-                
             }
-                
         }
         return target;
     }

@@ -57,6 +57,10 @@ public class UnitControl : MonoBehaviour {
         set { inSquad = value; }
     }
 
+    public Vector3 SquadPosition {
+        get { return squad.GetUnitPosition(UnitId); }
+    }
+
     bool inAttackMode = false;
     public bool InAttackMode {
         get { return inAttackMode; }
@@ -90,7 +94,7 @@ public class UnitControl : MonoBehaviour {
     bool defenseAnimPlaying = false;
 
     float hitPoint;
-    float maxHits = 20;
+    float maxHits = 10;
 
     public void Init() {
         gameManager = GameManager.instance;
@@ -119,7 +123,7 @@ public class UnitControl : MonoBehaviour {
 
         animator.SetFloat("AnimOffset", (float)UnitId/4.0f);
 
-        transform.position = squad.GetUnitPosition(unitId);
+        transform.position = SquadPosition;
         transform.rotation = squad.transform.rotation;
 
         CapsuleCollider collision = gameObject.AddComponent<CapsuleCollider>();
