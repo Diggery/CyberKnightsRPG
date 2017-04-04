@@ -21,7 +21,7 @@ public class InputControl : MonoBehaviour {
         if (!squad)
             squad = gameManager.PlayerSquad;
 
-        if (squad) {
+        if (squad && !squad.IsWaitingForTurn) {
             Vector2 touchPos = (GvrController.TouchPos * 2) - Vector2.one;
 
             if (GvrController.TouchDown) {

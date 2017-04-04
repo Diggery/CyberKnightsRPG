@@ -60,12 +60,18 @@ public class GameManager : MonoBehaviour {
 
         if (squad == PlayerSquad) {
             foreach(SquadControl enemySquad in enemySquads) {
-                SquadAI ai = enemySquad.SquadAI;
-                if (ai) {
-                    ai.TakeTurn();
-                }
+                enemySquad.StartTurn();
             }
-        }
+        } else if (enemySquads.Contains(squad)) {
+            bool allDone = true;
+            foreach(SquadControl enemySquad in enemySquads) {
+                if (enemySquad.IsTakingTurn)
+                    allDone = false;
+            }
+            if (allDone)
+                PlayerSquad.StartTurn();
+        } 
+
     }
 
     public GameObject GetCombotPart(string name) {

@@ -32,10 +32,6 @@ public class UnitControl : MonoBehaviour {
         get { return unitMover.IsMoving; }
     }
 
-    public bool AlmostDoneMoving {
-        get { return unitMover.AlmostDoneMoving; }
-    }
-
     public SquadControl Squad {
         get { return squad; }
     }

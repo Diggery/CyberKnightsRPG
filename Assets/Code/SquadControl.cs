@@ -35,6 +35,9 @@ public class SquadControl : MonoBehaviour {
         }
     }
 
+    bool hasMoved = false;
+    bool hasAttacked = false;
+
     bool inAttackMode = false;
     public bool InAttackMode {
         get {
@@ -62,16 +65,6 @@ public class SquadControl : MonoBehaviour {
         }
     }
 
-    public bool AlmostDoneMoving {
-        get {
-            bool almostDoneMoving = false;
-            foreach (UnitControl unit in units)
-                if (unit.AlmostDoneMoving) almostDoneMoving = true;
-
-            return almostDoneMoving;
-        }
-    }
-
     bool inFormation = true;
     public bool InFormation {
         get { return inFormation; }
@@ -89,6 +82,12 @@ public class SquadControl : MonoBehaviour {
             }
             return isTakingTurn;
         }
+    }
+
+    bool isWaitingForTurn = false;
+    public bool IsWaitingForTurn {
+        get { return isWaitingForTurn; }
+        set { isWaitingForTurn = value; }
     }
 
     public SquadAI squadAI;
@@ -129,14 +128,6 @@ public class SquadControl : MonoBehaviour {
         //gameObject.layer = LayerMask.NameToLayer("Squads");
     }
 
-    void Update() {
-
-        if (Input.GetKeyDown(KeyCode.T) && units[2]) {
-            units[2].Die();
-        }
-
-    }
-
     public int AddUnit(UnitControl newUnit) {
         int unitId = -1;
         for(int i = 0; i < 4; i++) {
@@ -167,15 +158,18 @@ public class SquadControl : MonoBehaviour {
 
     public void Move(Vector3 direction) {
 
+        if (hasMoved) {
+            return;
+        }
+
         if (IsAttacking)
             return;
 
         if (IsMoving) {
-            if (AlmostDoneMoving)
-                nextMove = direction;
-
             return;
         }
+
+
         ReCenterPosition();
 
         Ray ray = new Ray(transform.position + Vector3.up, direction);
@@ -192,9 +186,24 @@ public class SquadControl : MonoBehaviour {
 
         gameManager.ProcessSquadPositions();
 
+        hasMoved = true;
+
         foreach (UnitControl unit in units) {
             if (unit && unit.InSquad) {
                 unit.MoveTo(GetUnitPosition(unit.UnitId), Mathf.RoundToInt(heading / 90));
+            }
+        }
+    }
+
+    public void Rotate(int amount) {
+        if (hasMoved) {
+            return;
+        }
+        hasMoved = true;
+        transform.rotation *= Quaternion.AngleAxis(90 * amount, Vector3.up);
+        foreach (UnitControl unit in units) {
+            if (unit.InSquad) {
+                unit.RotateTo(amount, GetUnitPosition(unit.UnitId));
             }
         }
     }
@@ -240,14 +249,13 @@ public class SquadControl : MonoBehaviour {
         return transform.TransformPoint(unitOffsets[id]);
     }
 
-    public void Rotate(int amount) {
+    public void StartTurn() {
+        IsWaitingForTurn = false;
+        if (squadAI)
+            squadAI.TakeTurn();
 
-        transform.rotation *= Quaternion.AngleAxis(90 * amount, Vector3.up);
-        foreach (UnitControl unit in units) {
-            if (unit.InSquad) {
-                unit.RotateTo(amount, GetUnitPosition(unit.UnitId));
-            }
-        }
+        hasMoved = false;
+        hasAttacked = false;
     }
 
     public void MoveComplete() {
@@ -260,8 +268,10 @@ public class SquadControl : MonoBehaviour {
             return;
         }
 
-        if (!IsTakingTurn) 
+        if (!IsTakingTurn) {
+            IsWaitingForTurn = true;
             gameManager.SquadTurnComplete(this);
+        }
     }
 
     public void Attack(SquadControl targetSquad) {
@@ -288,8 +298,10 @@ public class SquadControl : MonoBehaviour {
     }
 
     public void AttackComplete() {
-        if (!IsTakingTurn) 
+        if (!IsTakingTurn) {
+            IsWaitingForTurn = true;
             gameManager.SquadTurnComplete(this);        
+        }
     }
 
         
