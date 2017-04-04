@@ -56,8 +56,16 @@ public class GameManager : MonoBehaviour {
     void Start () {
     }
 
-    public void SquadTurnComplete() {
-        Debug.Log("Turn Complete");
+    public void SquadTurnComplete(SquadControl squad) {
+
+        if (squad == PlayerSquad) {
+            foreach(SquadControl enemySquad in enemySquads) {
+                SquadAI ai = enemySquad.SquadAI;
+                if (ai) {
+                    ai.TakeTurn();
+                }
+            }
+        }
     }
 
     public GameObject GetCombotPart(string name) {

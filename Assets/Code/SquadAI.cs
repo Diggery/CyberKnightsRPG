@@ -18,4 +18,9 @@ public class SquadAI : MonoBehaviour {
                 Destroy(dead.gameObject);
         }
 	}
+
+    public void TakeTurn() {
+        Debug.Log("Taking Turn");
+        squad.Move(squad.transform.forward);
+    }
 }

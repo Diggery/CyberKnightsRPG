@@ -91,11 +91,17 @@ public class SquadControl : MonoBehaviour {
         }
     }
 
+    public SquadAI squadAI;
+    public SquadAI SquadAI {
+        get { return squadAI; }
+    }
+
     Vector3[] unitOffsets;
 
     void Start() {
         gameManager = GameManager.instance;
         input = gameManager.Input;
+        squadAI = GetComponent<SquadAI>();
 
         if (type == SquadType.Player) {
             gameManager.PlayerSquad = this;
@@ -178,7 +184,9 @@ public class SquadControl : MonoBehaviour {
             return;
 
         transform.position += (direction * gameManager.GridSize);
-        cameraControl.Move(transform.position);
+
+        if (cameraControl)
+            cameraControl.Move(transform.position);
 
         float heading = Vector3.Angle(direction, transform.forward) * Mathf.Sign(Vector3.Dot(direction, transform.right));
 
@@ -253,7 +261,7 @@ public class SquadControl : MonoBehaviour {
         }
 
         if (!IsTakingTurn) 
-            gameManager.SquadTurnComplete();
+            gameManager.SquadTurnComplete(this);
     }
 
     public void Attack(SquadControl targetSquad) {
@@ -281,7 +289,7 @@ public class SquadControl : MonoBehaviour {
 
     public void AttackComplete() {
         if (!IsTakingTurn) 
-            gameManager.SquadTurnComplete();        
+            gameManager.SquadTurnComplete(this);        
     }
 
         
