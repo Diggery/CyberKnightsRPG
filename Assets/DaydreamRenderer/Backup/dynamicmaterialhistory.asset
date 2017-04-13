@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d436c14450e8cb740bd1bde2b02091dd, type: 3}
+  m_Name: dynamicmaterialhistory
+  m_EditorClassIdentifier: 
+  m_convertedMaterials:
+  - m_sourceScenePath: 
+    m_backupMaterial: {fileID: 2100000, guid: 5d4c118e7e8ef7d48b05ab41c4de9ce6, type: 2}
+    m_material: {fileID: 2100000, guid: 2af74b7a3b30ad0488b91c504089faae, type: 2}
+    m_splitMaterial: {fileID: 0}
+  m_splitMaterials: []

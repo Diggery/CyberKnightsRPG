@@ -46,6 +46,33 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\DaydreamRenderer\Baking\Editor\AssetPostProcess.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\Editor\BakeContext.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\Editor\BakeSetDialog.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\Editor\BakeSetSettingsDialog.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\Editor\BakeSetsInspector.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\Editor\DaydreamInspector.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\Editor\DaydreamRendererImportManager.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\Editor\DaydreamRendererMaterialHistory.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\Editor\DaydreamVertexLightingEditor.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\Editor\DaydreamVertexLightingInspector.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\Editor\NativeLib.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\Editor\OverrideInspector.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\Editor\Tests\BVHTestInspector.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\Editor\Tests\TessellateTestInspector.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\Editor\Tests\TriangleTestInspector.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\Editor\VertexBakerLib.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Editor\ColorProperty_TT.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Editor\DREditorUtility.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Editor\Daydream Menu.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Editor\DaydreamLightInspector.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Editor\DaydreamMaterialPostProcessor.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Editor\DaydreamMeshRendererInspector.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Editor\DaydreamStandardUI.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Editor\IconCache.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Editor\RangeProperty_TT.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Editor\TextureProperty_TT.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Editor\TextureProperty_TT_transform.cs" />
      <Compile Include="Assets\Editor\CreatePartsInventory.cs" />
      <Compile Include="Assets\Editor\ReorderablePartsList.cs" />
      <Compile Include="Assets\GoogleVR\Demos\Editor\DemoInputManagerEditor.cs" />
@@ -61,28 +88,37 @@
      <Compile Include="Assets\GoogleVR\Legacy\Editor\GvrMenu.cs" />
      <Compile Include="Assets\GoogleVR\Legacy\Editor\GvrViewerEditor.cs" />
      <Compile Include="Assets\GoogleVR\Legacy\Editor\StereoControllerEditor.cs" />
+     <None Include="Assets\DaydreamRenderer\Shaders\daydreamStandardInclude.cginc" />
      <None Include="Assets\GoogleVR\Distortion\GvrDistortion.cginc" />
      <None Include="Assets\GoogleVR\Demos\Shaders\VideoDemo\VideoDemoInsideShader.shader" />
      <None Include="Assets\GoogleVR\Shaders\GvrUIOverlayFont.shader" />
      <None Include="Assets\GoogleVR\Legacy\Resources\UnlitTexture.shader" />
+     <None Include="Assets\DaydreamRenderer\Shaders\daydreamDiffuseReflectInclude.cginc" />
      <None Include="Assets\Plugins\Android\proguard-gvr.txt" />
      <None Include="Assets\Shaders\DrawAreaShader.shader" />
+     <None Include="Assets\DaydreamRenderer\Shaders\daydreamDiffuseOnlyInclude.cginc" />
      <None Include="Assets\GoogleVR\Shaders\GvrAdditiveOverlay.shader" />
      <None Include="Assets\GoogleVR\Demos\Environment\DemoEnvUnlitGrayscale.shader" />
+     <None Include="Assets\DaydreamRenderer\Shaders\daydreamDiffuseOnly.shader" />
      <None Include="Assets\GoogleVR\Shaders\GvrUnlitTransparentOverlay.shader" />
      <None Include="Assets\GoogleVR\Shaders\GvrUnlitTransparentOverlayColor.shader" />
      <None Include="Assets\GoogleVR\Demos\Shaders\GVRDemo\GVRDemoAmbientOcclusion.shader" />
      <None Include="Assets\Shaders\StandardWithScrolling.shader" />
      <None Include="Assets\GoogleVR\Shaders\GvrUnlitTextureOverlay.shader" />
+     <None Include="Assets\DaydreamRenderer\Shaders\daydreamStandard.shader" />
+     <None Include="Assets\DaydreamRenderer\Resources\shadowMask.shader" />
      <None Include="Assets\Plugins\Android\AndroidManifest-Daydream.xml" />
      <None Include="Assets\Shaders\DrawCircleShader.shader" />
      <None Include="Assets\GoogleVR\Demos\Shaders\GVRDemo\GVRDemoUnlitGrayscaleToColor.shader" />
      <None Include="Assets\GoogleVR\Shaders\GvrReticleShader.shader" />
      <None Include="Assets\GoogleVR\Shaders\GvrUIOverlay.shader" />
+     <None Include="Assets\DaydreamRenderer\Shaders\daydreamShared.cginc" />
      <None Include="Assets\Shaders\TransWithVert.shader" />
+     <None Include="Assets\DaydreamRenderer\Shaders\daydreamDiffuseReflect.shader" />
      <None Include="Assets\Plugins\Android\AndroidManifest-Cardboard.xml" />
      <None Include="Assets\GoogleVR\Legacy\Resources\SolidColor.shader" />
      <None Include="Assets\GoogleVR\Shaders\GvrUnityCompatibility.cginc" />
+     <None Include="Assets\DaydreamRenderer\Resources\shadowFilter.shader" />
      <None Include="Assets\GoogleVR\Demos\Shaders\VideoDemo\VideoDemoStereoShader.shader" />
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
@@ -146,6 +182,12 @@
  </Reference>
  <Reference Include="Google.ProtocolBuffers">
  <HintPath>/Users/briancollins/Unity/CyberKnightsRPG/Assets/Plugins/Google.ProtocolBuffers.dll</HintPath>
+ </Reference>
+ <Reference Include="fbsdefines_cs">
+ <HintPath>/Users/briancollins/Unity/CyberKnightsRPG/Assets/Plugins/baker/fbsdefines_cs.dll</HintPath>
+ </Reference>
+ <Reference Include="FlatBuffers">
+ <HintPath>/Users/briancollins/Unity/CyberKnightsRPG/Assets/Plugins/baker/FlatBuffers.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

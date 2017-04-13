@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d436c14450e8cb740bd1bde2b02091dd, type: 3}
+  m_Name: materialhistory
+  m_EditorClassIdentifier: 
+  m_convertedMaterials:
+  - m_sourceScenePath: 
+    m_backupMaterial: {fileID: 2100000, guid: fc7f24c41906a3d4499fc2cb1e43d54e, type: 2}
+    m_material: {fileID: 2100000, guid: f48afcaa12c40494b99a247e6abd4ed8, type: 2}
+    m_splitMaterial: {fileID: 0}
+  - m_sourceScenePath: 
+    m_backupMaterial: {fileID: 2100000, guid: d85f65a6e69b1b542a9d363b8c961971, type: 2}
+    m_material: {fileID: 2100000, guid: f6fa785af27b9af4eb10d217498fb98a, type: 2}
+    m_splitMaterial: {fileID: 0}
+  - m_sourceScenePath: 
+    m_backupMaterial: {fileID: 2100000, guid: c8788c34b59d4bc4cb801d156154337c, type: 2}
+    m_material: {fileID: 2100000, guid: 05336dcefedb3a0408d84a7610aa0893, type: 2}
+    m_splitMaterial: {fileID: 0}
+  m_splitMaterials: []

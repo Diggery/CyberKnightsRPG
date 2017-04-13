@@ -74,6 +74,30 @@
      <Compile Include="Assets\Code\UnitMover.cs" />
      <Compile Include="Assets\Code\Weapon.cs" />
      <Compile Include="Assets\Code\WeaponSpear.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\BakeFilter.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\DaydreamVertexLighting.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\NativeWrappers\BVHNodeWrapper.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\NativeWrappers\FBSWrapper.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\NativeWrappers\MeshCacheWrapper.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\ScriptableObjects\BakeData.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\ScriptableObjects\BakeSets.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\ScriptableObjects\DDRSettings.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\ScriptableObjects\DaydreamRendererImportSettings.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\ScriptableObjects\MeshContainer.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\ScriptableObjects\VertexDebugState.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\Tests\BVHTest.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\Tests\TessellateTest.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\Tests\TriangleTest.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\TypeExtensions.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\Utilities.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Baking\VertexLightingOverride.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Examples\ChangeLighting.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Scripts\DaydreamLight.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Scripts\DaydreamMeshRenderer.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Scripts\DaydreamRenderer.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Scripts\ShadowCaster.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Scripts\ShadowReceiver.cs" />
+     <Compile Include="Assets\DaydreamRenderer\Scripts\ShadowSource.cs" />
      <Compile Include="Assets\GoogleVR\Demos\Scripts\DemoInputManager.cs" />
      <Compile Include="Assets\GoogleVR\Demos\Scripts\DemoSceneManager.cs" />
      <Compile Include="Assets\GoogleVR\Demos\Scripts\GVRDemo\Teleport.cs" />
@@ -173,28 +197,37 @@
      <Compile Include="Assets\GoogleVR\Scripts\Utilities\GvrIntent.cs" />
      <Compile Include="Assets\GoogleVR\Scripts\Utilities\GvrUIHelpers.cs" />
      <Compile Include="Assets\GoogleVR\Scripts\Video\GvrVideoPlayerTexture.cs" />
+     <None Include="Assets\DaydreamRenderer\Shaders\daydreamStandardInclude.cginc" />
      <None Include="Assets\GoogleVR\Distortion\GvrDistortion.cginc" />
      <None Include="Assets\GoogleVR\Demos\Shaders\VideoDemo\VideoDemoInsideShader.shader" />
      <None Include="Assets\GoogleVR\Shaders\GvrUIOverlayFont.shader" />
      <None Include="Assets\GoogleVR\Legacy\Resources\UnlitTexture.shader" />
+     <None Include="Assets\DaydreamRenderer\Shaders\daydreamDiffuseReflectInclude.cginc" />
      <None Include="Assets\Plugins\Android\proguard-gvr.txt" />
      <None Include="Assets\Shaders\DrawAreaShader.shader" />
+     <None Include="Assets\DaydreamRenderer\Shaders\daydreamDiffuseOnlyInclude.cginc" />
      <None Include="Assets\GoogleVR\Shaders\GvrAdditiveOverlay.shader" />
      <None Include="Assets\GoogleVR\Demos\Environment\DemoEnvUnlitGrayscale.shader" />
+     <None Include="Assets\DaydreamRenderer\Shaders\daydreamDiffuseOnly.shader" />
      <None Include="Assets\GoogleVR\Shaders\GvrUnlitTransparentOverlay.shader" />
      <None Include="Assets\GoogleVR\Shaders\GvrUnlitTransparentOverlayColor.shader" />
      <None Include="Assets\GoogleVR\Demos\Shaders\GVRDemo\GVRDemoAmbientOcclusion.shader" />
      <None Include="Assets\Shaders\StandardWithScrolling.shader" />
      <None Include="Assets\GoogleVR\Shaders\GvrUnlitTextureOverlay.shader" />
+     <None Include="Assets\DaydreamRenderer\Shaders\daydreamStandard.shader" />
+     <None Include="Assets\DaydreamRenderer\Resources\shadowMask.shader" />
      <None Include="Assets\Plugins\Android\AndroidManifest-Daydream.xml" />
      <None Include="Assets\Shaders\DrawCircleShader.shader" />
      <None Include="Assets\GoogleVR\Demos\Shaders\GVRDemo\GVRDemoUnlitGrayscaleToColor.shader" />
      <None Include="Assets\GoogleVR\Shaders\GvrReticleShader.shader" />
      <None Include="Assets\GoogleVR\Shaders\GvrUIOverlay.shader" />
+     <None Include="Assets\DaydreamRenderer\Shaders\daydreamShared.cginc" />
      <None Include="Assets\Shaders\TransWithVert.shader" />
+     <None Include="Assets\DaydreamRenderer\Shaders\daydreamDiffuseReflect.shader" />
      <None Include="Assets\Plugins\Android\AndroidManifest-Cardboard.xml" />
      <None Include="Assets\GoogleVR\Legacy\Resources\SolidColor.shader" />
      <None Include="Assets\GoogleVR\Shaders\GvrUnityCompatibility.cginc" />
+     <None Include="Assets\DaydreamRenderer\Resources\shadowFilter.shader" />
      <None Include="Assets\GoogleVR\Demos\Shaders\VideoDemo\VideoDemoStereoShader.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
@@ -219,6 +252,12 @@
  </Reference>
  <Reference Include="Google.ProtocolBuffers">
  <HintPath>/Users/briancollins/Unity/CyberKnightsRPG/Assets/Plugins/Google.ProtocolBuffers.dll</HintPath>
+ </Reference>
+ <Reference Include="fbsdefines_cs">
+ <HintPath>/Users/briancollins/Unity/CyberKnightsRPG/Assets/Plugins/baker/fbsdefines_cs.dll</HintPath>
+ </Reference>
+ <Reference Include="FlatBuffers">
+ <HintPath>/Users/briancollins/Unity/CyberKnightsRPG/Assets/Plugins/baker/FlatBuffers.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
