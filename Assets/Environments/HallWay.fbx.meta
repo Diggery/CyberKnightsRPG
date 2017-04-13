@@ -33,6 +33,32 @@ ModelImporter:
     100050: pPlane9
     100052: transform1
     100054: transform2
+    100056: pPlane20
+    100058: pPlane21
+    100060: pPlane22
+    100062: pPlane23
+    100064: pPlane24
+    100066: pPlane25
+    100068: pPlane26
+    100070: pPlane27
+    100072: pPlane28
+    100074: pPlane29
+    100076: pPlane30
+    100078: pPlane31
+    100080: pPlane32
+    100082: pPlane33
+    100084: pPlane34
+    100086: pPlane35
+    100088: pPlane36
+    100090: pPlane37
+    100092: pPlane38
+    100094: pPlane39
+    100096: pPlane40
+    100098: pPlane41
+    100100: pPlane42
+    100102: pPlane43
+    100104: transform3
+    100106: transform4
     400000: //RootNode
     400002: pCube2
     400004: pCube3
@@ -61,6 +87,32 @@ ModelImporter:
     400050: pPlane9
     400052: transform1
     400054: transform2
+    400056: pPlane20
+    400058: pPlane21
+    400060: pPlane22
+    400062: pPlane23
+    400064: pPlane24
+    400066: pPlane25
+    400068: pPlane26
+    400070: pPlane27
+    400072: pPlane28
+    400074: pPlane29
+    400076: pPlane30
+    400078: pPlane31
+    400080: pPlane32
+    400082: pPlane33
+    400084: pPlane34
+    400086: pPlane35
+    400088: pPlane36
+    400090: pPlane37
+    400092: pPlane38
+    400094: pPlane39
+    400096: pPlane40
+    400098: pPlane41
+    400100: pPlane42
+    400102: pPlane43
+    400104: transform3
+    400106: transform4
     2300000: pCube2
     2300002: pCube3
     2300004: pCube4
@@ -84,6 +136,30 @@ ModelImporter:
     2300040: pPlane7
     2300042: pPlane8
     2300044: pPlane9
+    2300046: pPlane20
+    2300048: pPlane21
+    2300050: pPlane22
+    2300052: pPlane23
+    2300054: pPlane24
+    2300056: pPlane25
+    2300058: pPlane26
+    2300060: pPlane27
+    2300062: pPlane28
+    2300064: pPlane29
+    2300066: pPlane30
+    2300068: pPlane31
+    2300070: pPlane32
+    2300072: pPlane33
+    2300074: pPlane34
+    2300076: pPlane35
+    2300078: pPlane36
+    2300080: pPlane37
+    2300082: pPlane38
+    2300084: pPlane39
+    2300086: pPlane40
+    2300088: pPlane41
+    2300090: pPlane42
+    2300092: pPlane43
     3300000: pCube2
     3300002: pCube3
     3300004: pCube4
@@ -107,6 +183,30 @@ ModelImporter:
     3300040: pPlane7
     3300042: pPlane8
     3300044: pPlane9
+    3300046: pPlane20
+    3300048: pPlane21
+    3300050: pPlane22
+    3300052: pPlane23
+    3300054: pPlane24
+    3300056: pPlane25
+    3300058: pPlane26
+    3300060: pPlane27
+    3300062: pPlane28
+    3300064: pPlane29
+    3300066: pPlane30
+    3300068: pPlane31
+    3300070: pPlane32
+    3300072: pPlane33
+    3300074: pPlane34
+    3300076: pPlane35
+    3300078: pPlane36
+    3300080: pPlane37
+    3300082: pPlane38
+    3300084: pPlane39
+    3300086: pPlane40
+    3300088: pPlane41
+    3300090: pPlane42
+    3300092: pPlane43
     4300000: pCube2
     4300002: pCube3
     4300004: pCube4
@@ -130,6 +230,30 @@ ModelImporter:
     4300040: pPlane17
     4300042: pPlane18
     4300044: pPlane19
+    4300046: pPlane20
+    4300048: pPlane21
+    4300050: pPlane22
+    4300052: pPlane23
+    4300054: pPlane24
+    4300056: pPlane25
+    4300058: pPlane26
+    4300060: pPlane27
+    4300062: pPlane28
+    4300064: pPlane29
+    4300066: pPlane30
+    4300068: pPlane31
+    4300070: pPlane32
+    4300072: pPlane33
+    4300074: pPlane34
+    4300076: pPlane35
+    4300078: pPlane36
+    4300080: pPlane37
+    4300082: pPlane38
+    4300084: pPlane39
+    4300086: pPlane40
+    4300088: pPlane41
+    4300090: pPlane42
+    4300092: pPlane43
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -141,6 +265,8 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -177,6 +303,7 @@ ModelImporter:
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
+    serializedVersion: 2
     human: []
     skeleton: []
     armTwist: 0.5
@@ -187,7 +314,10 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
   humanoidOversampling: 1
