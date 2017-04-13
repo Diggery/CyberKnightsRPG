@@ -114,7 +114,9 @@ public class UnitControl : MonoBehaviour {
         if (!squad && teamName.Equals("Player")) {
             squad = gameManager.PlayerSquad;
         }
-
+        if (!squad)
+            Debug.Log(transform.name + " has no squad");
+        
         UnitId = squad.AddUnit(this);
 
         animator.SetFloat("AnimOffset", (float)UnitId/4.0f);
@@ -194,6 +196,11 @@ public class UnitControl : MonoBehaviour {
 
     public void MoveComplete() {
         squad.MoveComplete();
+    }
+
+    public void RotateComplete() {
+        Debug.Log("Unit is done rotating");
+        squad.RotateComplete();
     }
 
     public bool Attack(SquadControl targetSquad) {

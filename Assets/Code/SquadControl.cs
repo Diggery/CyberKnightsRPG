@@ -16,7 +16,7 @@ public class SquadControl : MonoBehaviour {
     Vector3 nextMove = Vector3.zero;
 
     public enum SquadType { Player, Friendly, Enemy }
-    public SquadType type = SquadType.Enemy;
+    public SquadType squadType = SquadType.Enemy;
 
     public bool autoFill = false;
 
@@ -74,13 +74,13 @@ public class SquadControl : MonoBehaviour {
         get { return centerSpot; }
     }
 
-    public bool IsTakingTurn {
+    public bool UnitsAreBusy {
         get {
-            bool isTakingTurn = false;
+            bool unitsAreBusy = false;
             foreach (UnitControl unit in units) {
-                if (unit && (unit.IsAttacking || unit.IsMoving)) isTakingTurn = true;
+                if (unit && (unit.IsAttacking || unit.IsMoving)) unitsAreBusy = true;
             }
-            return isTakingTurn;
+            return unitsAreBusy;
         }
     }
 
@@ -102,11 +102,11 @@ public class SquadControl : MonoBehaviour {
         input = gameManager.Input;
         squadAI = GetComponent<SquadAI>();
 
-        if (type == SquadType.Player) {
+        if (squadType == SquadType.Player) {
             gameManager.PlayerSquad = this;
             transform.tag = "Player";
             cameraControl = gameManager.CameraControl;
-        } else if (type == SquadType.Friendly) {
+        } else if (squadType == SquadType.Friendly) {
             gameManager.AddFrientlySquad(this);
             transform.tag = "Friendly";
         } else {
@@ -208,6 +208,39 @@ public class SquadControl : MonoBehaviour {
         }
     }
 
+    public void CompleteTurn() {
+        
+        if (UnitsAreBusy) {
+            Debug.Log("Still Waiting for Units");
+            return;
+        } else {
+            Debug.Log("TurnComplete... has attacked = " + hasAttacked); 
+        }
+        bool endTurn = false;
+
+        if (squadType != SquadType.Player) {
+            IsWaitingForTurn = true;
+            gameManager.SquadTurnComplete(this);
+            Debug.Log("Enemy turn complete");
+            return;
+        }
+
+        if (hasMoved && !hasAttacked) {
+            Debug.Log("Player has move, but not attacked");
+            SquadControl[] targets = GetAttackTargets();
+            endTurn = targets.Length == 0;
+        }
+
+        if (hasAttacked) {
+            endTurn = true;
+        }
+
+        if (endTurn) {
+            IsWaitingForTurn = true;
+            gameManager.SquadTurnComplete(this);           
+        }
+    }
+
     void SetupOffsets() {
         float centerOffset = 1;
         unitOffsets = new Vector3[4];
@@ -268,10 +301,16 @@ public class SquadControl : MonoBehaviour {
             return;
         }
 
-        if (!IsTakingTurn) {
-            IsWaitingForTurn = true;
-            gameManager.SquadTurnComplete(this);
+        CompleteTurn();
+    }
+
+    public void RotateComplete() {
+        if (IsMoving) {
+            Debug.Log("Squad is moving");
+            return;
         }
+        Debug.Log("RotateComplete");
+        CompleteTurn();
     }
 
     public void Attack(SquadControl targetSquad) {
@@ -279,6 +318,7 @@ public class SquadControl : MonoBehaviour {
             return;
 
         ReCenterPosition();
+        hasAttacked = true;
         StartCoroutine(StartAttack(targetSquad));
     }
 
@@ -298,10 +338,9 @@ public class SquadControl : MonoBehaviour {
     }
 
     public void AttackComplete() {
-        if (!IsTakingTurn) {
-            IsWaitingForTurn = true;
-            gameManager.SquadTurnComplete(this);        
-        }
+
+        CompleteTurn();
+
     }
 
         
@@ -331,4 +370,61 @@ public class SquadControl : MonoBehaviour {
     public UnitControl GetUnitByID(int id) {
         return units[id];
     }
+
+    public SquadControl[] GetAttackTargets() {
+        List<SquadControl> targetSquads = new List<SquadControl>();
+        RaycastHit hit;
+        LayerMask squadMask = 1 << LayerMask.NameToLayer("Squads");
+
+        Debug.Log(transform.name + " is checking for targets");
+        //check forward
+        Vector3 forwardPos = transform.forward * gameManager.GridSize;
+        Ray ray = new Ray(forwardPos + (Vector3.up * 5), Vector3.down);
+
+
+//        if (Physics.Raycast(ray, out hit, 10, squadMask)) {
+//            SquadControl target = hit.transform.GetComponent<SquadControl>();
+//            if (target && target.squadType != squadType) {
+//                targetSquads.Add(target);
+//                Debug.Log("Found target forward");
+//
+//            }
+//        }
+//
+//        //check right
+//        Vector3 rightPos = transform.forward * gameManager.GridSize;
+//        ray = new Ray(rightPos + (Vector3.up * 5), Vector3.down);
+//        if (Physics.Raycast(ray, out hit, 10, squadMask)) {
+//            SquadControl target = hit.transform.GetComponent<SquadControl>();
+//            if (target && target.squadType != squadType)
+//                targetSquads.Add(target);
+//        }
+//
+//        //check left
+//        Vector3 leftPos = transform.forward * gameManager.GridSize;
+//        ray = new Ray(leftPos + (Vector3.up * 5), Vector3.down);
+//        if (Physics.Raycast(ray, out hit, 10, squadMask)) {
+//            SquadControl target = hit.transform.GetComponent<SquadControl>();
+//            if (target && target.squadType != squadType)
+//                targetSquads.Add(target);
+//        }
+        return gameManager.FindEnemiesAtPosition(transform.position, squadType);
+    }
+
+
+//    UnitControl CheckForTarget(Vector3 targetPos) {
+//        UnitControl target = null;
+//        RaycastHit hit;
+//        LayerMask unitMask = 1 << LayerMask.NameToLayer("Units");
+//        Ray targetRay = new Ray(targetPos + (Vector3.up * 5), Vector3.down);
+//        if (Physics.Raycast(targetRay, out hit, 10, unitMask)) {
+//            target = hit.transform.GetComponent<UnitControl>();
+//            Debug.Log(transform.name + " is attacking " + target.name );
+//            if (target && target.TeamName.Equals(unitControl.TeamName)) {
+//                Debug.Log("Wait, thats a firendly!");
+//                target = null;
+//            }
+//        }
+//        return target;
+//    }
 }

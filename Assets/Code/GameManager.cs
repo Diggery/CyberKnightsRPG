@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour {
         } else if (enemySquads.Contains(squad)) {
             bool allDone = true;
             foreach(SquadControl enemySquad in enemySquads) {
-                if (enemySquad.IsTakingTurn)
+                if (enemySquad.UnitsAreBusy)
                     allDone = false;
             }
             if (allDone)
@@ -114,10 +114,10 @@ public class GameManager : MonoBehaviour {
             if (hits.Length > 0) {
                 SquadControl enemySquad = hits[0].transform.GetComponent<SquadControl>();
                 if (enemySquad) {
-                    if ((squadType == SquadControl.SquadType.Enemy && enemySquad.type == SquadControl.SquadType.Player) ||
-                        (squadType == SquadControl.SquadType.Player && enemySquad.type == SquadControl.SquadType.Enemy) ||
-                        (squadType == SquadControl.SquadType.Enemy && enemySquad.type == SquadControl.SquadType.Friendly) ||
-                        (squadType == SquadControl.SquadType.Friendly && enemySquad.type == SquadControl.SquadType.Enemy)) {
+                    if ((squadType == SquadControl.SquadType.Enemy && enemySquad.squadType == SquadControl.SquadType.Player) ||
+                        (squadType == SquadControl.SquadType.Player && enemySquad.squadType == SquadControl.SquadType.Enemy) ||
+                        (squadType == SquadControl.SquadType.Enemy && enemySquad.squadType == SquadControl.SquadType.Friendly) ||
+                        (squadType == SquadControl.SquadType.Friendly && enemySquad.squadType == SquadControl.SquadType.Enemy)) {
                         squads.Add(enemySquad);
                     }
                 }
@@ -130,16 +130,16 @@ public class GameManager : MonoBehaviour {
     }
 
     public void ProcessSquadPositions() {
-        SquadControl[] opponentSquads = FindEnemiesAtPosition(playerSquad.transform.position, playerSquad.type);
+        SquadControl[] opponentSquads = FindEnemiesAtPosition(playerSquad.transform.position, playerSquad.squadType);
         playerSquad.InAttackMode = opponentSquads.Length > 0;
 
         foreach (SquadControl squad in enemySquads) {
-            opponentSquads = FindEnemiesAtPosition(squad.transform.position, squad.type);
+            opponentSquads = FindEnemiesAtPosition(squad.transform.position, squad.squadType);
             squad.InAttackMode = opponentSquads.Length > 0;
         }
 
         foreach (SquadControl squad in friendlySquads) {
-            opponentSquads = FindEnemiesAtPosition(squad.transform.position, squad.type);
+            opponentSquads = FindEnemiesAtPosition(squad.transform.position, squad.squadType);
             squad.InAttackMode = opponentSquads.Length > 0;
 
         }

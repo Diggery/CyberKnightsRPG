@@ -85,7 +85,7 @@ public class InputControl : MonoBehaviour {
 	}
 
     public void SquadSelected(SquadControl selectedSquad) {
-        if (selectedSquad.type == SquadControl.SquadType.Enemy)
+        if (selectedSquad.squadType == SquadControl.SquadType.Enemy)
             squad.Attack(selectedSquad);
     }
 

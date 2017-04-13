@@ -124,7 +124,6 @@ public class UnitAttack : MonoBehaviour {
         // secondary attack if direction is forward;
         if (weapon.isSecondary) {
             if (victim) {
-                Debug.Log("Attacking with Secondary");
                 animator.SetTrigger("AttackSecondary");
                 weapon.StartAttack();
                 lastAttackTarget = victim;

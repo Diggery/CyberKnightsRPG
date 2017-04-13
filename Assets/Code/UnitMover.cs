@@ -15,6 +15,7 @@ public class UnitMover : MonoBehaviour {
     public bool IsMoving {
         get { return isMoving; }
         set { 
+            Debug.Log("Set moving");
             isMoving = value;
             animator.SetBool("IsMoving", isMoving);
         }
