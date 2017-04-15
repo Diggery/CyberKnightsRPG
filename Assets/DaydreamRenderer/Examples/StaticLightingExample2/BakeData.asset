@@ -2337,6 +2337,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_firstRun: 0
   m_enableLightingComponentsAutoAdd: 1
+  m_daydreamLightinSystemEnabled: 1
 --- !u!114 &114000011880372128
 MonoBehaviour:
   m_ObjectHideFlags: 0

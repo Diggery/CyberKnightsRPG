@@ -36,8 +36,8 @@ namespace daydreamrenderer
             static Matrix4x4 s_toViewSpace;
             // light mode (real time, mixed, etc)
             public int m_mode = LightModes.REALTIME;
-            // cache layer
-            public int m_layer = int.MaxValue;
+            // cache the light culling layer
+            public int m_cullingMask = 0;
 
             // keys to control update of light data
             int m_viewSpaceKey;
@@ -76,7 +76,6 @@ namespace daydreamrenderer
             {
                 m_light = light;
                 m_dist = 0;
-                m_layer = light.gameObject.layer;
             }
 
             public void Clear()
@@ -106,6 +105,8 @@ namespace daydreamrenderer
                     m_attenZ = ComputeLightAttenuation(m_light);
                     m_attenW = m_light.range * m_light.range;
                 }
+
+                m_cullingMask = m_light.cullingMask;
 
                 // updates to track changes
                 m_type = m_light.type;
@@ -198,7 +199,7 @@ namespace daydreamrenderer
             // test for changes and set flags
             public bool CheckForChange()
             {
-                if(m_lastAngle != m_light.spotAngle
+                if (m_lastAngle != m_light.spotAngle
                    || m_light.color != m_lastColor
                    || m_lastIntensity != m_light.intensity
                    || m_lastRange != m_light.range)
@@ -210,7 +211,7 @@ namespace daydreamrenderer
                     m_propertiesChanged = false;
                 }
 
-                if(m_light.type != m_type)
+                if (m_light.type != m_type)
                 {
                     m_propertiesChanged = true;
 
@@ -222,7 +223,7 @@ namespace daydreamrenderer
                 }
 
                 // check transform for changes
-                if(m_light.transform.hasChanged)
+                if (m_light.transform.hasChanged)
                 {
                     m_light.transform.hasChanged = false;
                     m_transformChanged = true;
@@ -231,7 +232,7 @@ namespace daydreamrenderer
                 {
                     m_transformChanged = false;
                 }
-                
+
                 // return true if anything changed
                 return m_transformChanged || m_propertiesChanged;
             }
@@ -257,9 +258,6 @@ namespace daydreamrenderer
 
         [HideInInspector]
         public int m_lightMode;
-#if UNITY_EDITOR
-        int m_checkLightMode = 0;
-#endif
 
         // wraps the light and caches data
         LightData m_lightData;
@@ -273,7 +271,7 @@ namespace daydreamrenderer
 
         // Daydream light manages a list lights in the scene
         static List<LightData> s_masterLightList = new List<LightData>();
-        public static LightData[] s_masterLightArray;
+        public static LightData[] s_masterLightArray = new LightData[0];
         static bool s_once = false;
 
         void OnEnable()
@@ -433,12 +431,12 @@ namespace daydreamrenderer
             return s_anyLightChanged;
         }
 
-        public static void GetSortedLights(int updateKey, int layer, Vector3 objPosition, float radius, ref int[] outLightList, ref int usedSlots)
+        public static void GetSortedLights(int updateKey, int layer, Vector3 objPosition, Bounds bounds, ref int[] outLightList, ref int usedSlots)
         {
 #if UNITY_EDITOR
             if (!Application.isPlaying && updateKey != s_updateLightKey)
             {
-                for(int i = 0, k = s_masterLightArray.Length; i < k; ++i)
+                for(int i = 0; i < s_masterLightArray.Length; ++i)
                 {
                     s_masterLightArray[i].m_light.GetComponent<DaydreamLight>().Update();
                 }
@@ -467,7 +465,7 @@ namespace daydreamrenderer
 
                 int ithLight = i;
 
-                if(lightData.m_layer != layer)
+                if((lightData.m_cullingMask & (1 << layer)) == 0)
                 {
                     continue;
                 }
@@ -481,13 +479,19 @@ namespace daydreamrenderer
                         lightData.m_dist = 0f;
                     }
 #endif
+
                     if (lightData.m_transformChanged || lightData.m_propertiesChanged || lightData.m_dist == 0f)
                     {
+
+                        // from cam to light
+                        objPosition = bounds.ClosestPoint(lightData.m_worlPos);
+
                         // only update if needed
+                        float range2 = lightData.m_lastRange * lightData.m_lastRange;
                         float x = (lightData.m_worlPos.x - objPosition.x)*(lightData.m_worlPos.x - objPosition.x);
                         float y = (lightData.m_worlPos.y - objPosition.y)*(lightData.m_worlPos.y - objPosition.y);
                         float z = (lightData.m_worlPos.z - objPosition.z)*(lightData.m_worlPos.z - objPosition.z);
-                        lightData.m_dist = (x + y + z) - (lightData.m_lastRange*lightData.m_lastRange*lightData.m_lastIntensity);
+                        lightData.m_dist = (x + y + z) - range2;
                     }
 
                     dist2 = lightData.m_dist;

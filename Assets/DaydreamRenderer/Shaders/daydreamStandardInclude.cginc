@@ -270,9 +270,8 @@ void computeAmbientLocal(in float3 viewPos, in float3 nrm, inout float3 color)
 #if defined(DYNAMIC_AMBIENT)
 	//get the world UP vector in view space.
 	float3 u = float3(UNITY_MATRIX_V[0].y, UNITY_MATRIX_V[1].y, UNITY_MATRIX_V[2].y);
-
-	float wu = saturate(dot(u, nrm));
-	float wd = saturate(dot(-u, nrm));
+	float wu = saturate(0.5*dot(u, nrm)+0.5);
+	float wd = saturate(0.5*dot(-u, nrm)+0.5);
 	color += wu*_globalAmbientUp + wd*_globalAmbientDn;
 #endif
 }

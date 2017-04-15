@@ -22,6 +22,8 @@ public class DaydreamMenu : Editor
         static public GUIContent m_ambientDownUI        = new GUIContent("Ambient Sky (up)  ", "Ambient color of normals pointing down (towards the 'ground') (-y).");
         static public GUIContent m_showFpsUI            = new GUIContent("Show FPS", "Enable to show average FPS and frame time.");
         static public GUIContent m_convertMtlUI         = new GUIContent("Convert Materials to Daydream", "Convert Standard materials to Daydream materials.");
+        static public GUIContent m_enableEnlightenUI    = new GUIContent("Enable Enlighten", "Enable Enlighten support.");
+        static public GUIContent m_enableDaydreamUI     = new GUIContent("Enable Daydream Lighting", "Enable Daydream Lighting support.");
 
         static public GUIContent m_fogSettingsUI        = new GUIContent("Fog settings", "Adjust the global fog settings.");
         static public GUIContent m_fogEnable            = new GUIContent("Fog enable", "Enables global fog.");
@@ -41,6 +43,8 @@ public class DaydreamMenu : Editor
 
         static public GUIContent[] m_fogModes = new GUIContent[3] { null, null, null };
         static public GUILayoutOption[] m_convertMtlLayout = new GUILayoutOption[] { GUILayout.Width(200) };
+        static public GUILayoutOption[] m_enlightenLayout = new GUILayoutOption[] { GUILayout.Width(120) };
+        static public GUILayoutOption[] m_drLightingLayout = new GUILayoutOption[] { GUILayout.Width(175) };
 
         static private bool s_initialized = false;
 
@@ -102,6 +106,14 @@ public class DaydreamMenu : Editor
         if (GUILayout.Button(Styles.m_convertMtlUI, Styles.m_convertMtlLayout))
         {
             StandardToDaydream();
+        }
+        if (GUILayout.Button(Styles.m_enableEnlightenUI, Styles.m_enlightenLayout))
+        {
+            renderer.EnableEnlighten(true);
+        }
+        if (GUILayout.Button(Styles.m_enableDaydreamUI, Styles.m_drLightingLayout))
+        {
+            renderer.EnableEnlighten(false);
         }
 
         renderer.m_shadowSettings = EditorGUILayout.Foldout(renderer.m_shadowSettings, Styles.m_shadowSettingsUI);

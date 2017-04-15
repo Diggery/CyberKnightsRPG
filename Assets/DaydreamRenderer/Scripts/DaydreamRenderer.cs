@@ -41,6 +41,7 @@ public class DaydreamRenderer : MonoBehaviour
     public bool m_fogEnable = false;
     public bool m_heightFogEnable = false;
     public int  m_fogMode = FogMode.Linear;
+    public bool m_enableEnlighten = false;
 
     //////////////////////
     // Enumerations/Types
@@ -188,6 +189,8 @@ public class DaydreamRenderer : MonoBehaviour
         {
             m_camera = gameObject.AddComponent<Camera>();
         }
+
+        EnableEnlighten(m_enableEnlighten);
 
         m_viewCamViewMatrix = m_camera.worldToCameraMatrix;
         m_viewCamProjMatrix = m_camera.projectionMatrix;
@@ -365,6 +368,19 @@ public class DaydreamRenderer : MonoBehaviour
     {
         Shader.SetGlobalColor(m_globalAmbientUpID, m_globalAmbientUp);
         Shader.SetGlobalColor(m_globalAmbientDnID, m_globalAmbientDn);
+    }
+
+    public void EnableEnlighten(bool enable)
+    {
+        m_enableEnlighten = enable;
+        if (enable)
+        {
+            Shader.EnableKeyword("_USE_ENLIGHTEN");
+        }
+        else
+        {
+            Shader.DisableKeyword("_USE_ENLIGHTEN");
+        }
     }
 
     public void UpdateFogParam()

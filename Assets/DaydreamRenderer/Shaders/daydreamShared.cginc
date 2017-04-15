@@ -3,20 +3,27 @@ float  _StaticLightingScale;
 float  _AmbientOcclusionDiffuse;
 float  _AmbientOcclusionSpec;
 
-// light color
-half4 dr_LightColor[8];
+#if defined(_USE_ENLIGHTEN)
+	#define dr_LightColor    unity_LightColor
+	#define dr_LightPosition unity_LightPosition
+	#define dr_LightAtten	 unity_LightAtten
+	#define dr_SpotDirection unity_SpotDirection
+#else
+	// light color
+	half4 dr_LightColor[8];
 
-// view-space vertex light positions (position,1), or (-direction,0) for directional lights.
-float4 dr_LightPosition[8];
+	// view-space vertex light positions (position,1), or (-direction,0) for directional lights.
+	float4 dr_LightPosition[8];
 
-// x = cos(spotAngle/2)   or -1 for non-spot
-// y = 1/cos(spotAngle/4) or  1 for non-spot
-// z = quadratic attenuation
-// w = range*range
-half4 dr_LightAtten[8];
+	// x = cos(spotAngle/2)   or -1 for non-spot
+	// y = 1/cos(spotAngle/4) or  1 for non-spot
+	// z = quadratic attenuation
+	// w = range*range
+	half4 dr_LightAtten[8];
 
-// view-space spot light directions, or (0,0,1,0) for non-spot
-float4 dr_SpotDirection[8];
+	// view-space spot light directions, or (0,0,1,0) for non-spot
+	float4 dr_SpotDirection[8];
+#endif
 
 //TANGENT SPACE BASIS VECTORS:
 // (-1/sqrt(6), -1/sqrt(2), 1/sqrt(3))

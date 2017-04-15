@@ -425,7 +425,6 @@ GameObject:
   - component: {fileID: 464899634}
   - component: {fileID: 464899633}
   - component: {fileID: 464899632}
-  - component: {fileID: 464899635}
   m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
@@ -459,7 +458,7 @@ ParticleSystemRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -539,7 +538,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1939585168
+  randomSeed: -383392241
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3501,18 +3500,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &464899635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 464899631}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 638db0180ef2f438cae6341bf3c73797, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_static: 0
 --- !u!1 &543568404
 GameObject:
   m_ObjectHideFlags: 0
@@ -5452,7 +5439,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
-  m_TargetEye: 3
+  m_TargetEye: 0
   m_HDR: 0
   m_AllowMSAA: 1
   m_ForceIntoRT: 0
@@ -5480,7 +5467,7 @@ MonoBehaviour:
   m_fogSettings: 1
   m_showFPS: 1
   m_maxShadowCasters: 1
-  m_uiEnabled: 1
+  m_uiEnabled: 0
   m_globalAmbientUp: {r: 0.11081316, g: 0.09721022, b: 0.21323532, a: 1}
   m_globalAmbientDn: {r: 0.05, g: 0.05, b: 0.025, a: 1}
   m_fogLinear: {x: 0, y: 200, z: 1, w: 0.1}
@@ -5490,14 +5477,15 @@ MonoBehaviour:
   m_fogEnable: 0
   m_heightFogEnable: 0
   m_fogMode: 0
+  m_enableEnlighten: 0
 --- !u!4 &2048398187
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2048398184}
-  m_LocalRotation: {x: -0.057141427, y: -0.73525727, z: -0.06247575, w: 0.67247933}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.42034626, y: 0.42119694, z: -0.22990489, w: 0.77009475}
+  m_LocalPosition: {x: -5.16, y: 2.22, z: -0.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

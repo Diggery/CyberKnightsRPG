@@ -6,5 +6,6 @@ namespace daydreamrenderer
     {
         public bool m_firstRun = true;
         public bool m_enableLightingComponentsAutoAdd = true;
+        public bool m_daydreamLightinSystemEnabled = true;
     }
 }

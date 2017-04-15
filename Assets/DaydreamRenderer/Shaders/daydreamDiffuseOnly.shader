@@ -55,12 +55,13 @@
 			#pragma only_renderers d3d11 glcore gles gles3
 			
 			//variants
-			//Shadow functionality
-			#pragma multi_compile __ BUILD_SHADOWMAP REC_SHADOWMAP SHDTYPE_PROJECTED SHDTYPE_MASK
-			#pragma shader_feature __ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
-
 			//global keywords
+			#pragma multi_compile __ BUILD_SHADOWMAP REC_SHADOWMAP SHDTYPE_PROJECTED SHDTYPE_MASK
 			#pragma multi_compile __ _DAYDREAM_FOG _FOG_HEIGHT
+			#pragma multi_compile __ _USE_ENLIGHTEN
+
+			//alpha
+			#pragma shader_feature __ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 						
 			//Sets - these should be multi_compile but that method does not work consistently on Android
 			//Lighting [Max light count 0, 4 (default), 8]
@@ -108,12 +109,13 @@
 			#pragma only_renderers d3d11 glcore gles gles3
 
 			//variants
-			//Shadow functionality
-			#pragma multi_compile __ BUILD_SHADOWMAP REC_SHADOWMAP SHDTYPE_PROJECTED SHDTYPE_MASK
-			#pragma shader_feature __ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
-
 			//global keywords
+			#pragma multi_compile __ BUILD_SHADOWMAP REC_SHADOWMAP SHDTYPE_PROJECTED SHDTYPE_MASK
 			#pragma multi_compile __ _DAYDREAM_FOG _FOG_HEIGHT
+			#pragma multi_compile __ _USE_ENLIGHTEN
+
+			//alpha
+			#pragma shader_feature __ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 						
 			//Sets - these should be multi_compile but that method does not work consistently on Android
 			//Lighting [Max light count 0, 4 (default), 8]
@@ -161,12 +163,13 @@
 			#pragma only_renderers d3d11 glcore gles gles3
 
 			//variants
-			//Shadow functionality
-			#pragma multi_compile __ BUILD_SHADOWMAP REC_SHADOWMAP SHDTYPE_PROJECTED SHDTYPE_MASK
-			#pragma shader_feature __ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
-
 			//global keywords
+			#pragma multi_compile __ BUILD_SHADOWMAP REC_SHADOWMAP SHDTYPE_PROJECTED SHDTYPE_MASK
 			#pragma multi_compile __ _DAYDREAM_FOG _FOG_HEIGHT
+			#pragma multi_compile __ _USE_ENLIGHTEN
+
+			//alpha
+			#pragma shader_feature __ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 						
 			//Sets - these should be multi_compile but that method does not work consistently on Android
 			//Lighting [Max light count 0, 4 (default), 8]

@@ -64,8 +64,9 @@
 			//global keywords
 			#pragma multi_compile __ BUILD_SHADOWMAP REC_SHADOWMAP SHDTYPE_PROJECTED SHDTYPE_MASK
 			#pragma multi_compile __ _DAYDREAM_FOG _FOG_HEIGHT
+			#pragma multi_compile __ _USE_ENLIGHTEN
 
-			//local keywords
+			//alpha
 			#pragma shader_feature __ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 
 			//Sets - these should be multi_compile but that method does not work consistently on Android
@@ -124,8 +125,9 @@
 			//global keywords
 			#pragma multi_compile __ BUILD_SHADOWMAP REC_SHADOWMAP SHDTYPE_PROJECTED SHDTYPE_MASK
 			#pragma multi_compile __ _DAYDREAM_FOG _FOG_HEIGHT
-			
-			//local keywords
+			#pragma multi_compile __ _USE_ENLIGHTEN
+
+			//alpha
 			#pragma shader_feature __ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 
 			//Sets - these should be multi_compile but that method does not work consistently on Android
@@ -184,8 +186,9 @@
 			//global keywords
 			#pragma multi_compile __ BUILD_SHADOWMAP REC_SHADOWMAP SHDTYPE_PROJECTED SHDTYPE_MASK
 			#pragma multi_compile __ _DAYDREAM_FOG _FOG_HEIGHT
-			
-			//local keywords
+			#pragma multi_compile __ _USE_ENLIGHTEN
+
+			//alpha
 			#pragma shader_feature __ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			
 			//Sets - these should be multi_compile but that method does not work consistently on Android

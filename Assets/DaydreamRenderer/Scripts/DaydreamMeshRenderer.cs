@@ -41,7 +41,7 @@ namespace daydreamrenderer
         LightData[] m_lightDataArray;
 
         // radius of the largest axis of the bounding box
-        float m_radius = -1f;
+        Vector3 m_radius;
 
         // distance to camera
         int m_camId;
@@ -115,21 +115,33 @@ namespace daydreamrenderer
             m_upateKey = ++m_upateKey % int.MaxValue;
         }
 
-        void Awake()
+        void UpdateEnabled()
         {
             Renderer renderer = GetRenderer;
-            if(renderer == null)
+            if(renderer == null || !renderer.enabled)
             {
                 enabled = false;
             }
+            else if(renderer != null && renderer.enabled)
+            {
+                enabled = true;
+            }
+        }
+
+        void Awake()
+        {
+            UpdateEnabled();
 #if UNITY_EDITOR
-            else
+            if(enabled)
             {
                 m_static = gameObject.isStatic;
-                Material[] mats = renderer.sharedMaterials;
+                Material[] mats = GetRenderer.sharedMaterials;
                 foreach (Material m in mats)
                 {
-                    Debug.Assert(m.shader.name.ToLower().Contains("daydream"), "Daydream materials required!");
+                    if (m != null)
+                    {
+                        Debug.Assert(m.shader.name.ToLower().Contains("daydream"), "Daydream materials required!");
+                    }
                 }
             }
 #endif
@@ -146,7 +158,8 @@ namespace daydreamrenderer
             m_layer = gameObject.layer;
             // force lights to process
             m_startup = true;
-                
+
+            m_radius = GetRenderer.bounds.extents;
             if(Camera.current != null)
             {
                 m_camCullingMask = Camera.current.cullingMask;
@@ -166,6 +179,8 @@ namespace daydreamrenderer
 
         void Update()
         {
+            if(!GetRenderer.enabled) return;
+
             if (!m_static && !CompareTransforms())
             {
                 IncrementUpdateKey();
@@ -184,6 +199,7 @@ namespace daydreamrenderer
 #if UNITY_EDITOR
             if(!Application.isPlaying)
             {
+
                 bool _static = GameObjectUtility.AreStaticEditorFlagsSet(gameObject, StaticEditorFlags.LightmapStatic);
                 if (m_static != _static)
                 {
@@ -196,7 +212,7 @@ namespace daydreamrenderer
         // called during culling right before render
         void OnWillRenderObject()
         {
-            if(s_ignoreLights) return;
+            if(s_ignoreLights || m_sharedMaterials == null || !GetRenderer.enabled) return;
 
             if(m_layer != 0 && (m_camCullingMask & m_layer) == 0)return;
             
@@ -255,7 +271,7 @@ namespace daydreamrenderer
                     m_startup = false;
                     int usedSlots = 0;
                     // rebuild the light array
-                    DaydreamLight.GetSortedLights(m_upateKey, gameObject.layer, transform.position, m_radius, ref m_lightList, ref usedSlots);
+                    DaydreamLight.GetSortedLights(m_upateKey, gameObject.layer, transform.position, GetRenderer.bounds, ref m_lightList, ref usedSlots);
                 }
             }
 
@@ -327,8 +343,7 @@ namespace daydreamrenderer
                     m_colors[i].w = 0f;
                 }
             }
-
-            for(int i = 0, k = m_sharedMaterials.Length; i < k; ++i)
+            for (int i = 0, k = m_sharedMaterials.Length; i < k; ++i)
             {
                 m_sharedMaterials[i].SetVectorArray(s_lightAttenId, m_atten);
                 m_sharedMaterials[i].SetVectorArray(s_lightColorId, m_colors);

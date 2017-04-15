@@ -5019,6 +5019,7 @@ MonoBehaviour:
   m_fogEnable: 0
   m_heightFogEnable: 1
   m_fogMode: 1
+  m_enableEnlighten: 0
 --- !u!4 &1912202003
 Transform:
   m_ObjectHideFlags: 0

@@ -47,6 +47,7 @@ namespace daydreamrenderer
             public static GUIContent importStaticLightingButton = new GUIContent("Convert");
             public static GUIContent addComponents = new GUIContent("Add Components", "Adds Daydream lighting system components to scene");
             public static GUIContent removeComponents = new GUIContent("Remove Components", "Removes all Daydream lighting system components from the scene");
+            public static GUIContent toggleLightingSystem = new GUIContent("Enable Daydream Lighting System", "Daydream replaces the lighting system");
             public static GUIContent toggleComponents = new GUIContent("Auto add Daydream lighting system components", "Lighting system components will be auto added to the scene (applies only to edit-time)");
             public const string kStaticConvertedMaterialListFrmt = "{0} Converted static lighting materials";
             public const string kDynamConvertedMaterialListFrmt = "{0} Converted dynamic lighting materials";
@@ -92,7 +93,7 @@ namespace daydreamrenderer
                     }
                 }
 
-                if(settings.m_enableLightingComponentsAutoAdd && (DateTime.Now - s_lastUpdate).TotalSeconds > 2)
+                if(settings.m_enableLightingComponentsAutoAdd && settings.m_daydreamLightinSystemEnabled && (DateTime.Now - s_lastUpdate).TotalSeconds > 2)
                 {
                     s_lastUpdate = DateTime.Now;
                     ApplyLightingComponents();
@@ -250,11 +251,31 @@ namespace daydreamrenderer
             EditorGUI.BeginChangeCheck();
             GUILayout.Space(20);
             EditorGUILayout.HelpBox(Styles.kToggleComponentsHelp, MessageType.Info);
-            settings.m_enableLightingComponentsAutoAdd = EditorGUILayout.ToggleLeft(Styles.toggleComponents, settings.m_enableLightingComponentsAutoAdd);
 
+            EditorGUI.BeginChangeCheck();
+            settings.m_daydreamLightinSystemEnabled = EditorGUILayout.BeginToggleGroup(Styles.toggleLightingSystem, settings.m_daydreamLightinSystemEnabled);
+            if (EditorGUI.EndChangeCheck())
+            {
+                if (!settings.m_daydreamLightinSystemEnabled)
+                {
+                    RemoveAllLightingComponents();
+                }
+
+                DaydreamRenderer renderer = FindObjectOfType<DaydreamRenderer>();
+                if (renderer)
+                {
+                    renderer.EnableEnlighten(!settings.m_daydreamLightinSystemEnabled);
+                }
+            }
+
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.Space(20);
+            settings.m_enableLightingComponentsAutoAdd = EditorGUILayout.ToggleLeft(Styles.toggleComponents, settings.m_enableLightingComponentsAutoAdd);
+            EditorGUILayout.EndHorizontal();
             if (!settings.m_enableLightingComponentsAutoAdd)
             {
                 EditorGUILayout.BeginHorizontal();
+                GUILayout.Space(20);
                 if (GUILayout.Button(Styles.addComponents))
                 {
                     ApplyLightingComponents();
@@ -265,6 +286,9 @@ namespace daydreamrenderer
                 }
                 EditorGUILayout.EndHorizontal();
             }
+
+
+            EditorGUILayout.EndToggleGroup();
 
             GUILayout.Space(50);
             if (EditorGUI.EndChangeCheck())
@@ -1054,6 +1078,14 @@ namespace daydreamrenderer
 
                 for (int j = 0, n = renderers.Length; j < n; ++j)
                 {
+                    MeshRenderer mr = renderers[j] as MeshRenderer;
+                    SkinnedMeshRenderer smr = renderers[j] as SkinnedMeshRenderer;
+
+                    if (renderers[j] == null || (mr == null && smr == null))
+                    {
+                        continue;
+                    }
+
                     bool isDaydreamRendered = false;
                     for (int m = 0; m < renderers[j].sharedMaterials.Length; ++m)
                     {
@@ -1063,9 +1095,18 @@ namespace daydreamrenderer
                             break;
                         }
                     }
-                    if (renderers[j] != null && isDaydreamRendered && null == renderers[j].GetComponent<DaydreamMeshRenderer>())
+                    if (renderers[j] != null && isDaydreamRendered)
                     {
-                        missingRenderer.Add(renderers[j].gameObject);
+                        DaydreamMeshRenderer dmr = renderers[j].GetComponent<DaydreamMeshRenderer>();
+                        if(null == dmr)
+                        {
+                            missingRenderer.Add(renderers[j].gameObject);
+                        }
+                        else
+                        {
+                            // update disable/enabled
+                            dmr.enabled = renderers[j].enabled;
+                        }
                     }
                 }
                 for (int j = 0, n = lights.Length; j < n; ++j)
