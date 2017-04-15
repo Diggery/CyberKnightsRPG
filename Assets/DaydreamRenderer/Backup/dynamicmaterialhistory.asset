@@ -16,4 +16,36 @@ MonoBehaviour:
     m_backupMaterial: {fileID: 2100000, guid: 5d4c118e7e8ef7d48b05ab41c4de9ce6, type: 2}
     m_material: {fileID: 2100000, guid: 2af74b7a3b30ad0488b91c504089faae, type: 2}
     m_splitMaterial: {fileID: 0}
+  - m_sourceScenePath: 
+    m_backupMaterial: {fileID: 2100000, guid: b82493807418e42e68a4c43207ce41d6, type: 2}
+    m_material: {fileID: 2100000, guid: d4e82e7bede19429685d887af59bade1, type: 2}
+    m_splitMaterial: {fileID: 0}
+  - m_sourceScenePath: 
+    m_backupMaterial: {fileID: 2100000, guid: 1e7d383636af840f48ac114ce41a40b3, type: 2}
+    m_material: {fileID: 2100000, guid: 706732d51e87245a7ba7d2d3ef874bc7, type: 2}
+    m_splitMaterial: {fileID: 0}
+  - m_sourceScenePath: 
+    m_backupMaterial: {fileID: 2100000, guid: c1fca1fdd9cdb4f62a84f02f7b6dd1c4, type: 2}
+    m_material: {fileID: 2100000, guid: f9a4a0f9419364e8db774b9ba1629345, type: 2}
+    m_splitMaterial: {fileID: 0}
+  - m_sourceScenePath: 
+    m_backupMaterial: {fileID: 2100000, guid: 895118055379f4f71bbb01d95f988bcd, type: 2}
+    m_material: {fileID: 2100000, guid: 2fee2633677084e3bad7eddf92a9b06a, type: 2}
+    m_splitMaterial: {fileID: 0}
+  - m_sourceScenePath: 
+    m_backupMaterial: {fileID: 2100000, guid: ec77e38e412b4468fa80946681a2231f, type: 2}
+    m_material: {fileID: 2100000, guid: 3b4f6031d569a624ba87b631c93a788a, type: 2}
+    m_splitMaterial: {fileID: 0}
+  - m_sourceScenePath: 
+    m_backupMaterial: {fileID: 2100000, guid: 3203b593526ca4132b90d478a0ec3966, type: 2}
+    m_material: {fileID: 2100000, guid: 7bc1b31ae424a1448b1be6be3707ad31, type: 2}
+    m_splitMaterial: {fileID: 0}
+  - m_sourceScenePath: 
+    m_backupMaterial: {fileID: 2100000, guid: 28f1fb1042c81451497070d691182511, type: 2}
+    m_material: {fileID: 2100000, guid: a6329ec80f51d6049a5d00d86224003b, type: 2}
+    m_splitMaterial: {fileID: 0}
+  - m_sourceScenePath: 
+    m_backupMaterial: {fileID: 2100000, guid: b8ca51854df5e4a3eb69bfc1e1a80bdc, type: 2}
+    m_material: {fileID: 2100000, guid: ebbccbcf1451ddf4199eab062dc6d367, type: 2}
+    m_splitMaterial: {fileID: 0}
   m_splitMaterials: []

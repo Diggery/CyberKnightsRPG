@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: lambert2
   m_Shader: {fileID: 4800000, guid: 722fdd6b84219cc489603060652374ab, type: 3}
-  m_ShaderKeywords: SHADOWS SPECULAR
+  m_ShaderKeywords: SHADOWS SPECULAR STATIC_LIGHTING VERTEX_LIGHTING
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_CustomRenderQueue: -1
@@ -38,16 +38,16 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 3020a941e1b4b384f9ca52b7b5151ab3, type: 3}
+        m_Scale: {x: 2, y: 2}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 7148ebe8156477e43aa7cc93538fc040, type: 3}
+        m_Scale: {x: 2, y: 2}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
@@ -75,7 +75,7 @@ Material:
     - _ShadowFalloff: 0.25
     - _ShadowIntens: 0.5
     - _SmoothnessTextureChannel: 0
-    - _SpecSmoothness: 0.5
+    - _SpecSmoothness: 0.818
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _StaticLightingScale: 1

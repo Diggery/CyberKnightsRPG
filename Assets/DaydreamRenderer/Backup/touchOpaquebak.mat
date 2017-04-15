@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: touchOpaque
+  m_Name: touchOpaquebak
   m_Shader: {fileID: 4800000, guid: adb9b18ac2466473a850d8acd17654a1, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
