@@ -1,4 +1,20 @@
-﻿using UnityEngine;
+﻿///////////////////////////////////////////////////////////////////////////////
+//Copyright 2017 Google Inc.
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+///////////////////////////////////////////////////////////////////////////////
+
+using UnityEngine;
 using System.Collections;
 using System;
 using System.Threading;
@@ -423,7 +439,9 @@ namespace daydreamrenderer
                     {
                         int count = m_vertCounts[m];
                         int floatCount = count * 3;
-                        string objectId = "" + m_meshes[m].GetUniqueId();
+
+                        // the ID used to look up this mesh later
+                        string objectId = "" + m_lightBakers[m].GetUniqueId();
 
                         m_lightBakers[m].m_currentContainer = meshContainer;
 
@@ -914,26 +932,33 @@ namespace daydreamrenderer
             {
                 VertexElementType elType = vertElementIter.Current.GetElType;
                 Element elDef = vertElementIter.Current;
+                int componentCount = elDef.ComponentCount;
 
                 // pointer to new data
                 IntPtr dataPtr = new IntPtr(ctx.m_meshDataPtr.ToInt64() + ptrOffset * SIZE_FLOAT);
-                
-                if (elType == VertexElementType.kTangent && mesh.tangents.Length == 0)
+
+                if(elType == VertexElementType.kTangent && mesh.tangents.Length == 0)
                 {
-                    // fill with UV data and use it to generate tangents
-                    elDef = new Element(VertexElementType.kUV0, 2, SIZE_FLOAT);
-                    //CopyArrayFromMesh(dataPtr, vertexCount * elDef.TotalByteSize, vertexCount * elDef.TotalByteSize, mesh, elDef);
+                    // If the data type is kTangent and there is not tangent data, copy UV0 data into the first half of the tangent
+                    // data buffer, leave the second half empty. The UV0 data will be used by the baker to generate the tangent data, which
+                    // will then be re-written into the tangent buffer.
+                    Element uvElement = new Element(VertexElementType.kUV0, 2, SIZE_FLOAT);
+                    CopyVectorArrayFromMesh(dataPtr, vertexCount * uvElement.TotalByteSize, vertexCount * uvElement.TotalByteSize, mesh, uvElement);
                 }
-                
-                if(elType != VertexElementType.kNormal || mesh.normals.Length != 0)
+                else if(elType == VertexElementType.kNormal && mesh.normals.Length == 0)
                 {
-                    // copy the mesh data into memory offset to dataPtr. 
-                    // If the data type is eNormal and there is no data skip this step but still increment pointer to allow space for normals later
+                    // Do Nothing!
+                    // If the data type is kNormal and there is no data skip this step but still increment pointer to leave a 'hole' in the buffer
+                    // that he baker can fill with dynamically generated normals. This statement is just here for reader clarity.
+                }
+                else
+                {
+                    // if here just copy data of the element size into the dataPtr (the buffer)
                     CopyVectorArrayFromMesh(dataPtr, vertexCount * elDef.TotalByteSize, vertexCount * elDef.TotalByteSize, mesh, elDef);
                 }
 
-                ptrOffset += vertexCount * elDef.ComponentCount;
-
+                // regardless of which 'if-statement' we fall, in always increment the pointer by the full amount
+                ptrOffset += vertexCount * componentCount;
 
             }
         }

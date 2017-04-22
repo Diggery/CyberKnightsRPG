@@ -1,4 +1,20 @@
-﻿using UnityEngine;
+﻿///////////////////////////////////////////////////////////////////////////////
+//Copyright 2017 Google Inc.
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+///////////////////////////////////////////////////////////////////////////////
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -99,21 +115,26 @@ namespace daydreamrenderer
         private Mesh GetLightinMeshFromContainer(string meshName, bool isSuffix = false)
         {
             // get lighting mesh from the container
-            Mesh lightinMesh = m_currentContainer.m_list.Find(delegate (Mesh m)
+            Mesh lightinMesh = null;
+            if(m_currentContainer != null)
             {
-                if (m != null && m.name != null)
+                lightinMesh = m_currentContainer.m_list.Find(delegate (Mesh m)
                 {
-                    if (isSuffix)
+                    if (m != null && m.name != null)
                     {
-                        return m.name.EndsWith(meshName);
-                    }else
-                    {
-                        return m.name == meshName;
+                        if (isSuffix)
+                        {
+                            return m.name.EndsWith(meshName);
+                        }
+                        else
+                        {
+                            return m.name == meshName;
+                        }
                     }
-                }
 
-                return false;
-            });
+                    return false;
+                });
+            }
 
             return lightinMesh;
         }

@@ -151,6 +151,25 @@ Prefab:
       propertyPath: m_Name
       value: Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 1000013329782168, guid: acacee50e0f1541db92126c89dca37f8, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 20000011613618654, guid: acacee50e0f1541db92126c89dca37f8,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010889854490, guid: acacee50e0f1541db92126c89dca37f8,
+        type: 2}
+      propertyPath: vrModeEnabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010889854490, guid: acacee50e0f1541db92126c89dca37f8,
+        type: 2}
+      propertyPath: distortionCorrection
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: acacee50e0f1541db92126c89dca37f8, type: 2}
   m_IsPrefabParent: 0
@@ -275,8 +294,8 @@ GameObject:
   - component: {fileID: 125883117}
   - component: {fileID: 125883116}
   - component: {fileID: 125883115}
-  - component: {fileID: 125883120}
   - component: {fileID: 125883119}
+  - component: {fileID: 125883120}
   m_Layer: 9
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -476,7 +495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0711ee67a1b0341cfa924161292d8fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_lightMode: 4
+  m_lightMode: 2
 --- !u!108 &279451059
 Light:
   m_ObjectHideFlags: 0
@@ -611,7 +630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0711ee67a1b0341cfa924161292d8fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_lightMode: 4
+  m_lightMode: 2
 --- !u!108 &351855231
 Light:
   m_ObjectHideFlags: 0
@@ -745,7 +764,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 638db0180ef2f438cae6341bf3c73797, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_static: 1
+  m_static: 0
 --- !u!114 &368946002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -884,7 +903,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0711ee67a1b0341cfa924161292d8fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_lightMode: 4
+  m_lightMode: 2
 --- !u!108 &409841474
 Light:
   m_ObjectHideFlags: 0
@@ -962,7 +981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0711ee67a1b0341cfa924161292d8fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_lightMode: 4
+  m_lightMode: 2
 --- !u!108 &436837989
 Light:
   m_ObjectHideFlags: 0
@@ -1499,7 +1518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0711ee67a1b0341cfa924161292d8fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_lightMode: 4
+  m_lightMode: 2
 --- !u!108 &921810388
 Light:
   m_ObjectHideFlags: 0
@@ -1665,22 +1684,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583a997e8f5f547efb216f0cdc0595bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &935559648 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100024, guid: 07bcd8a971047497d843a320a4ff059c, type: 3}
-  m_PrefabInternal: {fileID: 964412607}
---- !u!114 &935559652
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 935559648}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 638db0180ef2f438cae6341bf3c73797, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_static: 0
 --- !u!1001 &964412607
 Prefab:
   m_ObjectHideFlags: 0
@@ -2284,6 +2287,7 @@ GameObject:
   - component: {fileID: 1205238082}
   - component: {fileID: 1205238081}
   - component: {fileID: 1205238080}
+  - component: {fileID: 1205238083}
   m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
@@ -2317,7 +2321,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 47fd6a5a4a9293c46b13665db869bc43, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2355,6 +2359,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1205238078}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1205238083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1205238078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 638db0180ef2f438cae6341bf3c73797, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_static: 0
 --- !u!1 &1240761685 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100070, guid: 07bcd8a971047497d843a320a4ff059c, type: 3}
@@ -2579,7 +2595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0711ee67a1b0341cfa924161292d8fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_lightMode: 4
+  m_lightMode: 2
 --- !u!108 &1357887558
 Light:
   m_ObjectHideFlags: 0
@@ -2658,22 +2674,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1509471926 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100032, guid: 07bcd8a971047497d843a320a4ff059c, type: 3}
-  m_PrefabInternal: {fileID: 964412607}
---- !u!114 &1509471930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1509471926}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 638db0180ef2f438cae6341bf3c73797, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_static: 0
 --- !u!1001 &1512371205
 Prefab:
   m_ObjectHideFlags: 0
@@ -2727,8 +2727,8 @@ GameObject:
   - component: {fileID: 1556568069}
   - component: {fileID: 1556568068}
   - component: {fileID: 1556568067}
-  - component: {fileID: 1556568072}
   - component: {fileID: 1556568071}
+  - component: {fileID: 1556568072}
   m_Layer: 9
   m_Name: Cube (2)
   m_TagString: Untagged
@@ -2842,8 +2842,8 @@ GameObject:
   - component: {fileID: 1596341673}
   - component: {fileID: 1596341672}
   - component: {fileID: 1596341671}
-  - component: {fileID: 1596341676}
   - component: {fileID: 1596341675}
+  - component: {fileID: 1596341676}
   m_Layer: 9
   m_Name: Cube (3)
   m_TagString: Untagged
@@ -2946,6 +2946,103 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_static: 1
+--- !u!1 &1629485586
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1629485589}
+  - component: {fileID: 1629485588}
+  - component: {fileID: 1629485587}
+  m_Layer: 0
+  m_Name: DaydreamRenderer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!20 &1629485587
+Camera:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1629485586}
+  m_Enabled: 0
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+  m_StereoMirrorMode: 0
+--- !u!114 &1629485588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1629485586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72e476cc6f5c62f4f856b1f018fb57b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_shadowWidth: 128
+  m_shadowHeight: 128
+  m_sharpness: 0.5
+  m_maxShadowDist: 100
+  m_shadowSettings: 1
+  m_ambientSettings: 1
+  m_fogSettings: 1
+  m_showFPS: 1
+  m_maxShadowCasters: 1
+  m_uiEnabled: 1
+  m_globalAmbientUp: {r: 0.19852942, g: 0.0700692, b: 0.0700692, a: 1}
+  m_globalAmbientDn: {r: 0.14705884, g: 0.09407441, b: 0.09407441, a: 1}
+  m_fogLinear: {x: 4, y: 28, z: 1, w: 0}
+  m_fogHeight: {x: 0, y: 1.5, z: 10.4, w: 0.2}
+  m_fogColorNear: {r: 0.5808823, g: 0.5793569, b: 0.5766111, a: 1}
+  m_fogColorFar: {r: 0.3719723, g: 0.49874714, b: 0.58823526, a: 1}
+  m_fogEnable: 1
+  m_heightFogEnable: 0
+  m_fogMode: 0
+  m_enableEnlighten: 0
+--- !u!4 &1629485589
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1629485586}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.7745609, y: 1.1212692, z: 0.23280258}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1679694277 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100066, guid: 07bcd8a971047497d843a320a4ff059c, type: 3}
@@ -2961,7 +3058,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 638db0180ef2f438cae6341bf3c73797, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_static: 1
+  m_static: 0
 --- !u!114 &1679694282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3022,7 +3119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0711ee67a1b0341cfa924161292d8fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_lightMode: 4
+  m_lightMode: 2
 --- !u!108 &1699306100
 Light:
   m_ObjectHideFlags: 0
@@ -3140,8 +3237,8 @@ GameObject:
   - component: {fileID: 1772502012}
   - component: {fileID: 1772502011}
   - component: {fileID: 1772502010}
-  - component: {fileID: 1772502014}
   - component: {fileID: 1772502015}
+  - component: {fileID: 1772502014}
   m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
@@ -3285,7 +3382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0711ee67a1b0341cfa924161292d8fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_lightMode: 4
+  m_lightMode: 2
 --- !u!108 &1795936437
 Light:
   m_ObjectHideFlags: 0

@@ -1,6 +1,23 @@
-﻿using System.Collections;
+﻿///////////////////////////////////////////////////////////////////////////////
+//Copyright 2017 Google Inc.
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+///////////////////////////////////////////////////////////////////////////////
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -8,7 +25,6 @@ using UnityEditor;
 namespace daydreamrenderer
 {
     using UnityEngine.Rendering;
-    using LightData = DaydreamLight.LightData;
     using LightModes = TypeExtensions.LightModes;
 
     [ExecuteInEditMode]
@@ -16,13 +32,18 @@ namespace daydreamrenderer
     public class DaydreamMeshRenderer : MonoBehaviour
     {
         const int kMaxActiveLights = 8;
+        const int kMinObjectCount = 512;
+        const int kUpdateWindow = 80;
+
+        // setting this flag to false causes meshes to stop processing lights
+        public static bool s_ignoreLights = false;
 
         // the 'isStatic' flag on any gameObject is 'editor only' this flag tracks its state and serializes it for use on device
         [HideInInspector]
         public bool m_static = false;
 
-        // setting this flag to false causes meshes to stop processing lights
-        public static bool s_ignoreLights = false;
+        [System.NonSerialized]
+        public bool m_didInit = false;
 
         // list of lights affecting this object
         int[] m_lightList = new int[kMaxActiveLights];
@@ -38,27 +59,26 @@ namespace daydreamrenderer
         Vector4[] m_spotDir = new Vector4[8];
 
         // ref to light data list
-        LightData[] m_lightDataArray;
+        DaydreamLight[] m_daydreamLightArray;
 
-        // radius of the largest axis of the bounding box
-        Vector3 m_radius;
+        // cached bounds of this object
+        Bounds m_bounds;
 
         // distance to camera
-        int m_camId;
         int m_camCullingMask = int.MaxValue;
-        int m_layer = int.MaxValue;
+        int m_layer = 0;
 
         // shared shared uniform ids
         static int s_lightColorId;
         static int s_lightPositionId;
         static int s_lightAttenId;
         static int s_spotDirectionId;
-        static bool once = false;
         static int s_count = 0;
         static int s_countUpdated = 0;
         static int s_updateWindow = 0;
         static int s_updateFreq = 1;
-        const int kUpdateWindow = 80;
+        static int s_frameCount = 0;
+        public static List<DaydreamMeshRenderer> m_objectList = new List<DaydreamMeshRenderer>(kMinObjectCount);
 
         // quadratic attenuation
         const float kq = 25.0f;
@@ -68,8 +88,6 @@ namespace daydreamrenderer
 
         int m_freqKey = -1;
         bool m_startup = true;
-        // track changes in light count
-        int m_lightCount = -1;
 
         Renderer GetRenderer{
             get{
@@ -128,11 +146,12 @@ namespace daydreamrenderer
             }
         }
 
-        void Awake()
+        public void DMRInit()
         {
+            m_didInit = true;
             UpdateEnabled();
 #if UNITY_EDITOR
-            if(enabled)
+            if (enabled)
             {
                 m_static = gameObject.isStatic;
                 Material[] mats = GetRenderer.sharedMaterials;
@@ -145,25 +164,20 @@ namespace daydreamrenderer
                 }
             }
 #endif
-        }
 
-        void Start()
-        {
+            if (m_renderer != null || GetRenderer != null)
+            {
+                m_bounds = m_renderer.bounds;
+            }
+
             UpdateSharedMaterials();
             UpdateLightPositionId();
             UpdateLightAttenuationId();
             UpdateLightColorId();
             UpdateLightSpotDirectionId();
-
-            m_layer = gameObject.layer;
+            
             // force lights to process
             m_startup = true;
-
-            m_radius = GetRenderer.bounds.extents;
-            if(Camera.current != null)
-            {
-                m_camCullingMask = Camera.current.cullingMask;
-            }
         }
 
         bool CompareTransforms()
@@ -177,25 +191,8 @@ namespace daydreamrenderer
             return true;
         }
 
-        void Update()
+        public void UpdateStaticState()
         {
-            if(!GetRenderer.enabled) return;
-
-            if (!m_static && !CompareTransforms())
-            {
-                IncrementUpdateKey();
-            }
-
-            if(!once)
-            {
-                s_count = 0;
-                s_countUpdated = 0;
-                s_updateWindow = kUpdateWindow;
-                once = true;
-            }
-
-            s_updateFreq = ++s_count/kUpdateWindow + 1;
-
 #if UNITY_EDITOR
             if(!Application.isPlaying)
             {
@@ -209,28 +206,84 @@ namespace daydreamrenderer
 #endif
         }
 
+
+        public static void Clear()
+        {
+            s_count = 0;
+            s_countUpdated = 0;
+            s_updateWindow = kUpdateWindow;
+
+            m_objectList.Clear();
+        }
+
+        public static void StartFrame()
+        {
+            s_updateFreq = s_count / kUpdateWindow + 1;
+            s_frameCount++;
+        }
+
         // called during culling right before render
         void OnWillRenderObject()
         {
-            if(s_ignoreLights || m_sharedMaterials == null || !GetRenderer.enabled) return;
-
-            if(m_layer != 0 && (m_camCullingMask & m_layer) == 0)return;
+            m_layer = gameObject.layer;
             
-            // reset
-            once = false;
+            if (Camera.current != null)
+            {
+                m_camCullingMask = Camera.current.cullingMask;
+            }
 
-            #if UNITY_EDITOR
+            if (m_didInit)
+            {
+                if (s_ignoreLights || m_sharedMaterials == null) return;
+
+                if (m_layer != 0 && (m_camCullingMask & m_layer) == 0) return;
+            }
+
+            if (!CompareTransforms())
+            {
+                if (m_renderer != null || GetRenderer != null)
+                {
+                    m_bounds = m_renderer.bounds;
+                }
+                IncrementUpdateKey();
+            }
+            s_count++;
+            m_objectList.Add(this);
+        }
+
+        public void InEditorUpdate()
+        {
+
+#if UNITY_EDITOR
+            // always increment the update key in editor since 'Update' only gets
+            // called on change but 'OnWillRenderObject' gets called every frame
+            if (!Application.isPlaying)
+            {
+                UpdateSharedMaterials();
+                UpdateLightPositionId();
+                UpdateLightAttenuationId();
+                UpdateLightColorId();
+                UpdateLightSpotDirectionId();
+                IncrementUpdateKey();
+            }
+#endif
+        }
+
+        // called during culling right before render
+        public void ApplyLighting(bool lightChange)
+        {
+#if UNITY_EDITOR
             bool enableUpdateWindow = Application.isPlaying;
-            #else
+#else
             const bool enableUpdateWindow = true;
-            #endif
+#endif
 
             bool canUpdateLights = true;
-            if(enableUpdateWindow)
+            if (enableUpdateWindow)
             {
                 ++m_freqKey;
                 int updatesLeft = (s_count - ++s_countUpdated);
-                if(s_updateWindow <= 0 || (updatesLeft >= s_updateWindow && (m_freqKey % s_updateFreq) != 0))
+                if (s_updateWindow <= 0 || (updatesLeft >= s_updateWindow && (m_freqKey % s_updateFreq) != 0))
                 {
                     canUpdateLights = false;
                 }
@@ -242,66 +295,47 @@ namespace daydreamrenderer
                 }
             }
 
-#if UNITY_EDITOR
-            // always increment the update key in editor since 'Update' only gets
-            // called on change but 'OnWillRenderObject' gets called every frame
-            if(!Application.isPlaying)
-            {
-                UpdateSharedMaterials();
-                UpdateLightPositionId();
-                UpdateLightAttenuationId();
-                UpdateLightColorId();
-                UpdateLightSpotDirectionId();
-                IncrementUpdateKey();
-            }
-#endif
-            m_camId = Camera.current.GetInstanceID();
-            m_lightDataArray = DaydreamLight.s_masterLightArray;
+            m_daydreamLightArray = DaydreamLight.s_masterLightArray;
 
             // setup light uniforms
+            bool rebuildLights = false;
             if (canUpdateLights)
             {
-                bool rebuildLights = (m_key != m_upateKey || DaydreamLight.AnyLightChanged() || m_lightCount != DaydreamLight.GetLightCount());
-
-                // keep track of lights available to this object
-                m_lightCount = DaydreamLight.GetLightCount();
-
-                if(rebuildLights || m_startup)
+                rebuildLights = (m_key != m_upateKey || lightChange);
+                
+                if (rebuildLights || m_startup)
                 {
                     m_startup = false;
                     int usedSlots = 0;
                     // rebuild the light array
-                    DaydreamLight.GetSortedLights(m_upateKey, gameObject.layer, transform.position, GetRenderer.bounds, ref m_lightList, ref usedSlots);
+                    DaydreamLight.GetSortedLights(m_upateKey, gameObject.layer, m_static, transform.position, m_bounds, ref m_lightList, ref usedSlots);
                 }
             }
 
             m_key = m_upateKey;
-            
-
             // update data
             for (int i = 0; i < kMaxActiveLights; ++i)
             {
                 int lightIdx = m_lightList[i];
-                if (lightIdx != -1 && m_lightDataArray[lightIdx] != null && (!m_static || m_lightDataArray[lightIdx].m_mode == LightModes.REALTIME))
+
+                if (lightIdx != -1 && (!m_static || m_daydreamLightArray[lightIdx].m_curMode == LightModes.REALTIME))
                 {
-                    LightData lightData = m_lightDataArray[lightIdx];
+                    DaydreamLight dl = m_daydreamLightArray[lightIdx];
 
-                    LightType type = lightData.m_type;
+                    LightType type = dl.m_type;
 
-                    lightData.UpdateViewSpace(m_camId);
-
-                    if(type == LightType.Directional)
+                    if (type == LightType.Directional)
                     {
-                        lightData.GetViewSpaceDir(ref m_positions[i]);
+                        dl.GetViewSpaceDir(ref m_positions[i]);
                     }
                     else
                     {
-                        lightData.GetViewSpacePos(ref m_positions[i]);
+                        dl.GetViewSpacePos(ref m_positions[i]);
                     }
                     // view-space spot light directions, or (0,0,1,0) for non-spot
-                    if(type == LightType.Spot)
+                    if (type == LightType.Spot)
                     {
-                        lightData.GetViewSpaceDir(ref m_spotDir[i]);
+                        dl.GetViewSpaceDir(ref m_spotDir[i]);
                     }
                     else
                     {
@@ -311,28 +345,25 @@ namespace daydreamrenderer
                         m_spotDir[i].w = 0f;
                     }
 
-                    if(lightData.m_propertiesChanged)
+                    dl.GetColor(ref m_colors[i]);
+                    // from UnityShaderVariables.cginc
+                    // x = cos(spotAngle/2) or -1 for non-spot
+                    // y = 1/cos(spotAngle/4) or 1 for non-spot
+                    // z = quadratic attenuation
+                    // w = range*range
+                    if (type == LightType.Spot)
                     {
-                        lightData.GetColor(ref m_colors[i]);
-                        // from UnityShaderVariables.cginc
-                        // x = cos(spotAngle/2) or -1 for non-spot
-                        // y = 1/cos(spotAngle/4) or 1 for non-spot
-                        // z = quadratic attenuation
-                        // w = range*range
-                        if(type == LightType.Spot)
-                        {
-                            m_atten[i].x = lightData.GetAttenX();
-                            m_atten[i].y = lightData.GetAttenY();
-                        }
-                        else
-                        {
-                            m_atten[i].x = -1f;
-                            m_atten[i].y = 1f;
-                        }
-
-                        m_atten[i].z = lightData.GetAttenZ();
-                        m_atten[i].w = lightData.GetAttenW();
+                        m_atten[i].x = dl.GetAttenX();
+                        m_atten[i].y = dl.GetAttenY();
                     }
+                    else
+                    {
+                        m_atten[i].x = -1f;
+                        m_atten[i].y = 1f;
+                    }
+
+                    m_atten[i].z = dl.GetAttenZ();
+                    m_atten[i].w = dl.GetAttenW();
                 }
                 else
                 {
@@ -343,12 +374,16 @@ namespace daydreamrenderer
                     m_colors[i].w = 0f;
                 }
             }
+
             for (int i = 0, k = m_sharedMaterials.Length; i < k; ++i)
             {
-                m_sharedMaterials[i].SetVectorArray(s_lightAttenId, m_atten);
-                m_sharedMaterials[i].SetVectorArray(s_lightColorId, m_colors);
-                m_sharedMaterials[i].SetVectorArray(s_lightPositionId, m_positions);
-                m_sharedMaterials[i].SetVectorArray(s_spotDirectionId, m_spotDir);
+                if(m_sharedMaterials[i] != null)
+                {
+                    m_sharedMaterials[i].SetVectorArray(s_lightAttenId, m_atten);
+                    m_sharedMaterials[i].SetVectorArray(s_lightColorId, m_colors);
+                    m_sharedMaterials[i].SetVectorArray(s_lightPositionId, m_positions);
+                    m_sharedMaterials[i].SetVectorArray(s_spotDirectionId, m_spotDir);
+                }
             }
         }
 

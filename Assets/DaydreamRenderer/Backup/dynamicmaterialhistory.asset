@@ -13,24 +13,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_convertedMaterials:
   - m_sourceScenePath: 
-    m_backupMaterial: {fileID: 2100000, guid: 5d4c118e7e8ef7d48b05ab41c4de9ce6, type: 2}
-    m_material: {fileID: 2100000, guid: 2af74b7a3b30ad0488b91c504089faae, type: 2}
-    m_splitMaterial: {fileID: 0}
-  - m_sourceScenePath: 
-    m_backupMaterial: {fileID: 2100000, guid: b82493807418e42e68a4c43207ce41d6, type: 2}
-    m_material: {fileID: 2100000, guid: d4e82e7bede19429685d887af59bade1, type: 2}
-    m_splitMaterial: {fileID: 0}
-  - m_sourceScenePath: 
-    m_backupMaterial: {fileID: 2100000, guid: 1e7d383636af840f48ac114ce41a40b3, type: 2}
-    m_material: {fileID: 2100000, guid: 706732d51e87245a7ba7d2d3ef874bc7, type: 2}
-    m_splitMaterial: {fileID: 0}
-  - m_sourceScenePath: 
-    m_backupMaterial: {fileID: 2100000, guid: c1fca1fdd9cdb4f62a84f02f7b6dd1c4, type: 2}
-    m_material: {fileID: 2100000, guid: f9a4a0f9419364e8db774b9ba1629345, type: 2}
-    m_splitMaterial: {fileID: 0}
-  - m_sourceScenePath: 
     m_backupMaterial: {fileID: 2100000, guid: 895118055379f4f71bbb01d95f988bcd, type: 2}
     m_material: {fileID: 2100000, guid: 2fee2633677084e3bad7eddf92a9b06a, type: 2}
+    m_splitMaterial: {fileID: 0}
+  - m_sourceScenePath: 
+    m_backupMaterial: {fileID: 2100000, guid: 60ffb8363cda846528483b7daa2249ae, type: 2}
+    m_material: {fileID: 2100000, guid: 45322bf3540fb4e2dacf40773e6a72b9, type: 2}
+    m_splitMaterial: {fileID: 0}
+  - m_sourceScenePath: 
+    m_backupMaterial: {fileID: 2100000, guid: bab05e3b43aa5465fb9f07d91d9bb9e2, type: 2}
+    m_material: {fileID: 2100000, guid: 5f2906b5686f843f29f59170516a6e27, type: 2}
     m_splitMaterial: {fileID: 0}
   - m_sourceScenePath: 
     m_backupMaterial: {fileID: 2100000, guid: ec77e38e412b4468fa80946681a2231f, type: 2}

@@ -1,4 +1,19 @@
-﻿
+﻿///////////////////////////////////////////////////////////////////////////////
+//Copyright 2017 Google Inc.
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+///////////////////////////////////////////////////////////////////////////////
+
 #if DDR_RUNTIME_DLL_LINKING && !UNITY_EDITOR_OSX
 #define DDR_RUNTIME_DLL_LINKING_
 #endif
@@ -1005,8 +1020,20 @@ namespace daydreamrenderer
 
             int[] outIndex = new int[1];
             outIndex[0] = -1;
-            #if DDR_RUNTIME_DLL_LINKING_
-            int err = Invoke<int, _TessellateTriangles>(bvhSceneHandle.Ptr(), ToFloatArray(startPoint), ToFloatArray(endPoint), outIndex);
+#if DDR_RUNTIME_DLL_LINKING_
+            bool success = Invoke<bool, _TessellateTriangles>(bvhHandle.Ptr()
+                , m_baker.m_meshIdsPtr
+                , m_baker.m_vertexCountsPtr
+                , m_baker.m_triangleCountPtr
+                , vertexFormat.ElementCount
+                , vertexFormat.Definition.ToArray()
+                , m_baker.m_matDataPtr
+                , m_baker.m_meshDataPtr
+                , m_baker.m_triangleDataPtr
+                , m_baker.m_bakeOptionsPtr
+                , m_baker.m_guids
+                , m_baker.m_sourcePaths
+                , m_baker.m_settingsPtrs);
             #else
             bool success = _TessellateTriangles(bvhHandle.Ptr()
                 , m_baker.m_meshIdsPtr

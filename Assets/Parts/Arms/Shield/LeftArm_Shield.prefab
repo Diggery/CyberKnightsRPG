@@ -97,6 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000013754807130}
   - component: {fileID: 137000011298131094}
+  - component: {fileID: 114984817636609474}
   m_Layer: 0
   m_Name: LeftArm_Geo
   m_TagString: Untagged
@@ -277,6 +278,18 @@ MonoBehaviour:
   type: 1
   shield: {fileID: 100000, guid: ada3030813c6847a6bd85419c46cd85a, type: 3}
   animController: {fileID: 9100000, guid: 47be10f4e68f24cbdbdd6b8ea44f6417, type: 2}
+--- !u!114 &114984817636609474
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012716362976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 638db0180ef2f438cae6341bf3c73797, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_static: 0
 --- !u!137 &137000011298131094
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

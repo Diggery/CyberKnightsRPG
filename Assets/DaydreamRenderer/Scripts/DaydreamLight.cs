@@ -1,3 +1,19 @@
+///////////////////////////////////////////////////////////////////////////////
+//Copyright 2017 Google Inc.
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+///////////////////////////////////////////////////////////////////////////////
+
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,236 +30,12 @@ namespace daydreamrenderer
     [RequireComponent(typeof(Light))]
     public class DaydreamLight : MonoBehaviour
     {
-        public class LightData
-        {
-            // dist from light to object
-            public float m_dist;
-            // light data wraps a light
-            public Light m_light;
-            // cache the world pos for fast access
-            public Vector4 m_worlPos;
-            // cache the world dir for fast access
-            public Vector4 m_worldDir;
-            // flagged if any tracked property change (eg range, angle, intensity)
-            public bool m_propertiesChanged = true;
-            // flagged if light transform has change (ie the light moved)
-            public bool m_transformChanged = true;
-            // cache the type
-            public LightType m_type;
-            // track frame updates
-            public static int s_viewSpaceId;
-            // cache the view matrix
-            static Matrix4x4 s_toViewSpace;
-            // light mode (real time, mixed, etc)
-            public int m_mode = LightModes.REALTIME;
-            // cache the light culling layer
-            public int m_cullingMask = 0;
-
-            // keys to control update of light data
-            int m_viewSpaceKey;
-
-            // calculated values that are passed to a shader
-            float m_attenW;
-            float m_attenX;
-            float m_attenY;
-            float m_attenZ;
-            Vector4 m_viewSpacePos;
-            Vector4 m_viewSpaceDir;
-            Vector4 m_color;
-
-            // these fields track changes to minimize recalculations as much as possible
-            public float m_lastRange = 0f;
-            public float m_lastIntensity = 0f;
-            float m_lastAngle = float.MaxValue;
-            Color m_lastColor = Color.clear;
-            static int s_lastCamId;
-
-            // ensure properties are updated
-            bool m_invalidatedProps = false;
-            
-            public LightData()
-            { }
-
-            public LightData(Light light, int mode)
-            { 
-                Set(light);
-                m_transformChanged = true;
-                m_propertiesChanged = true;
-                m_mode = mode;
-            }
-
-            public void Set(Light light)
-            {
-                m_light = light;
-                m_dist = 0;
-            }
-
-            public void Clear()
-            {
-                Set(null);
-            }
-
-            public static void StartFrame()
-            {
-                s_lastCamId = 0;
-                // update frame
-                LightData.s_viewSpaceId = ++LightData.s_viewSpaceId % int.MaxValue;
-            }
-
-            // Called when property has changed
-            public void UpdateFrame()
-            {
-                float spotAngle = m_light.spotAngle*Mathf.Deg2Rad;
-                if(m_invalidatedProps || m_lastAngle != spotAngle)
-                {
-                    m_attenX = Mathf.Cos(spotAngle * 0.5f);
-                    m_attenY = 1f / Mathf.Cos(spotAngle * 0.25f);
-                }
-
-                if(m_invalidatedProps || m_lastRange != m_light.range)
-                {
-                    m_attenZ = ComputeLightAttenuation(m_light);
-                    m_attenW = m_light.range * m_light.range;
-                }
-
-                m_cullingMask = m_light.cullingMask;
-
-                // updates to track changes
-                m_type = m_light.type;
-                if(m_type == LightType.Spot)
-                {
-                    m_color = m_light.color * m_light.intensity * m_light.intensity;
-                }
-                else
-                {
-                    m_color = m_light.color * m_light.intensity;
-                }
-                m_lastColor = m_color;
-                m_lastRange = m_light.range;
-                m_lastAngle = spotAngle;
-                m_lastIntensity = m_light.intensity;
-
-                m_invalidatedProps = false;
-            }
-            
-
-            // called when light transform has changed
-            public void UpdateViewSpace(int camId)
-            {
-                if (DaydreamLight.CheckCamId(camId, s_lastCamId))
-                {
-                    ++s_viewSpaceId;
-                    s_toViewSpace = GetCurrentCamera().worldToCameraMatrix;
-                }
-
-                if(m_viewSpaceKey != s_viewSpaceId)
-                {
-                    // update key
-                    m_viewSpaceKey = s_viewSpaceId;
-
-                    Transform t = m_light.transform;
-                    m_worlPos = t.position;
-                    m_worlPos.w = 1f;
-                    m_worldDir = -t.forward;
-                    m_worldDir.w = 0f;
-
-                    // create view space position
-                    m_viewSpacePos = s_toViewSpace*m_worlPos;
-                    m_viewSpacePos.w = 1f;
-
-                    if(m_type != LightType.Point)
-                    {
-                        m_viewSpaceDir = s_toViewSpace*m_worldDir;
-                        m_viewSpaceDir.w = 0f;
-                    }
-                }
-
-                s_lastCamId = camId;
-            }
-            
-            public float GetAttenX()
-            {
-                return m_attenX;
-            }
-
-            public float GetAttenY()
-            {
-                return m_attenY;
-            }
-
-            public float GetAttenZ()
-            {
-                return m_attenZ;
-            }
-
-            public float GetAttenW()
-            {
-                return m_attenW;
-            }
-
-            public void GetViewSpacePos(ref Vector4 viewSpacePos)
-            {
-                viewSpacePos = m_viewSpacePos;
-            }
-
-            public void GetViewSpaceDir(ref Vector4 viewSpaceDir)
-            {
-                viewSpaceDir = m_viewSpaceDir;
-            }
-
-            public void GetColor(ref Vector4 color)
-            {
-                color = m_color;
-            }
-
-            // test for changes and set flags
-            public bool CheckForChange()
-            {
-                if (m_lastAngle != m_light.spotAngle
-                   || m_light.color != m_lastColor
-                   || m_lastIntensity != m_light.intensity
-                   || m_lastRange != m_light.range)
-                {
-                    m_propertiesChanged = true;
-                }
-                else
-                {
-                    m_propertiesChanged = false;
-                }
-
-                if (m_light.type != m_type)
-                {
-                    m_propertiesChanged = true;
-
-                    // make sure calculation that depend on properties get updated
-                    m_invalidatedProps = true;
-
-                    // sort may be different now
-                    DaydreamLight.s_resortLights = true;
-                }
-
-                // check transform for changes
-                if (m_light.transform.hasChanged)
-                {
-                    m_light.transform.hasChanged = false;
-                    m_transformChanged = true;
-                }
-                else
-                {
-                    m_transformChanged = false;
-                }
-
-                // return true if anything changed
-                return m_transformChanged || m_propertiesChanged;
-            }
-        }
-
         // sort the direction lights to the top of the list
-        public class LightSort : IComparer<LightData>
+        public class LightSort : IComparer<DaydreamLight>
         {
-            public int Compare(LightData x, LightData y)
+            public int Compare(DaydreamLight x, DaydreamLight y)
             {
-                if(x.m_light.type == LightType.Directional && y.m_light.type != LightType.Directional)
+                if (x.m_light.type == LightType.Directional && y.m_light.type != LightType.Directional)
                 {
                     return -1;
                 }
@@ -256,68 +48,226 @@ namespace daydreamrenderer
             }
         }
 
-        [HideInInspector]
-        public int m_lightMode;
-
-        // wraps the light and caches data
-        LightData m_lightData;
-
-        // flag forces light data to update
-        static int s_updateLightKey = -1;
-        // track if any light has changed
-        static bool s_anyLightChangedSet = false;
-        static bool s_anyLightChanged = true;
-        static bool s_resortLights = false;
+        public static bool s_resortLights = false;
 
         // Daydream light manages a list lights in the scene
-        static List<LightData> s_masterLightList = new List<LightData>();
-        public static LightData[] s_masterLightArray = new LightData[0];
-        static bool s_once = false;
+        public static DaydreamLight[] s_masterLightArray = new DaydreamLight[0];
 
-        void OnEnable()
+        [HideInInspector]
+        // this field serializes the last light mode
+        public int m_lightMode = LightModes.REALTIME;
+
+        // dist from light to object
+        [System.NonSerialized]
+        public float m_dist;
+        // light data wraps a light
+        [System.NonSerialized]
+        public Light m_light;
+        // cache the world pos for fast access
+        [System.NonSerialized]
+        public Vector4 m_worlPos;
+        // cache the world dir for fast access
+        [System.NonSerialized]
+        public Vector4 m_worldDir;
+        // flagged if any tracked property change (eg range, angle, intensity)
+        [System.NonSerialized]
+        public bool m_propertiesChanged = true;
+        // flagged if light transform has change (ie the light moved)
+        [System.NonSerialized]
+        public bool m_transformChanged = true;
+        // cache the type
+        [System.NonSerialized]
+        public LightType m_type;
+        // track frame updates
+        [System.NonSerialized]
+        public static int s_viewSpaceId;
+        // cache the view matrix
+        [System.NonSerialized]
+        static Matrix4x4 s_toViewSpace;
+        // light mode (real time, mixed, etc)
+        [System.NonSerialized]
+        public int m_curMode = LightModes.REALTIME;
+        // cache the light culling layer
+        [System.NonSerialized]
+        public int m_cullingMask = 0;
+        // track the last range
+        [System.NonSerialized]
+        public float m_lastRange = 0f;
+        // track last intensity
+        [System.NonSerialized]
+        public float m_lastIntensity = 0f;
+
+        // internal list of lights to accomodate sorting
+        static List<DaydreamLight> s_masterLightList = new List<DaydreamLight>();
+
+        // always update on init
+        bool m_didInit = false;
+
+        // calculated values that are passed to a shader
+        float m_attenW;
+        float m_attenX;
+        float m_attenY;
+        float m_attenZ;
+        Vector4 m_viewSpacePos;
+        Vector4 m_viewSpaceDir;
+        Vector4 m_color;
+
+        // these fields track changes to minimize recalculations as much as possible
+        float m_lastAngle = float.MaxValue;
+        Color m_lastColor = Color.clear;
+
+        // ensure properties are updated
+        bool m_invalidatedProps = true;
+
+        public static void StartFrame(Camera camera)
         {
-            // add lights to the master list
-            if(m_lightMode != LightModes.BAKED)
+            s_toViewSpace = camera.worldToCameraMatrix;
+            // update frame
+            s_viewSpaceId = ++s_viewSpaceId % int.MaxValue;
+        }
+        
+        // Called when property has changed
+        public void UpdateFrame()
+        {
+            float spotAngle = m_light.spotAngle;
+            float range = m_light.range;
+            if (m_invalidatedProps || m_lastAngle != spotAngle)
             {
-                AddToMasterList();
+                m_attenX = Mathf.Cos(spotAngle * Mathf.Deg2Rad * 0.5f);
+                m_attenY = 1f / Mathf.Cos(spotAngle * Mathf.Deg2Rad * 0.25f);
             }
+
+            if (m_invalidatedProps || m_lastRange != range)
+            {
+                m_attenZ = ComputeLightAttenuation(m_light);
+                m_attenW = range * range;
+            }
+
+            m_cullingMask = m_light.cullingMask;
+
+            // updates to track changes
+            m_type = m_light.type;
+            Color color = m_color = m_light.color;
+            float intensity = m_light.intensity;
+            if (m_type == LightType.Spot)
+            {
+                m_color = color * intensity * intensity;
+            }
+            else
+            {
+                m_color = color * intensity;
+            }
+            m_lastColor = color;
+            m_lastRange = range;
+            m_lastAngle = spotAngle;
+            m_lastIntensity = intensity;
+
+            m_invalidatedProps = false;
         }
 
-        void OnDisable()
+        // called when light transform has changed
+        public void UpdateViewSpace()
         {
-            // remove light from the master list
-            RemoveFromMasterList();
+            Transform t = m_light.transform;
+            m_worlPos = t.position;
+            m_worlPos.w = 1f;
+            m_worldDir = -t.forward;
+            m_worldDir.w = 0f;
+
+            // create view space position
+            m_viewSpacePos = s_toViewSpace*m_worlPos;
+            m_viewSpacePos.w = 1f;
+
+            if(m_type != LightType.Point)
+            {
+                m_viewSpaceDir = s_toViewSpace*m_worldDir;
+                m_viewSpaceDir.w = 0f;
+            }
+        }
+            
+        public float GetAttenX()
+        {
+            return m_attenX;
         }
 
-        void Update()
+        public float GetAttenY()
         {
-            if (DaydreamLight.s_resortLights)
+            return m_attenY;
+        }
+
+        public float GetAttenZ()
+        {
+            return m_attenZ;
+        }
+
+        public float GetAttenW()
+        {
+            return m_attenW;
+        }
+
+        public void GetViewSpacePos(ref Vector4 viewSpacePos)
+        {
+            viewSpacePos = m_viewSpacePos;
+        }
+
+        public void GetViewSpaceDir(ref Vector4 viewSpaceDir)
+        {
+            viewSpaceDir = m_viewSpaceDir;
+        }
+
+        public void GetColor(ref Vector4 color)
+        {
+            color = m_color;
+        }
+
+        // test for changes and set flags
+        public bool CheckForChange()
+        {
+            Color color = m_light.color;
+            if ( !m_didInit || m_lastAngle != m_light.spotAngle
+                || color.r != m_lastColor.r
+                || color.g != m_lastColor.g
+                || color.b != m_lastColor.b
+                || color.a != m_lastColor.a
+                || m_lastIntensity != m_light.intensity
+                || m_lastRange != m_light.range)
             {
-                DaydreamLight.s_resortLights = false;
-                ResortLights();
+                m_didInit = true;
+                m_propertiesChanged = true;
+            }
+            else
+            {
+                m_propertiesChanged = false;
             }
 
-            if (m_lightData != null)
+            if (m_light.type != m_type)
             {
-                // once per frame for all lights
-                if(!s_once)
-                {
-                    s_once = true;
+                m_propertiesChanged = true;
 
-                    // reset to force at least one update on the next call to 'GetSortedLights()'
-                    s_updateLightKey = -1;
-                    s_anyLightChangedSet = false;
-                    s_anyLightChanged = false;
+                // make sure calculation that depend on properties get updated
+                m_invalidatedProps = true;
 
-                    LightData.StartFrame();
-                }
-
-                // check for any changes in the lights transform or properties
-                
-                m_lightData.UpdateFrame();
-                m_lightData.CheckForChange();
+                // sort may be different now
+                DaydreamLight.s_resortLights = true;
             }
 
+            // check transform for changes
+            if (m_light.transform.hasChanged)
+            {
+                m_light.transform.hasChanged = false;
+                m_transformChanged = true;
+            }
+            else
+            {
+                m_transformChanged = false;
+            }
+
+            // return true if anything changed
+            return m_transformChanged || m_propertiesChanged;
+        }
+
+        public void InEditorUpdate()
+        {
 #if UNITY_EDITOR
             // Monitor for editor property change 'Light Mode'
             if (!Application.isPlaying)
@@ -341,11 +291,7 @@ namespace daydreamrenderer
                             RemoveFromMasterList();
                         }
 
-                        if (m_lightData != null)
-                        {
-                            m_lightData.m_mode = newMode;
-                        }
-
+                        m_curMode = newMode;
                         m_lightMode = newMode;
                     }
                 }
@@ -353,52 +299,12 @@ namespace daydreamrenderer
 #endif
         }
 
-        void LateUpdate()
-        {
-            s_once = false;
-        }
-
-        void AddToMasterList()
-        {
-            Light l = gameObject.GetComponent<Light>();
-            m_lightData = new LightData(l, m_lightMode);
-            s_masterLightList.Add(m_lightData);
-            s_masterLightList.Sort(new LightSort());
-            s_masterLightArray = s_masterLightList.ToArray();
-        }
-
-        void RemoveFromMasterList()
-        {
-            s_masterLightList.Remove(m_lightData);
-            s_masterLightArray = s_masterLightList.ToArray();
-            m_lightData = null;
-        }
-
-        public static Camera GetCurrentCamera()
-        {
-            if(Camera.current != null)
-            {
-                return Camera.current;
-            }else
-            {
-                return Camera.main;
-            }
-        }
-
         public static int GetLightCount()
         {
             return s_masterLightArray.Length;
         }
-
-        public static void GetLightData(LightData[] data)
-        {
-            for(int i = 0, k = Mathf.Min(data.Length, s_masterLightArray.Length); i < k; ++i)
-            {
-                data[i] = s_masterLightArray[i];
-            }
-        }
-
-        static void ResortLights()
+        
+        public static void ResortLights()
         {
             s_masterLightList.Sort(new LightSort());
             s_masterLightArray = s_masterLightList.ToArray();
@@ -414,43 +320,24 @@ namespace daydreamrenderer
 
         public static bool AnyLightChanged()
         {
-            if(!s_anyLightChangedSet)
+            for (int i = 0, k = s_masterLightArray.Length; i < k; ++i)
             {
-                s_anyLightChangedSet = true;
-                s_anyLightChanged = false;
-                for(int i = 0, k = s_masterLightArray.Length; i < k; ++i)
+                if (s_masterLightArray[i].m_propertiesChanged || s_masterLightList[i].m_transformChanged)
                 {
-                    if(s_masterLightArray[i].m_propertiesChanged || s_masterLightList[i].m_transformChanged)
-                    {
-                        s_anyLightChanged = true;
-                        break;
-                    }
+                    return true;
                 }
             }
 
-            return s_anyLightChanged;
+            return false;
         }
 
-        public static void GetSortedLights(int updateKey, int layer, Vector3 objPosition, Bounds bounds, ref int[] outLightList, ref int usedSlots)
+        public static void GetSortedLights(int updateKey, int layer, bool isStatic, Vector3 objPosition, Bounds bounds, ref int[] outLightList, ref int usedSlots)
         {
-#if UNITY_EDITOR
-            if (!Application.isPlaying && updateKey != s_updateLightKey)
-            {
-                for(int i = 0; i < s_masterLightArray.Length; ++i)
-                {
-                    s_masterLightArray[i].m_light.GetComponent<DaydreamLight>().Update();
-                }
-
-                s_updateLightKey = updateKey;
-            }
-#endif
-
-
 
             ClearList(ref outLightList);
 
             float dist2 = 0f;
-            LightData lightData = null;
+            DaydreamLight dl = null;
             usedSlots = 0;
 
             // number of directional lights
@@ -461,40 +348,40 @@ namespace daydreamrenderer
             for (int i = 0, k = s_masterLightArray.Length; i < k; ++i)
             {
                 // i'th light data
-                lightData = s_masterLightArray[i];
+                dl = s_masterLightArray[i];
 
                 int ithLight = i;
 
-                if((lightData.m_cullingMask & (1 << layer)) == 0)
+                if((dl.m_cullingMask & (1 << layer)) == 0 || (isStatic && dl.m_curMode != LightModes.REALTIME))
                 {
                     continue;
                 }
 
-                if (lightData.m_type != LightType.Directional)
+                if (dl.m_type != LightType.Directional)
                 {
                     // distance to the i'th lighta
 #if UNITY_EDITOR
                     if (!Application.isPlaying)
                     {
-                        lightData.m_dist = 0f;
+                        dl.m_dist = 0f;
                     }
 #endif
 
-                    if (lightData.m_transformChanged || lightData.m_propertiesChanged || lightData.m_dist == 0f)
+                    if (dl.m_transformChanged || dl.m_propertiesChanged || dl.m_dist == 0f)
                     {
 
                         // from cam to light
-                        objPosition = bounds.ClosestPoint(lightData.m_worlPos);
+                        objPosition = bounds.ClosestPoint(dl.m_worlPos);
 
                         // only update if needed
-                        float range2 = lightData.m_lastRange * lightData.m_lastRange;
-                        float x = (lightData.m_worlPos.x - objPosition.x)*(lightData.m_worlPos.x - objPosition.x);
-                        float y = (lightData.m_worlPos.y - objPosition.y)*(lightData.m_worlPos.y - objPosition.y);
-                        float z = (lightData.m_worlPos.z - objPosition.z)*(lightData.m_worlPos.z - objPosition.z);
-                        lightData.m_dist = (x + y + z) - range2;
+                        float range2 = dl.m_lastRange * dl.m_lastRange;
+                        float x = (dl.m_worlPos.x - objPosition.x)*(dl.m_worlPos.x - objPosition.x);
+                        float y = (dl.m_worlPos.y - objPosition.y)*(dl.m_worlPos.y - objPosition.y);
+                        float z = (dl.m_worlPos.z - objPosition.z)*(dl.m_worlPos.z - objPosition.z);
+                        dl.m_dist = (x + y + z) - range2;
                     }
 
-                    dist2 = lightData.m_dist;
+                    dist2 = dl.m_dist;
 
                     for (int j = dirCount; j < outLightList.Length; ++j)
                     {
@@ -527,20 +414,42 @@ namespace daydreamrenderer
             }
         }
 
-        static bool CheckCamId(int camIdA, int camIdB)
+        void OnEnable()
         {
+            DaydreamLightingManager.Init();
 #if UNITY_EDITOR
-            if (Application.isPlaying)
+            if (!Application.isPlaying)
             {
-                return camIdA != camIdB;
+                Light l = gameObject.GetComponent<Light>();
+                m_lightMode = l.LightMode();
             }
-            else
-            {
-                return true;
-            }
-#else
-            return camIdA != camIdB;
 #endif
+            // add lights to the master list
+            if (m_lightMode != LightModes.BAKED)
+            {
+                AddToMasterList();
+            }
+        }
+
+        void OnDisable()
+        {
+            // remove light from the master list
+            RemoveFromMasterList();
+        }
+
+        void AddToMasterList()
+        {
+            m_light = gameObject.GetComponent<Light>();
+            m_curMode = m_lightMode;
+            s_masterLightList.Add(this);
+            s_masterLightList.Sort(new LightSort());
+            s_masterLightArray = s_masterLightList.ToArray();
+        }
+
+        void RemoveFromMasterList()
+        {
+            s_masterLightList.Remove(this);
+            s_masterLightArray = s_masterLightList.ToArray();
         }
 
         static float ComputeLightAttenuation(Light light)

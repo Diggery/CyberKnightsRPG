@@ -1,4 +1,20 @@
-﻿using UnityEngine;
+﻿///////////////////////////////////////////////////////////////////////////////
+//Copyright 2017 Google Inc.
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+///////////////////////////////////////////////////////////////////////////////
+
+using UnityEngine;
 using System.Collections;
 using System.Reflection;
 using System.Collections.Generic;
@@ -108,42 +124,54 @@ namespace daydreamrenderer
 
             return string.Join("/", path.ToArray());
         }
-        
-		public static int GetUniqueId(this Light light)
-		{
-			string id = string.Format("{0}{1}{2}{3}"
-				, light.type.ToString()
-				, light.gameObject.transform.position.x
-				, light.gameObject.transform.position.y
-				, light.gameObject.transform.position.z);
-			return id.GetHashCode();
-		}
 
-		public static int GetUniqueId(this MeshFilter filter)
-		{
-			string id = string.Format("{0}|{1}{2}{3}{4}"
-				#if UNITY_EDITOR
-				, AssetDatabase.GetAssetPath (filter.sharedMesh)
-				#else
+        public static int GetUniqueId(this Light light)
+        {
+            string id = string.Format("{0}{1}{2}{3}"
+                , light.type.ToString()
+                , light.gameObject.transform.position.x
+                , light.gameObject.transform.position.y
+                , light.gameObject.transform.position.z);
+            return id.GetHashCode();
+        }
+
+        public static int GetUniqueId(this MeshFilter filter)
+        {
+            string id = string.Format("{0}|{1}{2}{3}{4}"
+#if UNITY_EDITOR
+                , AssetDatabase.GetAssetPath(filter.sharedMesh)
+#else
 				, filter.sharedMesh.GetInstanceID()
-				#endif
-				, filter.sharedMesh.name
-				, filter.gameObject.transform.position.x
-				, filter.gameObject.transform.position.y
-				, filter.gameObject.transform.position.z);
-			return id.GetHashCode();
-		}
+#endif
+                //, filter.sharedMesh.name
+                , filter.GetLocalIDinFile()
 
-		public static int GetUniqueId(this DaydreamVertexLighting comp)
-		{
-			MeshFilter mf = comp.GetComponent<MeshFilter>();
-			return mf.GetUniqueId ();
-		}
+                , filter.gameObject.transform.position.x
+                , filter.gameObject.transform.position.y
+                , filter.gameObject.transform.position.z);
+            return id.GetHashCode();
+        }
+
+        public static int GetUniqueId(this DaydreamVertexLighting comp)
+        {
+            MeshFilter filter = comp.GetComponent<MeshFilter>();
+            string id = string.Format("{0}|{1}{2}{3}{4}"
+#if UNITY_EDITOR
+                , filter != null ? AssetDatabase.GetAssetPath(filter.sharedMesh) : "missing_mesh"
+#else
+				, filter.sharedMesh.GetInstanceID()
+#endif
+                , comp.GetLocalIDinFile()
+                , comp.gameObject.transform.position.x
+                , comp.gameObject.transform.position.y
+                , comp.gameObject.transform.position.z);
+            return id.GetHashCode();
+        }
 
 
         public static bool IsLightmapLight(this Light light)
         {
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             if (light != null)
             {
                 SerializedObject serialObj = new SerializedObject(light);
@@ -154,14 +182,14 @@ namespace daydreamrenderer
                     return true;
                 }
             }
-            #endif
+#endif
 
             return false;
         }
 
         public static int LightMode(this Light light)
         {
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             if (light != null)
             {
                 SerializedObject serialObj = new SerializedObject(light);
@@ -169,7 +197,7 @@ namespace daydreamrenderer
 
                 return lightmapProp.intValue;
             }
-            #endif
+#endif
 
             return 4;
         }
@@ -177,7 +205,7 @@ namespace daydreamrenderer
         public static int GetLocalIDinFile(this Component comp)
         {
             int m_LocalIdentfierInFile = 0;
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
 
             PropertyInfo inspectorModeInfoProperty = typeof(SerializedObject).GetProperty("inspectorMode", BindingFlags.NonPublic | BindingFlags.Instance);
             SerializedObject serializedObject = new SerializedObject(comp);
@@ -186,7 +214,7 @@ namespace daydreamrenderer
             SerializedProperty m_LocalIdentfierInFile_Prop = serializedObject.FindProperty("m_LocalIdentfierInFile");
             m_LocalIdentfierInFile = m_LocalIdentfierInFile_Prop.intValue;
 
-            #endif
+#endif
 
             return m_LocalIdentfierInFile;
         }

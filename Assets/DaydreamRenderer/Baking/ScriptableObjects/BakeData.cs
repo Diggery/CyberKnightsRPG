@@ -1,4 +1,20 @@
-﻿using UnityEngine;
+﻿///////////////////////////////////////////////////////////////////////////////
+//Copyright 2017 Google Inc.
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+///////////////////////////////////////////////////////////////////////////////
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 #if UNITY_EDITOR
@@ -15,7 +31,9 @@ namespace daydreamrenderer
     public class BakeData : ScriptableObject
     {
         public const string kDaydreamPath = "Assets/DaydreamRenderer/";
+#if UNITY_EDITOR
         static string s_lastPath = "";
+#endif
         static string s_scenePath;
         static string s_sceneName;
 
@@ -68,7 +86,6 @@ namespace daydreamrenderer
         public VertexDebugState m_debugState;
         public DaydreamRendererImportSettings m_importSettings;
 
-        private static BakeData s_instance = null;
 
         #region Import Settings
         public DaydreamRendererImportSettings GetImportSettings()
@@ -231,6 +248,7 @@ namespace daydreamrenderer
         #endregion
 
 #if UNITY_EDITOR
+        private static BakeData s_instance = null;
         public static BakeData Instance()
         {
             if(s_instance == null || s_lastPath != BakeData.DataPath)
